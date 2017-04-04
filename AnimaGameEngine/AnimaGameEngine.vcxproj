@@ -29,7 +29,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -142,7 +142,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Application.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Globals.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\MemLeaks.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Module.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleAudio.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleInput.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleRender.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleTextures.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleWindow.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Point.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMicros.h" />
+    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMillis.h" />
     <ClInclude Include="Test.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Application.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Log.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Main.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleAudio.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleInput.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleRender.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleTextures.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleWindow.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMicros.cpp" />
+    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMillis.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

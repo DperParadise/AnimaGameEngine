@@ -2,6 +2,7 @@
 #define __TIMERMICROS_H__
 #include "libraries/SDL/include/SDL.h"
 
+//Timer resolution : microseconds
 class TimerMicros
 {
 public:

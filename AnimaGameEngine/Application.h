@@ -4,13 +4,14 @@
 #include<list>
 #include "Globals.h"
 #include "Module.h"
+#include "TimerMillis.h"
+#include "TimerMicros.h"
 
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
-
 
 class Application
 {
@@ -23,13 +24,22 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
 	ModuleRender* renderer;
 	ModuleWindow* window;
 	ModuleTextures* textures;
 	ModuleInput* input;
 	ModuleAudio* audio;
 
+	//------------------------------------------------- TIME CONTROL -----------------------------------------
+	TimerMillis timerMillis;
+	TimerMillis timerMillis_accumulated;
+	TimerMicros timerMicros;
+
+	unsigned frames_accumulated = 0;
+	double time_accumulated = 0.0;
+	unsigned average_fps = 0;
+	double ms_last_update = 0;
+	unsigned fps = 0;
 
 private:
 

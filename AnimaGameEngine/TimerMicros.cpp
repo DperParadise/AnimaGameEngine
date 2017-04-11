@@ -8,8 +8,9 @@ void TimerMicros::Start()
 {
 	previous = SDL_GetPerformanceCounter();
 	current = previous;
+	stopped = false;
 }
-
+//returns time in milliseconds
 double TimerMicros::Read()
 {
 	double ret;
@@ -23,7 +24,7 @@ double TimerMicros::Read()
 	else
 		ret = (double)current;
 
-	ret = (double)(ret / GetFrequency());
+	ret = (double)(ret * 1000 / GetFrequency());
 	
 	return ret;
 }
@@ -34,7 +35,7 @@ double TimerMicros::Stop()
 	stopped = true;
 	ret = (double)current;
 
-	ret = (double)(ret / GetFrequency());
+	ret = (double)(ret * 1000 / GetFrequency());
 
 	return ret;
 

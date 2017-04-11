@@ -2,7 +2,7 @@
 #define __TIMERMILLIS_H__
 #include "libraries/sdl/include/SDL.h"
 
-
+//Timer resolution : milliseconds
 class TimerMillis
  {
  public:

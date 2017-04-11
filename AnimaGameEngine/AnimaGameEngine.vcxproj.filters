@@ -21,72 +21,72 @@
     <ClInclude Include="Test.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Module.h">
+    <ClInclude Include="Module.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleAudio.h">
+    <ClInclude Include="..\ModuleAudio.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleInput.h">
+    <ClInclude Include="ModuleInput.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleRender.h">
+    <ClInclude Include="ModuleRender.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleTextures.h">
+    <ClInclude Include="ModuleTextures.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleWindow.h">
+    <ClInclude Include="ModuleWindow.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Application.h">
+    <ClInclude Include="Application.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Point.h">
+    <ClInclude Include="Globals.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMicros.h">
+    <ClInclude Include="MemLeaks.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMillis.h">
+    <ClInclude Include="Point.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Globals.h">
+    <ClInclude Include="TimerMicros.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\MemLeaks.h">
+    <ClInclude Include="TimerMillis.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleAudio.cpp">
+    <ClCompile Include="ModuleAudio.cpp">
       <Filter>CoreModules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleInput.cpp">
+    <ClCompile Include="ModuleInput.cpp">
       <Filter>CoreModules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleRender.cpp">
+    <ClCompile Include="ModuleRender.cpp">
       <Filter>CoreModules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleTextures.cpp">
+    <ClCompile Include="ModuleTextures.cpp">
       <Filter>CoreModules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\ModuleWindow.cpp">
+    <ClCompile Include="ModuleWindow.cpp">
       <Filter>CoreModules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Application.cpp">
+    <ClCompile Include="Application.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Main.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMicros.cpp">
+    <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\TimerMillis.cpp">
+    <ClCompile Include="TimerMicros.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\AnimaGameEngineBackUP\AnimaGameEngine\Log.cpp">
+    <ClCompile Include="TimerMillis.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>

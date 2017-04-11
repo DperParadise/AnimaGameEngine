@@ -7,8 +7,9 @@ void TimerMillis::Start()
 {
 	previous = SDL_GetTicks();
 	current = previous;
+	stopped = false;
 }
-
+//returns time in milliseconds
 Uint32 TimerMillis::Read()
 {
 	Uint32 ret;

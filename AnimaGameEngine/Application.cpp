@@ -38,7 +38,9 @@ bool Application::Init()
 		if((*it)->IsEnabled() == true)
 			ret = (*it)->Start();
 	}
-
+	//------------------------------------- START TIMERS-----------------------------------
+	timerMillis.Start();
+	timerMillis_accumulated.Start();
 
 	return ret;
 }
@@ -58,6 +60,15 @@ update_status Application::Update()
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PostUpdate();
+
+	//---------------------------------------   TIME CONTROL ---------------------------------------
+	frames_accumulated++;
+	time_accumulated = timerMillis_accumulated.Read();
+	average_fps = frames_accumulated / (time_accumulated/1000);
+	ms_last_update = timerMillis.Read();
+	fps = (unsigned)(1 / (ms_last_update/1000));
+	timerMillis.Start();
+	MYLOG("ACCUMULATED FRAMES = %d		TIME ACCUMULATED = %f		AVERAGE FPS = %d		MS LAST UPDATE = %f		  FPS = %d", frames_accumulated, time_accumulated, average_fps, ms_last_update, fps);
 
 	return ret;
 }

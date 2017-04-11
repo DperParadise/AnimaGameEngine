@@ -7,12 +7,17 @@
 #include "libraries/parson/parson.h"
 
 
-
-//#ifdef _MSC_VER
-//	#ifdef _DEBUG 
-//
-//
-//#endif
+#ifdef _MSC_VER
+	#ifdef _DEBUG 
+		#pragma comment(lib, "libraries/glew-2.0.0/libx86/deb/glew32d.lib")
+		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+	#else
+		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")
+		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+	#endif
+#endif
 
 using namespace std;
 
@@ -82,7 +87,7 @@ update_status Application::Update()
 	wait_time = 0;
 	timerMicros.Start();
 
-	MYLOG("ACCUMULATED FRAMES = %d		TIME ACCUMULATED = %d		AVERAGE FPS = %d		MS LAST UPDATE = %f		  FPS = %d", frames_accumulated, time_accumulated, average_fps, ms_last_update, fps);
+	//MYLOG("ACCUMULATED FRAMES = %d		TIME ACCUMULATED = %d		AVERAGE FPS = %d		MS LAST UPDATE = %f		  FPS = %d", frames_accumulated, time_accumulated, average_fps, ms_last_update, fps);
 
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
@@ -127,8 +132,7 @@ bool Application::ReadConfigFile(const std::string &file)
 	}
 
 	root_object = json_value_get_object(root_value);
-	fps_cap = (unsigned)(json_object_get_number(root_object, "fps_cap"));
-
+	fps_cap = (unsigned)json_object_dotget_number(root_object, "Application.fps_cap");
 	json_value_free(root_value);
 	return ret;
 }

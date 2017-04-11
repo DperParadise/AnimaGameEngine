@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include <string>
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -10,7 +11,15 @@ struct SDL_Rect;
 
 class ModuleRender : public Module
 {
+
+private:
+
+	//--------------------------- RENDER CONFIGURATION--------------------------------------
+	bool vsync = false;
+	SDL_GLContext gl_context = nullptr;
+
 public:
+
 	ModuleRender();
 	~ModuleRender();
 
@@ -22,8 +31,10 @@ public:
 
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f);
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera = true);
+	bool ModuleRender::ReadConfigFile(const std::string &file);
 
 public:
+
 	SDL_Renderer* renderer = nullptr;
 	SDL_Rect camera;
 };

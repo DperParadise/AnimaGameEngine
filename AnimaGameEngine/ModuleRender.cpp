@@ -4,6 +4,13 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "libraries/SDL/include/SDL.h"
+#include "libraries/parson/parson.h"
+#include "libraries/glew-2.0.0/include/GL/glew.h"
+#include "libraries/SDL/include/SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
+
 
 ModuleRender::ModuleRender()
 {
@@ -23,53 +30,102 @@ bool ModuleRender::Init()
 	bool ret = true;
 	Uint32 flags = 0;
 
-	if(VSYNC == true)
+	if(vsync == true)
 	{
-		//flags |= SDL_RENDERER_PRESENTVSYNC;
+		flags |= SDL_RENDERER_PRESENTVSYNC;
 	}
 
-	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
-	
-	if(renderer == nullptr)
+	//------------------------- CREATE OPENGL CONTEXT BEFORE INIT GLEW ------------------------
+
+	gl_context = SDL_GL_CreateContext(App->window->window);
+	if (gl_context == nullptr)
 	{
-		MYLOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+		MYLOG("Error : cannot create openGL context");
+		return false;
+	}
+
+	//------------------------- INIT GLEW----------------------------------------------------
+
+	GLenum initialization = glewInit();
+	if (initialization != GLEW_OK)
+	{
+		MYLOG("Error on glewInit()");
+		return false;
+	}
+	
+	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
+
+	//test glew Initialization
+	MYLOG("Using Glew %s", glewGetString(GLEW_VERSION));
+	MYLOG("Vendor: %s", glGetString(GL_VENDOR));
+	MYLOG("Renderer: %s", glGetString(GL_RENDERER));
+	MYLOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	MYLOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+	//Init matrices
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+		
+	//Check for error
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		MYLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 		ret = false;
 	}
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//Check for error
+		error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		MYLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+		ret = false;
+	}
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glClearDepth(1.0f);
+	glClearColor(0.6f, 0.6f, 0.6f, 1.f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_TEXTURE_2D);
 
 	return ret;
 }
 
 update_status ModuleRender::PreUpdate()
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(renderer);
+	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClearColor(0.6f, 0.6f, 0.6f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	return UPDATE_CONTINUE;
 }
 
-// Called every draw update
+
 update_status ModuleRender::Update(float dt)
 {
-	// debug camera
-	int speed = 1;
-
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->renderer->camera.y += speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->camera.y -= speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;
-
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::PostUpdate()
 {
-	SDL_RenderPresent(renderer);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glBegin(GL_TRIANGLES);
+		glColor3f(1, 0, 0); glVertex3f(-1.0f, -0.5f, -4.0f); // lower left vertex
+		glColor3f(1, 0, 0); glVertex3f(1.0f, -0.5f, -4.0f); // lower right vertex
+		glColor3f(1, 0, 0); glVertex3f(0.0f, 0.5f, -4.0f); // upper vertex
+	glEnd();
+
+	//SDL_RenderPresent(renderer);
+	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
 
@@ -139,5 +195,26 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 		ret = false;
 	}
 
+	return ret;
+}
+
+bool ModuleRender::ReadConfigFile(const std::string &file)
+{
+	const char *c_file = file.c_str();
+	bool ret = true;
+	JSON_Value *root_value;
+	JSON_Object *root_object;
+
+	root_value = json_parse_file(c_file);
+	if (root_value == NULL)
+	{
+		ret = false;
+		return ret;
+	}
+
+	root_object = json_value_get_object(root_value);
+	vsync = (bool)json_object_dotget_boolean(root_object, "ModuleRender.vsync");
+
+	json_value_free(root_value);
 	return ret;
 }

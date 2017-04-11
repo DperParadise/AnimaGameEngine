@@ -1,3 +1,19 @@
 {
-	"fps_cap" : 60
+	"Application" : 
+	{
+		"fps_cap" : 60
+	},
+	"ModuleWindow" : 
+	{
+		"window_title" : "Anima Game Engine",
+		"window_width" : 1024,
+		"window_height" : 768,
+		"full_screen" : false,
+		"resizable" : false			
+	},
+	"ModuleRender" : 
+	{
+		"vsync" : false	
+	}
+	
 }

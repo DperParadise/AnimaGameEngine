@@ -2,31 +2,35 @@
 #define __MODULEWINDOW_H__
 
 #include "Module.h"
+#include <string>
 
 struct SDL_Window;
 struct SDL_Surface;
 
 class ModuleWindow : public Module
 {
+
+private:
+
+	//---------------------- WINDOW CONFIGURATION-----------------------
+	std::string window_title = "";
+	bool full_screen = false;
+	bool resizable = false;
+
 public:
+
+	unsigned window_width = 0;
+	unsigned window_height = 0;
 
 	ModuleWindow();
 
-	// Destructor
 	virtual ~ModuleWindow();
-
-	// Called before quitting
-	bool Init();
-
-	// Called before quitting
+	bool Init();	
 	bool CleanUp();
-
-public:
-	//The window we'll be rendering to
+	bool ReadConfigFile(const std::string &file);
 	SDL_Window* window = nullptr;
-
-	//The surface contained by the window
 	SDL_Surface* screen_surface = nullptr;
+
 };
 
 #endif // __MODULEWINDOW_H__

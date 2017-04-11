@@ -38,6 +38,7 @@ bool ModuleRender::Init()
 	//------------------------- CREATE OPENGL CONTEXT BEFORE INIT GLEW ------------------------
 
 	gl_context = SDL_GL_CreateContext(App->window->window);
+
 	if (gl_context == nullptr)
 	{
 		MYLOG("Error : cannot create openGL context");
@@ -52,20 +53,19 @@ bool ModuleRender::Init()
 		MYLOG("Error on glewInit()");
 		return false;
 	}
-	
-	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
 
 	//test glew Initialization
 	MYLOG("Using Glew %s", glewGetString(GLEW_VERSION));
+
 	MYLOG("Vendor: %s", glGetString(GL_VENDOR));
 	MYLOG("Renderer: %s", glGetString(GL_RENDERER));
 	MYLOG("OpenGL version supported %s", glGetString(GL_VERSION));
 	MYLOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-	//Init matrices
+	//Init projection matrix
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-		
+
 	//Check for error
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
@@ -74,11 +74,12 @@ bool ModuleRender::Init()
 		ret = false;
 	}
 
+	//Init modelview matrix
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	//Check for error
-		error = glGetError();
+	 error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
 		MYLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
@@ -87,44 +88,53 @@ bool ModuleRender::Init()
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glClearDepth(1.0f);
-	glClearColor(0.6f, 0.6f, 0.6f, 1.f);
+	glClearColor(0.0, 0.0f, 0.0f, 1.f);
+
+	//Check for error
+	error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		MYLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+		ret = false;
+	}
+
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+	//glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
+	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
-	//glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
+
+	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
 
 	return ret;
 }
 
 update_status ModuleRender::PreUpdate()
-{
-	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glClearColor(0.6f, 0.6f, 0.6f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+{	
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);
+	//glLoadIdentity();
 
 	return UPDATE_CONTINUE;
 }
 
 
 update_status ModuleRender::Update(float dt)
-{
+{	
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::PostUpdate()
-{
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+{	
 	glBegin(GL_TRIANGLES);
-		glColor3f(1, 0, 0); glVertex3f(-1.0f, -0.5f, -4.0f); // lower left vertex
-		glColor3f(1, 0, 0); glVertex3f(1.0f, -0.5f, -4.0f); // lower right vertex
-		glColor3f(1, 0, 0); glVertex3f(0.0f, 0.5f, -4.0f); // upper vertex
+		glColor4f(1.0f, 0.0f, 0.0f, 1.0f); 
+		glVertex3f(1.0f, 0.0f, 0.0f); // lower left vertex
+		glVertex3f(0.0f, 1.0f, 0.0f); // lower right vertex
+		glVertex3f(-1.0f, 0.0f, 0.0f); // upper vertex
 	glEnd();
 
-	//SDL_RenderPresent(renderer);
+	
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -134,11 +144,8 @@ bool ModuleRender::CleanUp()
 {
 	MYLOG("Destroying renderer");
 
-	//Destroy window
-	if(renderer != nullptr)
-	{
-		SDL_DestroyRenderer(renderer);
-	}
+	//Destroy OpenGL context
+	SDL_GL_DeleteContext(gl_context);
 
 	return true;
 }

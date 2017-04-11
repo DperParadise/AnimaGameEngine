@@ -6,7 +6,7 @@
 #include "Module.h"
 #include "TimerMillis.h"
 #include "TimerMicros.h"
-
+#include <string>
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
@@ -24,6 +24,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	bool ReadConfigFile(const std::string &file);
+
 	ModuleRender* renderer;
 	ModuleWindow* window;
 	ModuleTextures* textures;
@@ -36,10 +38,15 @@ public:
 	TimerMicros timerMicros;
 
 	unsigned frames_accumulated = 0;
-	double time_accumulated = 0.0;
+	unsigned time_accumulated = 0;
 	unsigned average_fps = 0;
-	double ms_last_update = 0;
+	float ms_last_update = 0.0f;
 	unsigned fps = 0;
+	unsigned fps_cap = 0;
+	Uint32 wait_time = 0;
+
+	//dt in seconds
+	float dt = 0.0f;
 
 private:
 

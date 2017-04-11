@@ -49,7 +49,7 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status Update()
+	virtual update_status Update(float dt)
 	{
 		return UPDATE_CONTINUE;
 	}
@@ -68,6 +68,7 @@ public:
 
 private:
 	bool active = true;
+	float dt = 0.0f;
 };
 
 #endif // __MODULE_H__

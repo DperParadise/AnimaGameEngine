@@ -10,8 +10,8 @@ public:
 	TimerMicros();
 	~TimerMicros();
 	void Start();
-	double Read();
-	double Stop();
+	float Read();
+	float Stop();
 	static Uint64 GetFrequency();
 
 private:

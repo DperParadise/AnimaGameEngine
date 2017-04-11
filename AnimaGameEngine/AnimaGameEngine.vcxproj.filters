@@ -24,9 +24,6 @@
     <ClInclude Include="Module.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\ModuleAudio.h">
-      <Filter>CoreModules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleInput.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
@@ -56,6 +53,12 @@
     </ClInclude>
     <ClInclude Include="TimerMillis.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\parson\parson.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>CoreModules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +90,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="TimerMillis.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\parson\parson.c">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>

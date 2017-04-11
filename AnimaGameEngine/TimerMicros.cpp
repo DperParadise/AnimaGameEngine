@@ -11,31 +11,31 @@ void TimerMicros::Start()
 	stopped = false;
 }
 //returns time in milliseconds
-double TimerMicros::Read()
+float TimerMicros::Read()
 {
-	double ret;
+	float ret;
 
 	if (!stopped)
 	{
 		current = SDL_GetPerformanceCounter();
-		ret = (double)(current - previous);
+		ret = (float)(current - previous);
 	}
 
 	else
-		ret = (double)current;
+		ret = (float)current;
 
-	ret = (double)(ret * 1000 / GetFrequency());
+	ret = (float)(ret * 1000 / GetFrequency());
 	
 	return ret;
 }
 
-double TimerMicros::Stop()
+float TimerMicros::Stop()
 {
-	double ret;
+	float ret;
 	stopped = true;
-	ret = (double)current;
+	ret = (float)current;
 
-	ret = (double)(ret * 1000 / GetFrequency());
+	ret = (float)(ret * 1000 / GetFrequency());
 
 	return ret;
 

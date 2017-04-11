@@ -57,6 +57,7 @@ typedef unsigned int uint;
 #define SCREEN_HEIGHT 240
 #define FULLSCREEN false
 #define VSYNC true
-#define TITLE "Super Awesome Game"
+#define TITLE "Anima Game Engine"
+#define CONFIG_FILE  "D:\\GitHub\\AnimaGameEngine\\AnimaGameEngine\\config\\config.json"
 
 #endif //__GLOBALS_H__

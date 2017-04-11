@@ -25,7 +25,7 @@ bool ModuleRender::Init()
 
 	if(VSYNC == true)
 	{
-		flags |= SDL_RENDERER_PRESENTVSYNC;
+		//flags |= SDL_RENDERER_PRESENTVSYNC;
 	}
 
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
@@ -47,7 +47,7 @@ update_status ModuleRender::PreUpdate()
 }
 
 // Called every draw update
-update_status ModuleRender::Update()
+update_status ModuleRender::Update(float dt)
 {
 	// debug camera
 	int speed = 1;

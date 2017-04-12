@@ -99,8 +99,8 @@ bool ModuleRender::Init()
 	}
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
-	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
+	//glEnable(GL_CULL_FACE); //If disabled, back faces are visible but in grey colour
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
@@ -110,10 +110,10 @@ bool ModuleRender::Init()
 	return ret;
 }
 
-update_status ModuleRender::PreUpdate()
+update_status ModuleRender::PreUpdate(float dt)
 {	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glLoadIdentity();
 
 	return UPDATE_CONTINUE;
@@ -125,15 +125,20 @@ update_status ModuleRender::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRender::PostUpdate()
+update_status ModuleRender::PostUpdate(float dt)
 {	
-	glBegin(GL_TRIANGLES);
+	/*glBegin(GL_TRIANGLES);
 		glColor4f(1.0f, 0.0f, 0.0f, 1.0f); 
-		glVertex3f(1.0f, 0.0f, 0.0f); // lower left vertex
-		glVertex3f(0.0f, 1.0f, 0.0f); // lower right vertex
-		glVertex3f(-1.0f, 0.0f, 0.0f); // upper vertex
-	glEnd();
-
+		glVertex3f(1.0f, 0.0f, 0.0f); 
+		glVertex3f(0.0f, 1.0f, 0.0f); 
+		glVertex3f(-1.0f, 0.0f, 0.0f); 
+	glEnd();*/
+	/*glLineWidth(2.0f);
+	glBegin(GL_LINES);
+		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);		
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+	glEnd();*/
 	
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;

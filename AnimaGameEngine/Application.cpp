@@ -91,7 +91,7 @@ update_status Application::Update()
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
-			ret = (*it)->PreUpdate();
+			ret = (*it)->PreUpdate(dt);
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
@@ -99,7 +99,7 @@ update_status Application::Update()
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
-			ret = (*it)->PostUpdate();
+			ret = (*it)->PostUpdate(dt);
 
 	
 	return ret;

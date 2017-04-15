@@ -24,8 +24,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	bool ReadConfigFile(const std::string &file);
-
 	ModuleRender* renderer;
 	ModuleWindow* window;
 	ModuleTextures* textures;
@@ -37,12 +35,12 @@ public:
 	TimerMillis timerMillis_accumulated;
 	TimerMicros timerMicros;
 
-	unsigned frames_accumulated = 0;
-	unsigned time_accumulated = 0;
-	unsigned average_fps = 0;
+	int frames_accumulated = 0;
+	int time_accumulated = 0;
+	int average_fps = 0;
 	float ms_last_update = 0.0f;
-	unsigned fps = 0;
-	unsigned fps_cap = 0;
+	int fps = 0;
+	int fps_cap = 0;
 	Uint32 wait_time = 0;
 
 	//dt in seconds

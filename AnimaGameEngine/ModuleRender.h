@@ -8,7 +8,7 @@
 struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
-
+class Config;
 class ModuleRender : public Module
 {
 
@@ -23,7 +23,7 @@ public:
 	ModuleRender();
 	~ModuleRender();
 
-	bool Init();
+	bool Init(Config *config);
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
@@ -31,12 +31,12 @@ public:
 
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f);
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera = true);
-	bool ModuleRender::ReadConfigFile(const std::string &file);
-
+	
 public:
 
 	SDL_Renderer* renderer = nullptr;
 	SDL_Rect camera;
+
 };
 
 #endif // __MODULERENDER_H__

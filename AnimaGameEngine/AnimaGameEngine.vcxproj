@@ -143,7 +143,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="libraries\MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="libraries\parson\parson.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Module.h" />
@@ -159,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="libraries\parson\parson.c" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />

@@ -4,7 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
-#include "libraries/parson/parson.h"
+#include "Config.h"
 
 
 #ifdef _MSC_VER
@@ -43,23 +43,30 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	Config *config = Config::LoadConfig(CONFIG_FILE);
+	if (config == nullptr)
+	{
+		MYLOG("Error in configuration file.")
+		return false;
+	}
+
+	MYLOG("Load Application configuration");
+	fps_cap = config->GetInt("Application", "fps_cap");
+
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
-		ret = (*it)->Init(); // we init everything, even if not anabled
+		ret = (*it)->Init(config); // we init everything, even if not anabled
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 	{
 		if((*it)->IsEnabled() == true)
 			ret = (*it)->Start();
 	}
+
+	RELEASE(config);
+
 	//------------------------------------- START TIMERS-----------------------------------
 	timerMicros.Start();
 	timerMillis_accumulated.Start();
-
-	//read fps_cap from config
-	if (!ReadConfigFile(CONFIG_FILE))
-	{
-		MYLOG("Error : cannot read config file.");
-	}
 
 	return ret;
 }
@@ -116,23 +123,5 @@ bool Application::CleanUp()
 	return ret;
 }
 
-bool Application::ReadConfigFile(const std::string &file)
-{
-	const char *c_file = file.c_str();
-	bool ret = true;
-	JSON_Value *root_value;
-	JSON_Object *root_object;
 
-	root_value = json_parse_file(c_file);
-	if (root_value == NULL)
-	{
-		ret = false;
-		return ret;
-	}
-
-	root_object = json_value_get_object(root_value);
-	fps_cap = (unsigned)json_object_dotget_number(root_object, "Application.fps_cap");
-	json_value_free(root_value);
-	return ret;
-}
 

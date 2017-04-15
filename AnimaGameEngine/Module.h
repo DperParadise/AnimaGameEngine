@@ -3,6 +3,7 @@
 
 class Application;
 
+class Config;
 class Module
 {
 public:
@@ -34,7 +35,7 @@ public:
 		 return true;
 	 }
 
-	virtual bool Init() 
+	virtual bool Init(Config *config = nullptr) 
 	{
 		return true; 
 	}

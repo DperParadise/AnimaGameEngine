@@ -3,6 +3,7 @@
 #include "ModuleWindow.h"
 #include "libraries/SDL/include/SDL.h"
 #include "libraries/parson/parson.h"
+#include "Config.h"
 
 ModuleWindow::ModuleWindow()
 {
@@ -14,18 +15,19 @@ ModuleWindow::~ModuleWindow()
 }
 
 // Called before render is available
-bool ModuleWindow::Init()
+bool ModuleWindow::Init(Config *config)
 {
+	MYLOG("Load ModuleWindow configuration");
+	window_title = config->GetString("ModuleWindow", "window_title");
+	window_width = config->GetInt("ModuleWindow", "window_width");
+	window_height = config->GetInt("ModuleWindow", "window_height");
+	full_screen = config->GetBool("ModuleWindow", "full_screen");
+	resizable = config->GetBool("ModuleWindow", "resizable");
+
 	MYLOG("Init SDL window & surface");
 	bool ret = true;
 
-	if (!ReadConfigFile(CONFIG_FILE))
-	{
-		MYLOG("Error : cannot read config file");
-		ret = false;
-	}
-
-	else if(SDL_Init(SDL_INIT_VIDEO) < 0)
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		MYLOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
@@ -84,28 +86,4 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
-bool ModuleWindow::ReadConfigFile(const std::string &file)
-{
-	const char *c_file = file.c_str();
-	bool ret = true;
-	JSON_Value *root_value;
-	JSON_Object *root_object;
-
-	root_value = json_parse_file(c_file);
-	if (root_value == NULL)
-	{
-		ret = false;
-		return ret;
-	}
-
-	root_object = json_value_get_object(root_value);
-	window_title = json_object_dotget_string(root_object, "ModuleWindow.window_title");
-	window_width = (unsigned)json_object_dotget_number(root_object, "ModuleWindow.window_width");
-	window_height = (unsigned)json_object_dotget_number(root_object, "ModuleWindow.window_height");
-	full_screen = (bool)json_object_dotget_boolean(root_object, "ModuleWindow.full_screen");
-	resizable = (bool)json_object_dotget_boolean(root_object, "ModuleWindow.resizable");
-	
-	json_value_free(root_value);
-	return ret;
-}
 

@@ -9,7 +9,7 @@
 #include "libraries/SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-
+#include "Config.h"
 
 
 ModuleRender::ModuleRender()
@@ -24,8 +24,11 @@ ModuleRender::~ModuleRender()
 {}
 
 // Called before render is available
-bool ModuleRender::Init()
+bool ModuleRender::Init(Config *config)
 {
+	MYLOG("Load ModuleRender configuration");
+	vsync = config->GetBool("ModuleRender", "vsync");
+
 	MYLOG("Creating Renderer context");
 	bool ret = true;
 	Uint32 flags = 0;
@@ -100,7 +103,7 @@ bool ModuleRender::Init()
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
-	//glEnable(GL_CULL_FACE); //If disabled, back faces are visible but in grey colour
+	glEnable(GL_CULL_FACE); //If disabled, back faces are visible but in grey colour
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
@@ -114,7 +117,6 @@ update_status ModuleRender::PreUpdate(float dt)
 {	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glLoadIdentity();
 
 	return UPDATE_CONTINUE;
 }
@@ -127,19 +129,88 @@ update_status ModuleRender::Update(float dt)
 
 update_status ModuleRender::PostUpdate(float dt)
 {	
-	/*glBegin(GL_TRIANGLES);
-		glColor4f(1.0f, 0.0f, 0.0f, 1.0f); 
-		glVertex3f(1.0f, 0.0f, 0.0f); 
-		glVertex3f(0.0f, 1.0f, 0.0f); 
-		glVertex3f(-1.0f, 0.0f, 0.0f); 
-	glEnd();*/
-	/*glLineWidth(2.0f);
-	glBegin(GL_LINES);
-		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);		
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 1.0f, 0.0f);
-	glEnd();*/
-	
+	//---------------------------------------------- DIRECT MODE -----------------------------------------
+	//glBegin(GL_TRIANGLES);
+	//		
+	//	//Front face
+	//	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+	//	
+	//	glVertex3f(1.0f, 0.0f, 0.0f); 
+	//	glVertex3f(1.0f, 1.0f, 0.0f); 
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	
+	//	glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glVertex3f(0.0f, 0.0f, 0.0f);
+
+	//	//Upper face
+	//	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	//
+	//	glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glVertex3f(0.0f, 1.0f, 1.0f);
+
+	//	glVertex3f(0.0f, 1.0f, 1.0f);
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glVertex3f(1.0f, 1.0f, 0.0f);
+
+	//glEnd();
+
+	//---------------------------------------------- VERTEX ARRAYS WITH BUFFERS-----------------------------------------
+	GLfloat vertices[] =
+	{
+		
+		1.0f, 0.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f,
+
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f
+		
+	};
+
+	GLfloat colour[] =
+	{
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f,
+	};
+
+	uint my_id = 0;
+	glGenBuffers(1, (GLuint *)&(my_id));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12 * 3, vertices, GL_STATIC_DRAW);
+
+	/*glEnableClientState(GL_COLOR_ARRAY);
+	glColorPointer(4, GL_FLOAT, 0, colour);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableClientState(GL_COLOR_ARRAY);*/
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL); //if no buffer is used pass NULL else pass vertices pointer
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -207,26 +278,5 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 		ret = false;
 	}
 
-	return ret;
-}
-
-bool ModuleRender::ReadConfigFile(const std::string &file)
-{
-	const char *c_file = file.c_str();
-	bool ret = true;
-	JSON_Value *root_value;
-	JSON_Object *root_object;
-
-	root_value = json_parse_file(c_file);
-	if (root_value == NULL)
-	{
-		ret = false;
-		return ret;
-	}
-
-	root_object = json_value_get_object(root_value);
-	vsync = (bool)json_object_dotget_boolean(root_object, "ModuleRender.vsync");
-
-	json_value_free(root_value);
 	return ret;
 }

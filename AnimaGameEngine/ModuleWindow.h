@@ -6,7 +6,7 @@
 
 struct SDL_Window;
 struct SDL_Surface;
-
+class Config;
 class ModuleWindow : public Module
 {
 
@@ -19,15 +19,14 @@ private:
 
 public:
 
-	unsigned window_width = 0;
-	unsigned window_height = 0;
+	int window_width = 0;
+	int window_height = 0;
 
 	ModuleWindow();
 
 	virtual ~ModuleWindow();
-	bool Init();	
+	bool Init(Config *config);	
 	bool CleanUp();
-	bool ReadConfigFile(const std::string &file);
 	SDL_Window* window = nullptr;
 	SDL_Surface* screen_surface = nullptr;
 

@@ -1,7 +1,7 @@
 #ifndef __CONGIG_H__
 #define __CONFIG_H__
 
-#include "libraries/parson/parson.h";
+#include "libraries/parson/parson.h"
 #include <string>
 
 class Config

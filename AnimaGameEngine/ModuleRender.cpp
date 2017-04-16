@@ -10,6 +10,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Config.h"
+#include "ModuleEditorCamera.h"
 
 
 ModuleRender::ModuleRender()
@@ -130,86 +131,89 @@ update_status ModuleRender::Update(float dt)
 update_status ModuleRender::PostUpdate(float dt)
 {	
 	//---------------------------------------------- DIRECT MODE -----------------------------------------
-	//glBegin(GL_TRIANGLES);
-	//		
-	//	//Front face
-	//	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	//	
-	//	glVertex3f(1.0f, 0.0f, 0.0f); 
-	//	glVertex3f(1.0f, 1.0f, 0.0f); 
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
+	glBegin(GL_TRIANGLES);
+			
+		//Front face
+		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+		
+		glVertex3f(1.0f, 0.0f, 0.0f); 
+		glVertex3f(1.0f, 1.0f, 0.0f); 
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
 
-	//	//Upper face
-	//	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	//
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
+		//Upper face
+		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	
+		glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(0.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 1.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
 
-	//glEnd();
+	glEnd();
 
 	//---------------------------------------------- VERTEX ARRAYS WITH BUFFERS-----------------------------------------
-	GLfloat vertices[] =
-	{
-		
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f,
+	//GLfloat vertices[] =
+	//{
+	//	
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	0.0f, 0.0f, 0.0f,
 
-		1.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 0.0f
-		
-	};
+	//	1.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f
+	//	
+	//};
 
-	GLfloat colour[] =
-	{
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
+	//GLfloat colour[] =
+	//{
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
 
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f,
-	};
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f, 1.0f,
+	//};
 
-	uint my_id = 0;
-	glGenBuffers(1, (GLuint *)&(my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12 * 3, vertices, GL_STATIC_DRAW);
+	//uint my_id = 0;
+	//glGenBuffers(1, (GLuint *)&(my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12 * 3, vertices, GL_STATIC_DRAW);
 
-	/*glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_FLOAT, 0, colour);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDisableClientState(GL_COLOR_ARRAY);*/
+	///*glEnableClientState(GL_COLOR_ARRAY);
+	//glColorPointer(4, GL_FLOAT, 0, colour);
+	//glDrawArrays(GL_TRIANGLES, 0, 6);
+	//glDisableClientState(GL_COLOR_ARRAY);*/
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, NULL); //if no buffer is used pass NULL else pass vertices pointer
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL); //if no buffer is used pass NULL else pass vertices pointer
+	//glDrawArrays(GL_TRIANGLES, 0, 6);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 
-
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->module_camera->viewMatrix);
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->module_camera->projectionMatrix);
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;

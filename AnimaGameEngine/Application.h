@@ -12,6 +12,7 @@ class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
+class ModuleEditorCamera;
 
 class Application
 {
@@ -29,6 +30,7 @@ public:
 	ModuleTextures* textures;
 	ModuleInput* input;
 	ModuleAudio* audio;
+	ModuleEditorCamera* module_camera;
 
 	//------------------------------------------------- TIME CONTROL -----------------------------------------
 	TimerMillis timerMillis;

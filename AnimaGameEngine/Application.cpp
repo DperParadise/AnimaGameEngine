@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "Config.h"
+#include "ModuleEditorCamera.h"
 
 
 #ifdef _MSC_VER
@@ -16,6 +17,20 @@
 		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")
 		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+	#endif
+	
+	#ifdef _WIN64
+		#ifdef _DEBUG
+			#pragma comment(lib, "libraries/MathGeoLib/libx64/debug/MathGeoLib.lib")
+		#else
+			#pragma comment(lib, "libraries/MathGeoLib/libx64/release/MathGeoLib.lib")
+		#endif
+	#else
+		#ifdef _DEBUG
+			#pragma comment(lib, "libraries/MathGeoLib/libx86/debug/MathGeoLib.lib")
+		#else
+			#pragma comment(lib, "libraries/MathGeoLib/libx86/release/MathGeoLib.lib")
+		#endif
 	#endif
 #endif
 
@@ -29,7 +44,7 @@ Application::Application()
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(audio = new ModuleAudio());
-
+	modules.push_back(module_camera = new ModuleEditorCamera());
 	
 }
 

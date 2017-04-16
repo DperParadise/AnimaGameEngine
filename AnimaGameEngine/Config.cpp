@@ -1,5 +1,5 @@
 #include "Config.h"
-#include "libraries/parson/parson.h";
+#include "libraries/parson/parson.h"
 
 Config::Config(JSON_Value *value, JSON_Object *object) : root_value(value), root_object(object){}
 

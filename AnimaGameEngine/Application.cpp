@@ -21,15 +21,15 @@
 	
 	#ifdef _WIN64
 		#ifdef _DEBUG
-			#pragma comment(lib, "libraries/MathGeoLib/libx64/debug/MathGeoLib.lib")
+			#pragma comment(lib, "libraries/MathGeoLib/libx64/deb/MathGeoLib.lib")
 		#else
-			#pragma comment(lib, "libraries/MathGeoLib/libx64/release/MathGeoLib.lib")
+			#pragma comment(lib, "libraries/MathGeoLib/libx64/rel/MathGeoLib.lib")
 		#endif
 	#else
 		#ifdef _DEBUG
-			#pragma comment(lib, "libraries/MathGeoLib/libx86/debug/MathGeoLib.lib")
+			#pragma comment(lib, "libraries/MathGeoLib/libx86/deb/MathGeoLib.lib")
 		#else
-			#pragma comment(lib, "libraries/MathGeoLib/libx86/release/MathGeoLib.lib")
+			#pragma comment(lib, "libraries/MathGeoLib/libx86/rel/MathGeoLib.lib")
 		#endif
 	#endif
 #endif

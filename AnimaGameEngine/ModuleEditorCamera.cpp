@@ -8,12 +8,12 @@ ModuleEditorCamera::~ModuleEditorCamera() {}
 bool ModuleEditorCamera::Init(Config *config)
 {
 	
-	camera.SetKind(projectiveSpace, handedness);
-	camera.SetPos(position);
-	camera.SetFront(front_vect);
-	camera.SetUp(up_vect);
-	camera.SetViewPlaneDistances(near_plane, far_plane);
-	camera.SetVerticalFovAndAspectRatio(DegToRad(vertical_fov), aspect_ratio);
+	frustum.SetKind(projectiveSpace, handedness);
+	frustum.SetPos(position);
+	frustum.SetFront(front_vect);
+	frustum.SetUp(up_vect);
+	frustum.SetViewPlaneDistances(near_plane, far_plane);
+	frustum.SetVerticalFovAndAspectRatio(DegToRad(vertical_fov), aspect_ratio);
 
 	memset(projectionMatrix, 0, 16 * sizeof(float));
 	memset(viewMatrix, 0, 16 * sizeof(float));
@@ -37,7 +37,7 @@ bool ModuleEditorCamera::CleanUp()
 
 void ModuleEditorCamera::SetVerticalFOV(float vertical_fov)
 {
-	camera.SetHorizontalFovAndAspectRatio(vertical_fov, aspect_ratio);
+	frustum.SetHorizontalFovAndAspectRatio(vertical_fov, aspect_ratio);
 }
 
 void ModuleEditorCamera::SetAspectRatio(float aspect_ratio)
@@ -65,7 +65,7 @@ void ModuleEditorCamera::LookAt(float x, float y, float z)
 
 void ModuleEditorCamera::ComputeProjectionMatrix()
 {
-	float4x4 matrix = camera.ComputeProjectionMatrix();
+	float4x4 matrix = frustum.ComputeProjectionMatrix();
 	matrix.Transpose();
 	
 	for (int i = 0; i < 4; i++)
@@ -75,11 +75,12 @@ void ModuleEditorCamera::ComputeProjectionMatrix()
 			projectionMatrix[i * 4 + j] = matrix[i][j];
 		}
 	}
+
 }
 
 void ModuleEditorCamera::ComputeViewMatrix()
 {
-	float4x4 matrix = camera.ComputeViewMatrix();
+	float4x4 matrix = frustum.ComputeViewMatrix();
 	matrix.Transpose();
 
 	for (int i = 0; i < 4; i++)

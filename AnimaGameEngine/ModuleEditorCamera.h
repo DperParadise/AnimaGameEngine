@@ -29,23 +29,23 @@ public:
 	float GetHorizontalFOV(float vertical_fov);
 	
 
-	Frustum camera;
+	Frustum frustum;
 	float projectionMatrix[16];
 	float viewMatrix[16];
 
 private:
 	FrustumProjectiveSpace projectiveSpace = FrustumProjectiveSpace::FrustumSpaceGL;
 	FrustumHandedness handedness = FrustumHandedness::FrustumRightHanded;
-	vec position = vec(0.0f, 0.0f, 5.0f);
+	vec position = vec(0.0f, 0.0f, 10.0f);
 	vec front_vect = vec(0.0f, 0.0f, -1.0f);
 	vec up_vect = vec(0.0f, 1.0f, 0.0f);
 	float near_plane = 1.0f;
 	float far_plane = 100.0f;
-	float vertical_fov = 60.0;
+	float vertical_fov = 60.0f;
 	float horizontal_fov;
 	int width = 1024;
 	int height = 768;
-	float aspect_ratio = 1.3333;
+	float aspect_ratio = 1.3333f;
 
 };
 

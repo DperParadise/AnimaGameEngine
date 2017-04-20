@@ -130,7 +130,41 @@ update_status ModuleRender::Update(float dt)
 
 update_status ModuleRender::PostUpdate(float dt)
 {	
-	//---------------------------------------------- DIRECT MODE -----------------------------------------
+	//---------------------------------------------- GIZMO (0,0,0) -----------------
+	glLineWidth(2.0f);
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex3i(0, 0, 0);
+	glVertex3i(2, 0, 0);
+
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glVertex3i(0, 0, 0);
+	glVertex3i(0, 2, 0);
+
+	glColor3f(0, 0, 1);
+	glVertex3i(0, 0, 0);
+	glVertex3i(0, 0, 2);
+	glEnd();
+
+	//---------------------------------------------- GRID DIRECT MODE ---------------------------------------
+	glLineWidth(2.0f);
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 1.0f);
+	for (int z = -100; z <= 100; z += 1)
+	{
+		glVertex3i(-100.0f, 0, z);
+		glVertex3i(100.0f, 0, z);
+	}
+	for (float x = -100; x <= 100; x += 1)
+	{
+		glVertex3i(x, 0.0, -100);
+		glVertex3i(x, 0.0, 100);
+	}
+	
+	glEnd();
+
+
+	//---------------------------------------------- CUBE DIRECT MODE -----------------------------------------
 	glBegin(GL_TRIANGLES);
 			
 		//Front face
@@ -155,9 +189,43 @@ update_status ModuleRender::PostUpdate(float dt)
 		glVertex3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(1.0f, 1.0f, 0.0f);
 
-	glEnd();
+		//Right face
+		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 
-	//---------------------------------------------- VERTEX ARRAYS WITH BUFFERS-----------------------------------------
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
+
+		glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
+
+		//Left face
+		glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
+		
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 1.0f);		
+		glVertex3f(0.0f, 0.0f, 0.0f);
+
+		glVertex3f(0.0f, 1.0f, 1.0f);
+		glVertex3f(0.0f, 0.0f, 1.0f);		
+		glVertex3f(0.0f, 1.0f, 0.0f);
+
+		//Bottom face
+		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+
+		glVertex3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 1.0f);
+		
+
+	glEnd();
+	
+	//---------------------------------------------- CUBE VERTEX ARRAYS WITH BUFFERS-----------------------------------------
 	//GLfloat vertices[] =
 	//{
 	//	
@@ -213,8 +281,7 @@ update_status ModuleRender::PostUpdate(float dt)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_camera->viewMatrix);
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->module_camera->projectionMatrix);
-
+	glLoadMatrixf(App->module_camera->projectionMatrix);	
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

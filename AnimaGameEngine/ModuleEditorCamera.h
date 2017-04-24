@@ -17,8 +17,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void SetVerticalFOV(float vertical_fov);
-	void SetAspectRatio(float aspect_ratio);
+	void SetVerticalFOVAndAspectRatio(float vertical_fov, int width, int height);
+	float GetVerticalFOV();
+	float GetAspectRatio();
 	void SetPlaneDistances(float near, float far);
 	void SetPosition(float3 pos);
 	void SetOrientation(float3 front, float3 up);
@@ -26,8 +27,7 @@ public:
 	void ComputeProjectionMatrix();
 	void ComputeViewMatrix();
 
-	float GetHorizontalFOV(float vertical_fov);
-	
+	void OnResize(int window_width, int window_height);
 
 	Frustum frustum;
 	float projectionMatrix[16];

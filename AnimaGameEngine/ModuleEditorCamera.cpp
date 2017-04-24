@@ -7,6 +7,7 @@ ModuleEditorCamera::~ModuleEditorCamera() {}
 
 bool ModuleEditorCamera::Init(Config *config)
 {
+	//añadir lectura de propiedades desde el archivo de configuración
 	
 	frustum.SetKind(projectiveSpace, handedness);
 	frustum.SetPos(position);
@@ -27,6 +28,11 @@ bool ModuleEditorCamera::Init(Config *config)
 
 update_status ModuleEditorCamera::Update(float dt)
 {
+
+
+
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -35,15 +41,22 @@ bool ModuleEditorCamera::CleanUp()
 	return true;
 }
 
-void ModuleEditorCamera::SetVerticalFOV(float vertical_fov)
+void ModuleEditorCamera::SetVerticalFOVAndAspectRatio(float vertical_fov, int width, int height)
 {
-	frustum.SetHorizontalFovAndAspectRatio(vertical_fov, aspect_ratio);
+	aspect_ratio = (float)width / height;
+	frustum.SetVerticalFovAndAspectRatio(DegToRad(vertical_fov), aspect_ratio);
 }
 
-void ModuleEditorCamera::SetAspectRatio(float aspect_ratio)
+float ModuleEditorCamera::GetVerticalFOV()
 {
-	aspect_ratio = width / height;
+	return vertical_fov;
 }
+
+float ModuleEditorCamera::GetAspectRatio()
+{
+	return aspect_ratio;
+}
+
 void ModuleEditorCamera::SetPlaneDistances(float near, float far)
 {
 	near_plane = near;
@@ -92,9 +105,8 @@ void ModuleEditorCamera::ComputeViewMatrix()
 	}
 }
 
-float ModuleEditorCamera::GetHorizontalFOV(float vertical_fov)
-{
-	horizontal_fov = 2 * atan(tan(vertical_fov / 2) * aspect_ratio);
-
-	return horizontal_fov;
+void ModuleEditorCamera::OnResize(int window_width, int window_height)
+{	
+	SetVerticalFOVAndAspectRatio(vertical_fov, window_width, window_height);
+	ComputeProjectionMatrix();
 }

@@ -15,9 +15,7 @@
 
 ModuleRender::ModuleRender()
 {
-	camera.x = camera.y = 0;
-	camera.w = SCREEN_WIDTH * SCREEN_SIZE;
-	camera.h = SCREEN_HEIGHT* SCREEN_SIZE;
+	
 }
 
 // Destructor
@@ -152,13 +150,13 @@ update_status ModuleRender::PostUpdate(float dt)
 	glColor3f(1.0f, 1.0f, 1.0f);
 	for (int z = -100; z <= 100; z += 1)
 	{
-		glVertex3i(-100.0f, 0, z);
-		glVertex3i(100.0f, 0, z);
+		glVertex3i(-100, 0, z);
+		glVertex3i(100, 0, z);
 	}
-	for (float x = -100; x <= 100; x += 1)
+	for (int x = -100; x <= 100; x += 1)
 	{
-		glVertex3i(x, 0.0, -100);
-		glVertex3i(x, 0.0, 100);
+		glVertex3i(x, 0, -100);
+		glVertex3i(x, 0, 100);
 	}
 	
 	glEnd();
@@ -297,57 +295,10 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-// Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed)
+void ModuleRender::OnResize(int window_width, int window_height)
 {
-	bool ret = true;
-	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
-	rect.y = (int)(camera.y * speed) + y * SCREEN_SIZE;
-
-	if(section != NULL)
-	{
-		rect.w = section->w;
-		rect.h = section->h;
-	}
-	else
-	{
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
-
-	rect.w *= SCREEN_SIZE;
-	rect.h *= SCREEN_SIZE;
-
-	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
-	{
-		MYLOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
-	}
-
-	return ret;
+	glViewport(0, 0, window_width, window_height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->module_camera->projectionMatrix);
 }
 
-bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
-{
-	bool ret = true;
-
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, r, g, b, a);
-
-	SDL_Rect rec(rect);
-	if (use_camera)
-	{
-		rec.x = (int)(camera.x + rect.x * SCREEN_SIZE);
-		rec.y = (int)(camera.y + rect.y * SCREEN_SIZE);
-		rec.w *= SCREEN_SIZE;
-		rec.h *= SCREEN_SIZE;
-	}
-
-	if (SDL_RenderFillRect(renderer, &rec) != 0)
-	{
-		MYLOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
-		ret = false;
-	}
-
-	return ret;
-}

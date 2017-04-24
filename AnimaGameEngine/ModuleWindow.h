@@ -23,12 +23,14 @@ public:
 	int window_height = 0;
 
 	ModuleWindow();
+	void OnResize(int window_widht, int window_height);
 
 	virtual ~ModuleWindow();
 	bool Init(Config *config);	
 	bool CleanUp();
 	SDL_Window* window = nullptr;
-	SDL_Surface* screen_surface = nullptr;
+	//SDL_Surface* screen_surface = nullptr;
+
 
 };
 

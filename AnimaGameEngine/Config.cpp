@@ -25,7 +25,8 @@ Config* Config::LoadConfig(const std::string &file)
 const bool Config::GetBool(const char *module, const char *property) const
 {
 	std::string json_field = std::string(module) + "." + std::string(property);
-	bool ret = (bool)json_object_dotget_boolean(root_object, json_field.c_str());
+	int value = json_object_dotget_boolean(root_object, json_field.c_str());
+	bool ret = value && 1;
 	return ret;
 }
 
@@ -46,13 +47,13 @@ const int Config::GetInt(const char *module, const char *property) const
 const double Config::GetDouble(const char *module, const char *property) const
 {
 	std::string json_field = std::string(module) + "." + std::string(property);
-	int ret = json_object_dotget_number(root_object, json_field.c_str());
+	double ret = json_object_dotget_number(root_object, json_field.c_str());
 	return ret;
 }
 
 const float Config::GetFloat(const char *module, const char *property) const
 {
 	std::string json_field = std::string(module) + "." + std::string(property);
-	int ret = (float)json_object_dotget_number(root_object, json_field.c_str());
+	float ret = (float)json_object_dotget_number(root_object, json_field.c_str());
 	return ret;
 }

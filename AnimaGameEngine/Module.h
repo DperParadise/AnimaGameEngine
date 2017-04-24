@@ -66,6 +66,8 @@ public:
 	}
 
 	// Callbacks ---
+	virtual void OnResize(int window_widht, int window_height){}
+
 
 private:
 	bool active = true;

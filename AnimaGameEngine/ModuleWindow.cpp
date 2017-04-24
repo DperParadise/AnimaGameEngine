@@ -52,11 +52,7 @@ bool ModuleWindow::Init(Config *config)
 			MYLOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
 		}
-		else
-		{
-			//Get window surface
-			screen_surface = SDL_GetWindowSurface(window);
-		}
+		
 
 		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -84,6 +80,12 @@ bool ModuleWindow::CleanUp()
 	//Quit SDL subsystems
 	SDL_Quit();
 	return true;
+}
+
+void ModuleWindow::OnResize(int window_width, int window_height)
+{
+	this->window_width = window_width;
+	this->window_height = window_height;
 }
 
 

@@ -28,11 +28,6 @@ bool ModuleEditorCamera::Init(Config *config)
 
 update_status ModuleEditorCamera::Update(float dt)
 {
-
-
-
-
-
 	return UPDATE_CONTINUE;
 }
 
@@ -45,6 +40,7 @@ void ModuleEditorCamera::SetVerticalFOVAndAspectRatio(float vertical_fov, int wi
 {
 	aspect_ratio = (float)width / height;
 	frustum.SetVerticalFovAndAspectRatio(DegToRad(vertical_fov), aspect_ratio);
+	ComputeProjectionMatrix();
 }
 
 float ModuleEditorCamera::GetVerticalFOV()
@@ -61,19 +57,48 @@ void ModuleEditorCamera::SetPlaneDistances(float near, float far)
 {
 	near_plane = near;
 	far_plane = far;
+	frustum.SetViewPlaneDistances(near_plane, far_plane);
+	ComputeProjectionMatrix();
 }
-void ModuleEditorCamera::SetPosition(float3 pos)
+void ModuleEditorCamera::SetPosition(const float3 &pos)
 {
 	position = pos;
+	frustum.SetPos(position);
+	ComputeProjectionMatrix();
+	ComputeViewMatrix();
 }
-void ModuleEditorCamera::SetOrientation(float3 front, float3 up)
+void ModuleEditorCamera::SetOrientation(const float3 &front, const float3 &up)
 {
 	front_vect = front;
 	up_vect = up;
+	frustum.SetFront(front_vect);
+	frustum.SetUp(up_vect);
+	ComputeProjectionMatrix();
+	ComputeViewMatrix();
 }
-void ModuleEditorCamera::LookAt(float x, float y, float z)
+void ModuleEditorCamera::LookAt(const float3 &point)
 {
-	//ver lookAt de float4x4 de MathGeoLib
+	float3 new_right;
+	float3 new_up;
+	float3 new_front = (point - frustum.Pos()).Normalized();
+
+	float3 left_right = frustum.Front().Cross(new_front);
+
+	if ((int)left_right.Length() != 0) // check whether front and new front look at the same point
+	{
+		float3 check_vector = left_right.Cross(frustum.Front());
+		float test_product = frustum.Up().Dot(check_vector);
+		if (test_product > 0)
+			new_right = left_right;
+		else if (test_product < 0)
+			new_right = -1 * left_right;
+
+		new_up = new_right.Cross(new_front);
+
+		SetOrientation(new_front, new_up);
+	
+	}
+	
 }
 
 void ModuleEditorCamera::ComputeProjectionMatrix()

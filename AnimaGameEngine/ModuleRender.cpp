@@ -131,15 +131,15 @@ update_status ModuleRender::PostUpdate(float dt)
 	//---------------------------------------------- GIZMO (0,0,0) -----------------
 	glLineWidth(2.0f);
 	glBegin(GL_LINES);
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(3.0f, 0.0f, 0.0f);
 	glVertex3i(0, 0, 0);
 	glVertex3i(2, 0, 0);
 
-	glColor3f(0.0f, 1.0f, 0.0f);
+	glColor3f(0.0f, 3.0f, 0.0f);
 	glVertex3i(0, 0, 0);
 	glVertex3i(0, 2, 0);
 
-	glColor3f(0, 0, 1);
+	glColor3f(0.0f, 0.0f, 3.0);
 	glVertex3i(0, 0, 0);
 	glVertex3i(0, 0, 2);
 	glEnd();
@@ -163,65 +163,65 @@ update_status ModuleRender::PostUpdate(float dt)
 
 
 	//---------------------------------------------- CUBE DIRECT MODE -----------------------------------------
-	glBegin(GL_TRIANGLES);
-			
-		//Front face
-		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-		
-		glVertex3f(1.0f, 0.0f, 0.0f); 
-		glVertex3f(1.0f, 1.0f, 0.0f); 
-		glVertex3f(0.0f, 1.0f, 0.0f);
-		
-		glVertex3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, 0.0f);
+	//glBegin(GL_TRIANGLES);
+	//		
+	//	//Front face
+	//	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+	//	
+	//	glVertex3f(1.0f, 0.0f, 0.0f); 
+	//	glVertex3f(1.0f, 1.0f, 0.0f); 
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	
+	//	glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glVertex3f(0.0f, 0.0f, 0.0f);
 
-		//Upper face
-		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	
-		glVertex3f(1.0f, 1.0f, 0.0f);
-		glVertex3f(1.0f, 1.0f, 1.0f);
-		glVertex3f(0.0f, 1.0f, 1.0f);
+	//	//Upper face
+	//	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	//
+	//	glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glVertex3f(0.0f, 1.0f, 1.0f);
 
-		glVertex3f(0.0f, 1.0f, 1.0f);
-		glVertex3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glVertex3f(0.0f, 1.0f, 1.0f);
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glVertex3f(1.0f, 1.0f, 0.0f);
 
-		//Right face
-		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+	//	//Right face
+	//	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 
-		glVertex3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(1.0f, 0.0f, 1.0f);
-		glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glVertex3f(1.0f, 0.0f, 1.0f);
+	//	glVertex3f(1.0f, 1.0f, 0.0f);
 
-		glVertex3f(1.0f, 1.0f, 0.0f);
-		glVertex3f(1.0f, 0.0f, 1.0f);
-		glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glVertex3f(1.0f, 0.0f, 1.0f);
+	//	glVertex3f(1.0f, 1.0f, 1.0f);
 
-		//Left face
-		glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
-		
-		glVertex3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, 1.0f);		
-		glVertex3f(0.0f, 0.0f, 0.0f);
+	//	//Left face
+	//	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
+	//	
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glVertex3f(0.0f, 0.0f, 1.0f);		
+	//	glVertex3f(0.0f, 0.0f, 0.0f);
 
-		glVertex3f(0.0f, 1.0f, 1.0f);
-		glVertex3f(0.0f, 0.0f, 1.0f);		
-		glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glVertex3f(0.0f, 1.0f, 1.0f);
+	//	glVertex3f(0.0f, 0.0f, 1.0f);		
+	//	glVertex3f(0.0f, 1.0f, 0.0f);
 
-		//Bottom face
-		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+	//	//Bottom face
+	//	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
 
-		glVertex3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(1.0f, 0.0f, 1.0f);
-		glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glVertex3f(0.0f, 0.0f, 1.0f);
+	//	glVertex3f(1.0f, 0.0f, 1.0f);
+	//	glVertex3f(1.0f, 0.0f, 0.0f);
 
-		glVertex3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, 1.0f);
-		
+	//	glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glVertex3f(0.0f, 0.0f, 0.0f);
+	//	glVertex3f(0.0f, 0.0f, 1.0f);
+	//	
 
-	glEnd();
+	//glEnd();
 	
 	//---------------------------------------------- CUBE VERTEX ARRAYS WITH BUFFERS-----------------------------------------
 	//GLfloat vertices[] =
@@ -276,10 +276,27 @@ update_status ModuleRender::PostUpdate(float dt)
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 	//glDisableClientState(GL_VERTEX_ARRAY);
 
+	
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) 
+	{
+		float3 pos = App->module_editor_camera->frustum.Pos();
+		pos.x -= 1.0f;
+		App->module_editor_camera->SetPosition(pos);
+		App->module_editor_camera->LookAt(float3(0.0f, 0.0f, 0.0f));
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		float3 pos = App->module_editor_camera->frustum.Pos();
+		pos.x += 1.0f;
+		App->module_editor_camera->SetPosition(pos);
+		App->module_editor_camera->LookAt(float3(0.0f, 0.0f, 0.0f));
+	}
+
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->module_camera->viewMatrix);
+	glLoadMatrixf(App->module_editor_camera->viewMatrix);
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->module_camera->projectionMatrix);	
+	glLoadMatrixf(App->module_editor_camera->projectionMatrix);	
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -299,6 +316,6 @@ void ModuleRender::OnResize(int window_width, int window_height)
 {
 	glViewport(0, 0, window_width, window_height);
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->module_camera->projectionMatrix);
+	glLoadMatrixf(App->module_editor_camera->projectionMatrix);
 }
 

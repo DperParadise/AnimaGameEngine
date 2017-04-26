@@ -106,10 +106,9 @@ update_status ModuleInput::PreUpdate(float dt)
 					windowEvents[WE_SHOW] = true;
 					break;
 
-					case SDL_WINDOWEVENT_SIZE_CHANGED:
-						MYLOG("Dentro de SDL_WINDOWEVENT_SIZE_CHANGED");
+					case SDL_WINDOWEVENT_SIZE_CHANGED:						
 						App->window->OnResize(event.window.data1, event.window.data2);					
-						App->module_camera->OnResize(event.window.data1, event.window.data2);
+						App->module_editor_camera->OnResize(event.window.data1, event.window.data2);
 						App->renderer->OnResize(event.window.data1, event.window.data2);
 						break;
 				}
@@ -124,10 +123,12 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_MOUSEMOTION:
-				mouse_motion.x = event.motion.xrel / SCREEN_SIZE;
-				mouse_motion.y = event.motion.yrel / SCREEN_SIZE;
-				mouse.x = event.motion.x / SCREEN_SIZE;
-				mouse.y = event.motion.y / SCREEN_SIZE;
+				mouse_motion.x = event.motion.xrel /*/ SCREEN_SIZE*/;
+				mouse_motion.y = event.motion.yrel /*/ SCREEN_SIZE*/;
+				mouse.x = event.motion.x /*/ SCREEN_SIZE*/;
+				mouse.y = event.motion.y /*/ SCREEN_SIZE*/;
+				//MYLOG("mouse_x = %d mouse_y = %d   mouse_motion_x = %d mouse_motion_y = %d ", mouse.x, mouse.y, mouse_motion.x, mouse_motion.y);
+
 			break;
 		}
 	}

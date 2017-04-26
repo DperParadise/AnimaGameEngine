@@ -21,9 +21,9 @@ public:
 	float GetVerticalFOV();
 	float GetAspectRatio();
 	void SetPlaneDistances(float near, float far);
-	void SetPosition(float3 pos);
-	void SetOrientation(float3 front, float3 up);
-	void LookAt(float x, float y, float z);
+	void SetPosition(const float3 &pos);
+	void SetOrientation(const float3 &front, const float3 &up);
+	void LookAt(const float3 &point);
 	void ComputeProjectionMatrix();
 	void ComputeViewMatrix();
 
@@ -36,9 +36,9 @@ public:
 private:
 	FrustumProjectiveSpace projectiveSpace = FrustumProjectiveSpace::FrustumSpaceGL;
 	FrustumHandedness handedness = FrustumHandedness::FrustumRightHanded;
-	vec position = vec(0.0f, 0.0f, 10.0f);
-	vec front_vect = vec(0.0f, 0.0f, -1.0f);
-	vec up_vect = vec(0.0f, 1.0f, 0.0f);
+	float3 position = float3(0.0f, 10.0f, 20.0f);
+	float3 front_vect = float3(0.0f, 1.0f, -1.0f);
+	float3 up_vect = float3(0.0f, 1.0f, 0.0f);
 	float near_plane = 1.0f;
 	float far_plane = 100.0f;
 	float vertical_fov = 60.0f;

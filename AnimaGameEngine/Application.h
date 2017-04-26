@@ -30,7 +30,7 @@ public:
 	ModuleTextures* textures;
 	ModuleInput* input;
 	ModuleAudio* audio;
-	ModuleEditorCamera* module_camera;
+	ModuleEditorCamera* module_editor_camera;
 
 	//------------------------------------------------- TIME CONTROL -----------------------------------------
 	TimerMillis timerMillis;

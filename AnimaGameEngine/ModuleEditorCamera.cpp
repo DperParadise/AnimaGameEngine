@@ -76,29 +76,13 @@ void ModuleEditorCamera::SetOrientation(const float3 &front, const float3 &up)
 	ComputeProjectionMatrix();
 	ComputeViewMatrix();
 }
-void ModuleEditorCamera::LookAt(const float3 &point)
-{
-	float3 new_right;
-	float3 new_up;
-	float3 new_front = (point - frustum.Pos()).Normalized();
-
-	float3 left_right = frustum.Front().Cross(new_front);
-
-	if ((int)left_right.Length() != 0) // check whether front and new front look at the same point
-	{
-		float3 check_vector = left_right.Cross(frustum.Front());
-		float test_product = frustum.Up().Dot(check_vector);
-		if (test_product > 0)
-			new_right = left_right;
-		else if (test_product < 0)
-			new_right = -1 * left_right;
-
-		new_up = new_right.Cross(new_front);
-
-		SetOrientation(new_front, new_up);
-	
-	}
-	
+void ModuleEditorCamera::LookAt(const float3 &position)
+{	
+	float3 dir = position - frustum.Pos();
+	float3x3 m = float3x3::LookAt(frustum.Front(), dir.Normalized(), frustum.Up(), float3::unitY);
+	float3 front = m.MulDir(frustum.Front()).Normalized();
+	float3 up = m.MulDir(frustum.Up()).Normalized();
+	SetOrientation(front, up);
 }
 
 void ModuleEditorCamera::ComputeProjectionMatrix()

@@ -145,7 +145,7 @@ update_status ModuleRender::PostUpdate(float dt)
 	glEnd();
 
 	//---------------------------------------------- GRID DIRECT MODE ---------------------------------------
-	glLineWidth(2.0f);
+	glLineWidth(1.0f);
 	glBegin(GL_LINES);
 	glColor3f(1.0f, 1.0f, 1.0f);
 	for (int z = -100; z <= 100; z += 1)
@@ -276,22 +276,8 @@ update_status ModuleRender::PostUpdate(float dt)
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 	//glDisableClientState(GL_VERTEX_ARRAY);
 
-	
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) 
-	{
-		float3 pos = App->module_editor_camera->frustum.Pos();
-		pos.x -= 1.0f;
-		App->module_editor_camera->SetPosition(pos);
-		App->module_editor_camera->LookAt(float3(0.0f, 0.0f, 0.0f));
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-	{
-		float3 pos = App->module_editor_camera->frustum.Pos();
-		pos.x += 1.0f;
-		App->module_editor_camera->SetPosition(pos);
-		App->module_editor_camera->LookAt(float3(0.0f, 0.0f, 0.0f));
-	}
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		App->module_editor_camera->LookAt(float3(0.0f, 5.0f, 0.0f));
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);

@@ -46,7 +46,7 @@ private:
 	int width = 1024;
 	int height = 768;
 	float aspect_ratio = 1.3333f;
-	float camera_speed = 70.0f;
+	float camera_speed = 30.0f;
 
 };
 

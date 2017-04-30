@@ -81,7 +81,7 @@ bool Application::Init()
 	RELEASE(config);
 
 	//------------------------------------- START TIMERS-----------------------------------
-	timerMicros.Start();
+	timerMillis.Start();
 	timerMillis_accumulated.Start();
 
 	return ret;
@@ -92,26 +92,34 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 
 	//---------------------------------------   TIME CONTROL ---------------------------------------
+	ms_last_update = timerMillis.Read();
+	timerMillis.Start();
+	dt = ms_last_update / 1000;
+	fps = 1 / dt;
 
-	frames_accumulated++;
-	time_accumulated = timerMillis_accumulated.Read();
-	ms_last_update = timerMicros.Read();
-	dt = ms_last_update / 1000.0f;
-	if (ms_last_update < (1.0f / ((double)fps_cap / 1000.0f)))
+	if (fps_cap != 0)   
 	{
-		double cap_time = (1.0f / ((double)fps_cap / 1000.0f));
-		wait_time = (Uint32)(cap_time - ms_last_update);
-		SDL_Delay(wait_time);
+		if (fps > fps_cap)
+		{
+			wait_time = 1000 / fps_cap - ms_last_update;
+			SDL_Delay(wait_time);
+		}
+	}
+	
+	time_accumulated = timerMillis_accumulated.Read();
+	frames_accumulated++;
+	if(time_accumulated != 0)
+		average_fps = 1000 * (float)frames_accumulated / time_accumulated;
+
+	if (frames_accumulated == 1000)
+	{
+		frames_accumulated = 0;
+		timerMillis_accumulated.Start();
 	}
 
-	fps = (unsigned)(1.0f / ((ms_last_update + wait_time) / 1000.0f));
-	average_fps = (unsigned)(frames_accumulated / ((time_accumulated + wait_time) / 1000.0f));
-	wait_time = 0;
-	timerMicros.Start();
-
-	//MYLOG("ACCUMULATED FRAMES = %d		TIME ACCUMULATED = %d		AVERAGE FPS = %d		MS LAST UPDATE = %f		  FPS = %d", frames_accumulated, time_accumulated, average_fps, ms_last_update, fps);
-
-
+	MYLOG("ACCUMULATED FRAMES = %d		TIME ACCUMULATED = %d		AVERAGE FPS = %f		MS LAST UPDATE = %f		  FPS = %d", frames_accumulated, time_accumulated, average_fps, ms_last_update, fps);
+	
+	
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PreUpdate(dt);

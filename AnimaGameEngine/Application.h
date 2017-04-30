@@ -39,7 +39,7 @@ public:
 
 	int frames_accumulated = 0;
 	int time_accumulated = 0;
-	int average_fps = 0;
+	float average_fps = 0.0f;
 	float ms_last_update = 0.0f;
 	int fps = 0;
 	int fps_cap = 0;

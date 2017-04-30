@@ -13,7 +13,7 @@
 	},
 	"ModuleRender" : 
 	{
-		"vsync" : true	
+		"vsync" : false	
 	}
 	
 }

@@ -1,5 +1,6 @@
 #include "ModuleEditorCamera.h"
-
+#include "Application.h"
+#include "ModuleInput.h"
 
 ModuleEditorCamera::ModuleEditorCamera() {}
 
@@ -28,6 +29,48 @@ bool ModuleEditorCamera::Init(Config *config)
 
 update_status ModuleEditorCamera::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+	{
+		float3 tmp = frustum.Pos();
+		tmp.y += camera_speed * dt;
+		SetPosition(tmp);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
+	{
+		float3 tmp = frustum.Pos();
+		tmp.y -= camera_speed * dt;
+		SetPosition(tmp);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		float3 tmp = frustum.Pos();
+		tmp += frustum.Front() * camera_speed * dt;
+		SetPosition(tmp);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		float3 tmp = frustum.Pos();
+		tmp -= frustum.Front() * camera_speed * dt;
+		SetPosition(tmp);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		float3 tmp = frustum.Pos();
+		tmp -= frustum.WorldRight() * camera_speed * dt;
+		SetPosition(tmp);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		float3 tmp = frustum.Pos();
+		tmp += frustum.WorldRight() * camera_speed * dt;
+		SetPosition(tmp);
+	}
+
 	return UPDATE_CONTINUE;
 }
 

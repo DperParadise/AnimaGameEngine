@@ -36,8 +36,8 @@ public:
 private:
 	FrustumProjectiveSpace projectiveSpace = FrustumProjectiveSpace::FrustumSpaceGL;
 	FrustumHandedness handedness = FrustumHandedness::FrustumRightHanded;
-	float3 position = float3(0.0f, 10.0f, 20.0f);
-	float3 front_vect = float3(0.0f, 1.0f, -1.0f);
+	float3 position = float3(0.0f, 5.0f, 10.0f);
+	float3 front_vect = float3(0.0f, 0.0f, -1.0f);
 	float3 up_vect = float3(0.0f, 1.0f, 0.0f);
 	float near_plane = 1.0f;
 	float far_plane = 100.0f;
@@ -46,6 +46,7 @@ private:
 	int width = 1024;
 	int height = 768;
 	float aspect_ratio = 1.3333f;
+	float camera_speed = 70.0f;
 
 };
 

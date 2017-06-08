@@ -77,8 +77,8 @@ update_status ModuleEditorCamera::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		float3 up_increment = frustum.Up() * dt;
-		float3 new_front = frustum.Front() + up_increment;
+		float3 up_increment = frustum.Up() * 0.5;
+		float3 new_front = frustum.Front() + up_increment * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();
@@ -87,8 +87,8 @@ update_status ModuleEditorCamera::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		float3 up_increment = frustum.Up() * dt;
-		float3 new_front = frustum.Front() - up_increment;
+		float3 up_increment = frustum.Up() * 0.5;
+		float3 new_front = frustum.Front() - up_increment * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();
@@ -97,9 +97,8 @@ update_status ModuleEditorCamera::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		float3 left_increment = frustum.Up().Cross(frustum.Front());
-		left_increment = left_increment.Normalized() * dt;
-		float3 new_front = frustum.Front() + left_increment;
+		float3 left_increment = frustum.Up().Cross(frustum.Front()) * 0.5;
+		float3 new_front = frustum.Front() + left_increment * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();
@@ -108,9 +107,8 @@ update_status ModuleEditorCamera::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		float3 right_increment = frustum.Front().Cross(frustum.Up());
-		right_increment = right_increment.Normalized() * dt;
-		float3 new_front = frustum.Front() + right_increment;
+		float3 right_increment = frustum.Front().Cross(frustum.Up()) * 0.5;
+		float3 new_front = frustum.Front() + right_increment * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();

@@ -8,7 +8,7 @@ ModuleEditorCamera::~ModuleEditorCamera() {}
 
 bool ModuleEditorCamera::Init(Config *config)
 {
-	//añadir lectura de propiedades desde el archivo de configuración
+	//TODO : añadir lectura de propiedades desde el archivo de configuración
 	
 	frustum.SetKind(projectiveSpace, handedness);
 	frustum.SetPos(position);
@@ -21,8 +21,12 @@ bool ModuleEditorCamera::Init(Config *config)
 	memset(viewMatrix, 0, 16 * sizeof(float));
 
 	//---------------------------------------- SET DEFAULT PROJECTION AND VIEW MATRICES ---------------------------------
-	ComputeProjectionMatrix();
-	ComputeViewMatrix();
+	lookat_point = float3::zero;
+	LookAt(lookat_point);
+
+	//ComputeProjectionMatrix();
+	//ComputeViewMatrix();
+
 
 	return true;
 }
@@ -69,6 +73,48 @@ update_status ModuleEditorCamera::Update(float dt)
 		float3 tmp = frustum.Pos();
 		tmp += frustum.WorldRight() * camera_speed * dt;
 		SetPosition(tmp);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		float3 up_increment = frustum.Up() * dt;
+		float3 new_front = frustum.Front() + up_increment;
+		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
+		float3 front = m.MulDir(frustum.Front()).Normalized();
+		float3 up = m.MulDir(frustum.Up()).Normalized();
+		SetOrientation(front, up);			
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		float3 up_increment = frustum.Up() * dt;
+		float3 new_front = frustum.Front() - up_increment;
+		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
+		float3 front = m.MulDir(frustum.Front()).Normalized();
+		float3 up = m.MulDir(frustum.Up()).Normalized();
+		SetOrientation(front, up);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		float3 left_increment = frustum.Up().Cross(frustum.Front());
+		left_increment = left_increment.Normalized() * dt;
+		float3 new_front = frustum.Front() + left_increment;
+		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
+		float3 front = m.MulDir(frustum.Front()).Normalized();
+		float3 up = m.MulDir(frustum.Up()).Normalized();
+		SetOrientation(front, up);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		float3 right_increment = frustum.Front().Cross(frustum.Up());
+		right_increment = right_increment.Normalized() * dt;
+		float3 new_front = frustum.Front() + right_increment;
+		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
+		float3 front = m.MulDir(frustum.Front()).Normalized();
+		float3 up = m.MulDir(frustum.Up()).Normalized();
+		SetOrientation(front, up);
 	}
 
 	return UPDATE_CONTINUE;
@@ -119,9 +165,9 @@ void ModuleEditorCamera::SetOrientation(const float3 &front, const float3 &up)
 	ComputeProjectionMatrix();
 	ComputeViewMatrix();
 }
-void ModuleEditorCamera::LookAt(const float3 &position)
+void ModuleEditorCamera::LookAt(const float3 &point)
 {	
-	float3 dir = position - frustum.Pos();
+	float3 dir = point - frustum.Pos();
 	float3x3 m = float3x3::LookAt(frustum.Front(), dir.Normalized(), frustum.Up(), float3::unitY);
 	float3 front = m.MulDir(frustum.Front()).Normalized();
 	float3 up = m.MulDir(frustum.Up()).Normalized();

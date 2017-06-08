@@ -315,8 +315,6 @@ update_status ModuleRender::PostUpdate(float dt)
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 	//glDisableClientState(GL_VERTEX_ARRAY);
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		App->module_editor_camera->LookAt(float3(0.0f, 5.0f, 0.0f));
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);

@@ -33,6 +33,8 @@ public:
 	float projectionMatrix[16];
 	float viewMatrix[16];
 
+	float3 lookat_point;
+
 private:
 	FrustumProjectiveSpace projectiveSpace = FrustumProjectiveSpace::FrustumSpaceGL;
 	FrustumHandedness handedness = FrustumHandedness::FrustumRightHanded;

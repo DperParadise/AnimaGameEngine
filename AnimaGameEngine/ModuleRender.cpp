@@ -102,7 +102,7 @@ bool ModuleRender::Init(Config *config)
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
-	glEnable(GL_CULL_FACE); //If disabled, back faces are visible but in grey colour
+	glEnable(GL_CULL_FACE); //If disabled, back faces are visible
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
@@ -128,6 +128,23 @@ update_status ModuleRender::Update(float dt)
 
 update_status ModuleRender::PostUpdate(float dt)
 {	
+	//---------------------------------------------- GRID DIRECT MODE ---------------------------------------
+	glLineWidth(1.0f);
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 1.0f);
+	for (int z = -100; z <= 100; z += 1)
+	{
+		glVertex3i(-100, 0, z);
+		glVertex3i(100, 0, z);
+	}
+	for (int x = -100; x <= 100; x += 1)
+	{
+		glVertex3i(x, 0, -100);
+		glVertex3i(x, 0, 100);
+	}
+
+	glEnd();
+
 	//---------------------------------------------- GIZMO (0,0,0) -----------------
 	glLineWidth(2.0f);
 	glBegin(GL_LINES);
@@ -183,84 +200,79 @@ update_status ModuleRender::PostUpdate(float dt)
 
 	glEnd();
 
-	//---------------------------------------------- GRID DIRECT MODE ---------------------------------------
-	glLineWidth(1.0f);
-	glBegin(GL_LINES);
-	glColor3f(1.0f, 1.0f, 1.0f);
-	for (int z = -100; z <= 100; z += 1)
-	{
-		glVertex3i(-100, 0, z);
-		glVertex3i(100, 0, z);
-	}
-	for (int x = -100; x <= 100; x += 1)
-	{
-		glVertex3i(x, 0, -100);
-		glVertex3i(x, 0, 100);
-	}
-	
-	glEnd();
-
-
 	//---------------------------------------------- CUBE DIRECT MODE -----------------------------------------
-	//glBegin(GL_TRIANGLES);
-	//		
-	//	//Front face
-	//	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	//	
-	//	glVertex3f(1.0f, 0.0f, 0.0f); 
-	//	glVertex3f(1.0f, 1.0f, 0.0f); 
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glTranslatef(-0.5f, -0.5f, -0.5f);
+	glBegin(GL_TRIANGLES);		
+		//Back face
+		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+		
+		glVertex3f(0.0f, 0.0f, 0.0f); 
+		glVertex3f(1.0f, 1.0f, 0.0f); 
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
 
-	//	//Upper face
-	//	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	//
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
+		//Front face
+		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	
+		glVertex3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(0.0f, 1.0f, 1.0f);
 
-	//	//Right face
-	//	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+		//Left face
+		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(1.0f, 0.0f, 1.0f);
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 0.0f, 1.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(1.0f, 0.0f, 1.0f);
 
-	//	//Left face
-	//	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
-	//	
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(0.0f, 0.0f, 1.0f);		
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
+		//Right face
+		glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
+		
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 1.0f);		
+		glVertex3f(0.0f, 1.0f, 0.0f);
 
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
-	//	glVertex3f(0.0f, 0.0f, 1.0f);		
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 1.0f);		
+		glVertex3f(0.0f, 1.0f, 1.0f);
 
-	//	//Bottom face
-	//	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+		//Upper face
+		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
 
-	//	glVertex3f(0.0f, 0.0f, 1.0f);
-	//	glVertex3f(1.0f, 0.0f, 1.0f);
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
 
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
-	//	glVertex3f(0.0f, 0.0f, 1.0f);
-	//	
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f);
 
-	//glEnd();
+		//Bottom face
+		glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
+
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 1.0f);
+		glVertex3f(0.0f, 0.0f, 1.0f);
+
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 1.0f);
+	glEnd();
+	glPopMatrix();
 	
 	//---------------------------------------------- CUBE VERTEX ARRAYS WITH BUFFERS-----------------------------------------
 	//GLfloat vertices[] =

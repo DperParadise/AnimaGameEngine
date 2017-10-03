@@ -49,6 +49,7 @@ private:
 	int height = 768;
 	float aspect_ratio = 1.3333f;
 	float camera_speed = 30.0f;
+	float camera_speed_fast = 60.0f;
 
 };
 

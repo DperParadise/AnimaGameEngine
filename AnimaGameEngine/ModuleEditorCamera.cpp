@@ -36,59 +36,87 @@ update_status ModuleEditorCamera::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
 	{
 		float3 tmp = frustum.Pos();
-		tmp.y += camera_speed * dt;
+
+		if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+			tmp.y += camera_speed_fast * dt;
+		else
+			tmp.y += camera_speed * dt;
+		
 		SetPosition(tmp);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
 	{
 		float3 tmp = frustum.Pos();
-		tmp.y -= camera_speed * dt;
+
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+			tmp.y -= camera_speed_fast * dt;
+		else
+			tmp.y -= camera_speed * dt;
+
 		SetPosition(tmp);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		float3 tmp = frustum.Pos();
-		tmp += frustum.Front() * camera_speed * dt;
+
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+			tmp += frustum.Front() * camera_speed_fast * dt;
+		else
+			tmp += frustum.Front() * camera_speed * dt;
+
 		SetPosition(tmp);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		float3 tmp = frustum.Pos();
-		tmp -= frustum.Front() * camera_speed * dt;
+
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+			tmp -= frustum.Front() * camera_speed_fast * dt;
+		else
+			tmp -= frustum.Front() * camera_speed * dt;
+
 		SetPosition(tmp);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		float3 tmp = frustum.Pos();
-		tmp -= frustum.WorldRight() * camera_speed * dt;
+
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+			tmp -= frustum.WorldRight() * camera_speed_fast * dt;
+		else
+			tmp -= frustum.WorldRight() * camera_speed * dt;
+
 		SetPosition(tmp);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		float3 tmp = frustum.Pos();
-		tmp += frustum.WorldRight() * camera_speed * dt;
+
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+			tmp += frustum.WorldRight() * camera_speed_fast * dt;
+		else
+			tmp += frustum.WorldRight() * camera_speed * dt;
 		SetPosition(tmp);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		float3 up_increment = frustum.Up() * 0.5;
-		float3 new_front = frustum.Front() + up_increment * dt;
+	{		
+		float3 new_front = frustum.Front() + frustum.Up() * 0.5 * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();
-		SetOrientation(front, up);			
+		SetOrientation(front, up);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		float3 up_increment = frustum.Up() * 0.5;
-		float3 new_front = frustum.Front() - up_increment * dt;
+		float3 up_increment = frustum.Up();
+		float3 new_front = frustum.Front() - frustum.Up() * 0.5 * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();
@@ -96,9 +124,8 @@ update_status ModuleEditorCamera::Update(float dt)
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		float3 left_increment = frustum.Up().Cross(frustum.Front()) * 0.5;
-		float3 new_front = frustum.Front() + left_increment * dt;
+	{	
+		float3 new_front = frustum.Front() - frustum.WorldRight() * 0.5 * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();
@@ -106,13 +133,48 @@ update_status ModuleEditorCamera::Update(float dt)
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		float3 right_increment = frustum.Front().Cross(frustum.Up()) * 0.5;
-		float3 new_front = frustum.Front() + right_increment * dt;
+	{		
+		float3 new_front = frustum.Front() + frustum.WorldRight() * 0.5 * dt;
 		float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 		float3 front = m.MulDir(frustum.Front()).Normalized();
 		float3 up = m.MulDir(frustum.Up()).Normalized();
 		SetOrientation(front, up);
+	}
+
+	//Use mouse motion to move the camera
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	{
+		iPoint increment = App->input->GetMouseMotion();
+		if (increment.x != 0 || increment.y != 0)
+		{
+			float3 inc_vector;
+			inc_vector.x = 0.0f;
+			inc_vector.y = 0.0f;
+			inc_vector.z = 0.0f;
+
+			inc_vector += frustum.Front() + frustum.WorldRight() * increment.x * 0.5f * dt;
+			inc_vector += frustum.Up() * -increment.y * 0.5 * dt;
+			float3x3 m = float3x3::LookAt(frustum.Front(), inc_vector.Normalized(), frustum.Up(), float3::unitY);
+			float3 front = m.MulDir(frustum.Front()).Normalized();
+			float3 up = m.MulDir(frustum.Up()).Normalized();
+			SetOrientation(front, up);		
+		}
+	}
+
+	// Move forward with mouse wheel
+	if (App->input->IsScrollingUp())
+	{
+		float3 tmp = frustum.Pos();
+		tmp += frustum.Front() * camera_speed_fast * dt;
+		SetPosition(tmp);
+	}
+
+	// Move backward with mouse wheel
+	if (App->input->IsScrollingDown())
+	{
+		float3 tmp = frustum.Pos();
+		tmp -= frustum.Front() * camera_speed_fast * dt;
+		SetPosition(tmp);
 	}
 
 	return UPDATE_CONTINUE;

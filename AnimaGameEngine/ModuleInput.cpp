@@ -49,6 +49,8 @@ update_status ModuleInput::PreUpdate(float dt)
 	static SDL_Event event;
 
 	mouse_motion = {0, 0};
+	scroll_up = false;
+	scroll_down = false;
 	memset(windowEvents, false, WE_COUNT * sizeof(bool));
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -123,12 +125,24 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_MOUSEMOTION:
-				mouse_motion.x = event.motion.xrel /*/ SCREEN_SIZE*/;
-				mouse_motion.y = event.motion.yrel /*/ SCREEN_SIZE*/;
-				mouse.x = event.motion.x /*/ SCREEN_SIZE*/;
-				mouse.y = event.motion.y /*/ SCREEN_SIZE*/;
-				//MYLOG("mouse_x = %d mouse_y = %d   mouse_motion_x = %d mouse_motion_y = %d ", mouse.x, mouse.y, mouse_motion.x, mouse_motion.y);
+				mouse_motion.x = event.motion.xrel;
+				mouse_motion.y = event.motion.yrel;
+				mouse.x = event.motion.x;
+				mouse.y = event.motion.y;
+				break;
 
+			case SDL_MOUSEWHEEL:	
+				if (event.wheel.y == 1)
+				{
+					scroll_up = true;
+					break;
+				}
+
+				if (event.wheel.y == -1)
+				{
+					scroll_down = true;
+					break;
+				}
 			break;
 		}
 	}

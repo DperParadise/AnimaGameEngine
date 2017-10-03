@@ -64,12 +64,27 @@ public:
 	const iPoint& GetMouseMotion() const;
 	const iPoint& GetMousePosition() const;
 
+	// Check scroll up
+	bool IsScrollingUp() const
+	{
+		return scroll_up;
+	}
+
+	//Check scroll down
+	bool IsScrollingDown() const
+	{
+		return scroll_down;
+	}
+
 private:
 	bool		windowEvents[WE_COUNT];
 	KeyState*	keyboard;
 	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
 	iPoint mouse_motion;
 	iPoint mouse;
+	bool scroll_up = false;
+	bool scroll_down = false;
+
 };
 
 #endif // __MODULEINPUT_H__

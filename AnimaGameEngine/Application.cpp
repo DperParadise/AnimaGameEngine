@@ -13,10 +13,16 @@
 		#pragma comment(lib, "libraries/glew-2.0.0/libx86/deb/glew32d.lib")
 		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/DevIL.lib")
+		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
+		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
 	#else
 		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")
 		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/DevIL.lib")
+		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
+		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
 	#endif
 	
 	#ifdef _WIN64

@@ -3,7 +3,9 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
 #include <string>
+
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -18,7 +20,9 @@ private:
 	bool vsync = false;
 	SDL_GLContext gl_context = nullptr;
 
-	uint my_texture[1];
+	uint my_textures[2];
+	ILuint image;
+	ILubyte *image_data;
 
 public:
 

@@ -11,7 +11,9 @@
 #include <gl/GLU.h>
 #include "Config.h"
 #include "ModuleEditorCamera.h"
-
+//#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
+#include "libraries\DevIL_Windows_SDK\include\IL\ilu.h"
+#include "libraries\DevIL_Windows_SDK\include\IL\ilut.h"
 
 ModuleRender::ModuleRender()
 {
@@ -123,14 +125,47 @@ bool ModuleRender::Init(Config *config)
 	}
 	
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, (GLuint *)&my_texture[0]);
-	glBindTexture(GL_TEXTURE_2D, my_texture[0]);
+	glGenTextures(2, my_textures);
+	glBindTexture(GL_TEXTURE_2D, my_textures[0]);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 64, 64, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+
+	//------------- INIT DEVIL---------------------
+	//Initialize IL
+	ilInit();
+	if(ilGetError() != IL_NO_ERROR)
+		MYLOG(iluErrorString(ilGetError()));
+
+	// Initialize ILU
+	iluInit();	if (ilGetError() != IL_NO_ERROR)
+		MYLOG(iluErrorString(ilGetError()));	// Initialize ILUT with OpenGL support.
+	ilutRenderer(ILUT_OPENGL);	if (ilGetError() != IL_NO_ERROR)
+		MYLOG(iluErrorString(ilGetError()));
+
+
+	ilGenImages(1, &image);
+	ilBindImage(image);
+	ilLoad(IL_PNG, "images/Lenna.png");
+	if (ilGetError() != IL_NO_ERROR)
+		MYLOG(iluErrorString(ilGetError()));
+
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+	uint img_widht = ilGetInteger(IL_IMAGE_WIDTH);
+	uint img_height = ilGetInteger(IL_IMAGE_HEIGHT);
+	image_data = ilGetData();
+	
+	glBindTexture(GL_TEXTURE_2D, my_textures[1]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_widht, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	iluDeleteImage(image);
 
 	return ret;
 }
@@ -462,6 +497,10 @@ update_status ModuleRender::PostUpdate(float dt)
 	};
 
 	//------ VERTEX ARRAYS WITH BUFFERS -------
+
+	//glBindTexture(GL_TEXTURE_2D, my_textures[0]);
+	glBindTexture(GL_TEXTURE_2D, my_textures[1]);
+
 	uint my_id[3];
 	glGenBuffers(3, (GLuint *)&(my_id));
 
@@ -489,6 +528,8 @@ update_status ModuleRender::PostUpdate(float dt)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	//------ VERTEX ARRAYS WITHOUT BUFFERS ------
 	/*glEnableClientState(GL_TEXTURE_COORD_ARRAY);

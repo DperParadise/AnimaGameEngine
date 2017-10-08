@@ -109,6 +109,29 @@ bool ModuleRender::Init(Config *config)
 
 	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
 
+
+	//Checkered texture
+	GLubyte checkImage[64][64][4];
+	for (int i = 0; i < 64; i++) {
+		for (int j = 0; j < 64; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
+		}
+	}
+	
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, (GLuint *)&my_texture[0]);
+	glBindTexture(GL_TEXTURE_2D, my_texture[0]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 64, 64, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+
 	return ret;
 }
 
@@ -202,6 +225,9 @@ update_status ModuleRender::PostUpdate(float dt)
 
 	//---------------------------------------------- CUBE DIRECT MODE -----------------------------------------
 	
+	
+	//glBindTexture(GL_TEXTURE_2D, my_texture[0]);
+
 	//glMatrixMode(GL_MODELVIEW);
 	//glPushMatrix();
 	//glTranslatef(-0.5f, -0.5f, -0.5f);
@@ -209,71 +235,72 @@ update_status ModuleRender::PostUpdate(float dt)
 	//	//Back face
 	//	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 	//	
-	//	glVertex3f(0.0f, 0.0f, 0.0f); 
-	//	glVertex3f(1.0f, 1.0f, 0.0f); 
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(0.0f, 0.0f, 0.0f);
+	//	glTexCoord2f( 0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(0.0f, 0.0f);  glVertex3f(1.0f, 0.0f, 0.0f);
 	//	
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(0.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 0.0f);
 
 	//	//Front face
 	//	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 	//
-	//	glVertex3f(0.0f, 0.0f, 1.0f);
-	//	glVertex3f(1.0f, 0.0f, 1.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(0.0f, 0.0f, 1.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(0.0f, 1.0f, 1.0f);
 
 	//	//Left face
 	//	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
-	//	glVertex3f(1.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 0.0f, 1.0f);
 
 	//	//Right face
 	//	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
 	//	
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
-	//	glVertex3f(0.0f, 1.0f, 1.0f);		
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f,1.0f); glVertex3f(0.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(0.0f, 1.0f, 0.0f);
 
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
-	//	glVertex3f(0.0f, 0.0f, 1.0f);		
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(1.1f, 1.1f); glVertex3f(0.0f, 1.0f, 1.0f);
 
 	//	//Upper face
 	//	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
 
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
-	//	glVertex3f(1.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 0.0f);
 
-	//	glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(0.0f, 1.0f, 1.0f);
-	//	glVertex3f(1.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f, 1.0f, 1.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
 
 	//	//Bottom face
 	//	glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
 
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
-	//	glVertex3f(1.0f, 0.0f, 1.0f);
-	//	glVertex3f(0.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex3f(0.0f, 0.0f, 1.0f);
 
-	//	glVertex3f(0.0f, 0.0f, 0.0f);
-	//	glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(1.0f, 0.0f, 1.0f);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 0.0f, 1.0f);
 	//glEnd();
 	//glPopMatrix();
-	
+	//
+	//glBindTexture(GL_TEXTURE_2D, 0);
 	//---------------------------------------------- CUBE WITH VERTEX ARRAY -----------------------------------------
 	GLfloat vertices[] =
 	{
@@ -377,19 +404,81 @@ update_status ModuleRender::PostUpdate(float dt)
 		1.0f, 0.0f, 1.0f
 	};
 
+	GLfloat texture[] =
+	{
+		//Back face
+		1.0f, 0.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+
+		//Front face	
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+
+		0.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+
+		//Left face
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+
+		1.0f, 0.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+
+		//Right face	
+		0.0f, 0.0f,
+		1.0f,1.0f,
+		0.0f, 1.0f,
+
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.1f, 1.1f,
+
+		//Upper face	
+		0.0f, 1.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+
+		//Bottom face	
+		0.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f
+	};
+
 	//------ VERTEX ARRAYS WITH BUFFERS -------
-	/*uint my_id[2];
-	glGenBuffers(2, (GLuint *)&(my_id));
+	uint my_id[3];
+	glGenBuffers(3, (GLuint *)&(my_id));
 
 	glBindBuffer(GL_ARRAY_BUFFER, my_id[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * 6 * 6, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	glBindBuffer(GL_ARRAY_BUFFER, my_id[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * 6 * 6, colour, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(colour), colour, GL_STATIC_DRAW);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, my_id[2]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texture), texture, GL_STATIC_DRAW);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -397,10 +486,13 @@ update_status ModuleRender::PostUpdate(float dt)
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glPopMatrix();
 
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);*/
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	//------ VERTEX ARRAYS WITHOUT BUFFERS ------
+	/*glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, texture);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(3, GL_FLOAT, 0, colour);
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -412,7 +504,7 @@ update_status ModuleRender::PostUpdate(float dt)
 	glPopMatrix();
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);*/
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);

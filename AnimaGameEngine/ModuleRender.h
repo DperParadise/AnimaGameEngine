@@ -18,6 +18,8 @@ private:
 	bool vsync = false;
 	SDL_GLContext gl_context = nullptr;
 
+	uint my_texture[1];
+
 public:
 
 	ModuleRender();

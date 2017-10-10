@@ -23,6 +23,7 @@ private:
 	uint my_textures[2];
 	ILuint image;
 	ILubyte *image_data;
+	uint my_buffers[3];
 
 public:
 

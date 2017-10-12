@@ -5,7 +5,7 @@
 #include "Globals.h"
 #include "libraries\DevIL_Windows_SDK\include\IL\il.h"
 #include <string>
-
+#include "Model.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -24,6 +24,7 @@ private:
 	ILuint image;
 	ILubyte *image_data;
 	uint my_buffers[3];
+	Model batman_model;
 
 public:
 

@@ -11,9 +11,10 @@
 #include <gl/GLU.h>
 #include "Config.h"
 #include "ModuleEditorCamera.h"
-//#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
+#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
 #include "libraries\DevIL_Windows_SDK\include\IL\ilu.h"
 #include "libraries\DevIL_Windows_SDK\include\IL\ilut.h"
+
 
 ModuleRender::ModuleRender()
 {
@@ -104,7 +105,7 @@ bool ModuleRender::Init(Config *config)
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
-	glEnable(GL_CULL_FACE); //If disabled, back faces are visible
+	//glEnable(GL_CULL_FACE); //If disabled, back faces are visible
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
@@ -149,7 +150,7 @@ bool ModuleRender::Init(Config *config)
 
 	ilGenImages(1, &image);
 	ilBindImage(image);
-	ilLoad(IL_PNG, "images/Lenna.png");
+	ilLoad(IL_TGA, "images/Lenna.tga");
 	if (ilGetError() != IL_NO_ERROR)
 		MYLOG(iluErrorString(ilGetError()));
 
@@ -168,7 +169,10 @@ bool ModuleRender::Init(Config *config)
 	iluDeleteImage(image);
 
 	//Generate buffers
-	glGenBuffers(3, (GLuint *)&(my_buffers));
+	//glGenBuffers(3, (GLuint *)&(my_buffers));
+
+	//Load batman model
+	batman_model.Load("models/Batman/Batman.obj");
 
 	return ret;
 }
@@ -340,213 +344,224 @@ update_status ModuleRender::PostUpdate(float dt)
 	//
 	//glBindTexture(GL_TEXTURE_2D, 0);
 	//---------------------------------------------- CUBE WITH VERTEX ARRAY -----------------------------------------
-	GLfloat vertices[] =
-	{
-		0.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f, 
-		1.0f, 0.0f, 0.0f,
+	//GLfloat vertices[] =
+	//{
+	//	0.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f, 
+	//	1.0f, 0.0f, 0.0f,
 
-		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f,
 
-		0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		
-		0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
-		
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
+	//	1.0f, 0.0f, 1.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	
+	//	0.0f, 0.0f, 1.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f,
+	//	
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,
 
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	1.0f, 0.0f, 1.0f,
 
-		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 1.0f,		
-		0.0f, 1.0f, 0.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	0.0f, 1.0f, 1.0f,		
+	//	0.0f, 1.0f, 0.0f,
 
-		0.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f,	
-		0.0f, 1.0f, 1.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	0.0f, 0.0f, 1.0f,	
+	//	0.0f, 1.0f, 1.0f,
 
-		0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	1.0f, 1.0f, 0.0f,
 
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 1.0f,
+	//	1.0f, 1.0f, 1.0f,
 
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
 
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 1.0f
-	};
+	//	0.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 1.0f
+	//};
 
-	GLfloat colour[] =
-	{
-		0.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
+	//GLfloat colour[] =
+	//{
+	//	0.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f,
+	//	1.0f, 0.0f, 0.0f,
 
-		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f,
 
-		0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
+	//	1.0f, 0.0f, 1.0f,
+	//	1.0f, 1.0f, 1.0f,
 
-		0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f,
 
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,
 
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	1.0f, 0.0f, 1.0f,
 
-		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 0.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	0.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 0.0f,
 
-		0.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	0.0f, 0.0f, 1.0f,
+	//	0.0f, 1.0f, 1.0f,
 
-		0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,
+	//	1.0f, 1.0f, 0.0f,
 
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 1.0f,
+	//	1.0f, 1.0f, 1.0f,
 
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
 
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 1.0f
-	};
+	//	0.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 1.0f
+	//};
 
-	GLfloat texture[] =
-	{
-	//Back face
-	1.0f, 1.0f,
-	0.0f, 0.0f,
-	0.0f, 1.0f,
+	//GLfloat texture[] =
+	//{
+	////Back face
+	//1.0f, 1.0f,
+	//0.0f, 0.0f,
+	//0.0f, 1.0f,
 
-	1.0f, 1.0f,
-	1.0f, 0.0f,
-	0.0f, 0.0f,
+	//1.0f, 1.0f,
+	//1.0f, 0.0f,
+	//0.0f, 0.0f,
 
-	//Front face
-	0.0f, 1.0f,
-	1.0f, 1.0f,
-	1.0f, 0.0f,
+	////Front face
+	//0.0f, 1.0f,
+	//1.0f, 1.0f,
+	//1.0f, 0.0f,
 
-	0.0f, 1.0f,
-	1.0f, 0.0f,
-	0.0f, 0.0f,
+	//0.0f, 1.0f,
+	//1.0f, 0.0f,
+	//0.0f, 0.0f,
 
-	//Left face
-	1.0f, 1.0f,
-	1.0f, 0.0f,
-	0.0f, 0.0f,
+	////Left face
+	//1.0f, 1.0f,
+	//1.0f, 0.0f,
+	//0.0f, 0.0f,
 
-	1.0f, 1.0f,
-	0.0f, 0.0f,
-	0.0f, 1.0f,
+	//1.0f, 1.0f,
+	//0.0f, 0.0f,
+	//0.0f, 1.0f,
 
-	//Right face
-	0.0f, 1.0f,
-	1.0f, 0.0f,
-	0.0f, 0.0f,
+	////Right face
+	//0.0f, 1.0f,
+	//1.0f, 0.0f,
+	//0.0f, 0.0f,
 
-	0.0f, 1.0f,
-	1.0f, 1.0f,
-	1.0f, 0.0f,
+	//0.0f, 1.0f,
+	//1.0f, 1.0f,
+	//1.0f, 0.0f,
 
-	//Upper face
-	
-	0.0f, 0.0f,
-	1.0f, 1.0f,
-	1.0f, 0.0f,
+	////Upper face
+	//
+	//0.0f, 0.0f,
+	//1.0f, 1.0f,
+	//1.0f, 0.0f,
 
-	0.0f, 0.0f,
-	0.0f, 1.0f,
-	1.0f, 1.0f,
+	//0.0f, 0.0f,
+	//0.0f, 1.0f,
+	//1.0f, 1.0f,
 
-	//Bottom face
-	0.0f, 1.0f,
-	1.0f, 0.0f,
-	0.0f, 0.0f,
+	////Bottom face
+	//0.0f, 1.0f,
+	//1.0f, 0.0f,
+	//0.0f, 0.0f,
 
-	0.0f, 1.0f,
-	1.0f, 1.0f,
-	1.0f, 0.0f
-	};
+	//0.0f, 1.0f,
+	//1.0f, 1.0f,
+	//1.0f, 0.0f
+	//};
 
 	//------ VERTEX ARRAYS WITH BUFFERS -------
 
 	//glBindTexture(GL_TEXTURE_2D, my_textures[0]); //checkered texture
-	glBindTexture(GL_TEXTURE_2D, my_textures[1]);  //Lenna texture
+	//glBindTexture(GL_TEXTURE_2D, my_textures[1]);  //Lenna texture
 
-	glBindBuffer(GL_ARRAY_BUFFER, my_buffers[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_buffers[0]);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	glBindBuffer(GL_ARRAY_BUFFER, my_buffers[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(colour), colour, GL_STATIC_DRAW);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(3, GL_FLOAT, 0, NULL);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_buffers[1]);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(colour), colour, GL_STATIC_DRAW);
+	//glEnableClientState(GL_COLOR_ARRAY);
+	//glColorPointer(3, GL_FLOAT, 0, NULL);
 
-	glBindBuffer(GL_ARRAY_BUFFER, my_buffers[2]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(texture), texture, GL_STATIC_DRAW);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_buffers[2]);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(texture), texture, GL_STATIC_DRAW);
+	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glTranslatef(-0.5f, -0.5f, -0.5f);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glPopMatrix();
+	//glMatrixMode(GL_MODELVIEW);
+	//glPushMatrix();
+	//glTranslatef(-0.5f, -0.5f, -0.5f);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glPopMatrix();
 
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glDisableClientState(GL_COLOR_ARRAY);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	//------ VERTEX ARRAYS WITHOUT BUFFERS ------
-	/*glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, texture);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(3, GL_FLOAT, 0, colour);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glTranslatef(-0.5f, -0.5f, -0.5f);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glPopMatrix();
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);*/
+	//glBindTexture(GL_TEXTURE_2D, my_textures[0]); //checkered texture
+	//glBindTexture(GL_TEXTURE_2D, my_textures[1]);  //Lenna texture
+
+	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glTexCoordPointer(2, GL_FLOAT, 0, texture);
+	//glEnableClientState(GL_COLOR_ARRAY);
+	//glColorPointer(3, GL_FLOAT, 0, colour);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, 0, vertices);
+	//glMatrixMode(GL_MODELVIEW);
+	//glPushMatrix();
+	//glTranslatef(-0.5f, -0.5f, -0.5f);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glPopMatrix();
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	//glDisableClientState(GL_COLOR_ARRAY);
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+
+	//-------- DRAWING MODEL------------
+	
+	glColor3d(1, 1, 1);
+	batman_model.Draw();
+	
+
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);

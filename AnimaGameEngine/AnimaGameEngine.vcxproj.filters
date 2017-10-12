@@ -12,6 +12,9 @@
     <Filter Include="Main">
       <UniqueIdentifier>{7d9b2eca-d63c-4a07-a35c-0e371ae4ae68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Geometry Load">
+      <UniqueIdentifier>{b4807aa3-3c2e-4f9d-8335-b45f2ea7cbfd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h">
@@ -62,6 +65,9 @@
     <ClInclude Include="ModuleEditorCamera.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Geometry Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -102,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="ModuleEditorCamera.cpp">
       <Filter>CoreModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Geometry Load</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

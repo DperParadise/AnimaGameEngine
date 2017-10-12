@@ -147,6 +147,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="libraries\parson\parson.h" />
     <ClInclude Include="MemLeaks.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleEditorCamera.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="libraries\parson\parson.c" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleEditorCamera.cpp" />
     <ClCompile Include="ModuleInput.cpp" />

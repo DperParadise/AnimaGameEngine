@@ -16,8 +16,8 @@ public:
 	~Model();
 
 	void Load(const char *file);
-	void Clear();
 	void Draw();
+	void Clear();
 
 private:
 	Assimp::Importer importer;

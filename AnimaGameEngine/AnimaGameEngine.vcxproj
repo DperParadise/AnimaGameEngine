@@ -144,7 +144,10 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="Gizmo.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="libraries\parson\parson.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Model.h" />
@@ -163,6 +166,9 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Config.cpp" />
+    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Gizmo.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="libraries\parson\parson.c" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />

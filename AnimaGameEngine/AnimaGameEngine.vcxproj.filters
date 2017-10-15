@@ -15,6 +15,9 @@
     <Filter Include="Geometry Load">
       <UniqueIdentifier>{b4807aa3-3c2e-4f9d-8335-b45f2ea7cbfd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Primitives">
+      <UniqueIdentifier>{11d6e440-4f89-4439-a8f7-0812b2b95c1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h">
@@ -68,6 +71,15 @@
     <ClInclude Include="Model.h">
       <Filter>Geometry Load</Filter>
     </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Gizmo.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -111,6 +123,15 @@
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Geometry Load</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Gizmo.cpp">
+      <Filter>Primitives</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

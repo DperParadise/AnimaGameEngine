@@ -5,7 +5,11 @@
 #include "Globals.h"
 #include "libraries\DevIL_Windows_SDK\include\IL\il.h"
 #include <string>
+#include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "Model.h"
+#include "Cube.h"
+#include "Grid.h"
+#include "Gizmo.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -20,11 +24,14 @@ private:
 	bool vsync = false;
 	SDL_GLContext gl_context = nullptr;
 
-	uint my_textures[2];
+	GLuint my_textures[2];
 	ILuint image;
 	ILubyte *image_data;
-	uint my_buffers[3];
+	GLuint my_buffers[3];
 	Model batman_model;
+	Cube cube_primitive;
+	Grid grid_primitive;
+	Gizmo gizmo_primitive;
 
 public:
 

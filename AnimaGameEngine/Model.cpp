@@ -12,7 +12,7 @@ Model::~Model() {}
 void Model::Load(const char *file)
 {
 	scene = importer.ReadFile(file, aiPostProcessSteps::aiProcess_PreTransformVertices | aiPostProcessSteps::aiProcess_FlipUVs/*aiProcessPreset_TargetRealtime_Fast*/);
-	
+
 	textures = new GLuint[scene->mNumMeshes];
 	images = new ILuint[scene->mNumMeshes];
 	image_data = new ILubyte*[scene->mNumMeshes];
@@ -98,27 +98,9 @@ void Model::Load(const char *file)
 
 		uv_array[i] -= mesh->mNumFaces * 3 * 2;
 		normal_array[i] -= mesh->mNumFaces * 3 * 3;
-		vertex_array[i] -= mesh->mNumFaces * 3 * 3;
+		vertex_array[i] -= mesh->mNumFaces * 3 * 3;	
 	}
 
-}
-
-void Model::Clear()
-{
-	for (uint i = 0; i < scene->mNumMeshes; i++)
-	{
-		RELEASE_ARRAY(vertex_array[i]);
-		RELEASE_ARRAY(normal_array[i]);
-		RELEASE_ARRAY(uv_array[i]);
-		RELEASE_ARRAY(image_data[i]);
-	}
-	RELEASE_ARRAY(vertex_array);
-	RELEASE_ARRAY(normal_array);
-	RELEASE_ARRAY(uv_array);
-	RELEASE_ARRAY(image_data);
-
-	RELEASE_ARRAY(textures);
-	RELEASE_ARRAY(images);
 }
 
 void Model::Draw()
@@ -130,9 +112,9 @@ void Model::Draw()
 	for (uint i = 0; i < scene->mNumMeshes; i++)
 	{
 		glBindTexture(GL_TEXTURE_2D, textures[i]);
-
-		glVertexPointer(3, GL_FLOAT, 0, vertex_array[i]);
-		glNormalPointer(GL_FLOAT, 0, normal_array[i]);
+	
+		glVertexPointer(3, GL_FLOAT, 0, vertex_array[i]);	
+		glNormalPointer(GL_FLOAT, 0, normal_array[i]);		
 		glTexCoordPointer(2, GL_FLOAT, 0, uv_array[i]);
 
 		uint num_verts = scene->mMeshes[i]->mNumFaces * 3;
@@ -143,4 +125,21 @@ void Model::Draw()
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Model::Clear()
+{
+	for (uint i = 0; i < scene->mNumMeshes; i++)
+	{
+		RELEASE_ARRAY(vertex_array[i]);
+		RELEASE_ARRAY(normal_array[i]);
+		RELEASE_ARRAY(uv_array[i]);
+	}
+	RELEASE_ARRAY(vertex_array);
+	RELEASE_ARRAY(normal_array);
+	RELEASE_ARRAY(uv_array);
+	RELEASE_ARRAY(image_data);
+
+	RELEASE_ARRAY(textures);
+	RELEASE_ARRAY(images);
 }

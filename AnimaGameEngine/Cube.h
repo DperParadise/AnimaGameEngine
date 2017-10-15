@@ -5,8 +5,8 @@
 #include "libraries\DevIL_Windows_SDK\include\IL\il.h"
 
 
-#define NUM_VERTICES 6*2*3*3 
-#define NUM_COORD_TEXTURE 6*2*3*2
+#define NUM_VERTICES_COORD 6*2*3*3 
+#define NUM_TEXTURE_COORD 6*2*3*2
 #define NUM_TEXTURES 2
 #define TEXTURE_WIDTH 64
 #define TEXTURE_HEIGHT 64
@@ -30,7 +30,7 @@ private:
 	ILuint image;
 	ILubyte *image_data = nullptr;
 
-	GLfloat vertices[NUM_VERTICES] = {
+	GLfloat vertices[NUM_VERTICES_COORD] = {
 	0.0f, 0.0f, 0.0f,
 	1.0f, 1.0f, 0.0f,
 	1.0f, 0.0f, 0.0f,
@@ -80,7 +80,7 @@ private:
 	1.0f, 0.0f, 1.0f
 };
 
-	GLfloat colour[NUM_VERTICES] = {
+	GLfloat colour[NUM_VERTICES_COORD] = {
 	0.0f, 0.0f, 0.0f,
 	1.0f, 1.0f, 0.0f,
 	1.0f, 0.0f, 0.0f,
@@ -130,7 +130,7 @@ private:
 	1.0f, 0.0f, 1.0f
 };
 
-	GLfloat texture[NUM_COORD_TEXTURE] = {
+	GLfloat texture[NUM_TEXTURE_COORD] = {
 	//Back face
 	1.0f, 1.0f,
 	0.0f, 0.0f,

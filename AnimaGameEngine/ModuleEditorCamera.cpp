@@ -165,7 +165,7 @@ update_status ModuleEditorCamera::Update(float dt)
 	if (App->input->IsScrollingUp())
 	{
 		float3 tmp = frustum.Pos();
-		tmp += frustum.Front() * camera_speed_fast * dt;
+		tmp += frustum.Front() * camera_wheel_speed * dt;
 		SetPosition(tmp);
 	}
 
@@ -173,7 +173,7 @@ update_status ModuleEditorCamera::Update(float dt)
 	if (App->input->IsScrollingDown())
 	{
 		float3 tmp = frustum.Pos();
-		tmp -= frustum.Front() * camera_speed_fast * dt;
+		tmp -= frustum.Front() * camera_wheel_speed * dt;
 		SetPosition(tmp);
 	}
 

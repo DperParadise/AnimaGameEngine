@@ -106,8 +106,6 @@ bool ModuleRender::Init(Config *config)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
 	//glEnable(GL_CULL_FACE); //If disabled, back faces are visible
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
 
 	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
@@ -125,9 +123,15 @@ bool ModuleRender::Init(Config *config)
 	ilutRenderer(ILUT_OPENGL);	if (ilGetError() != IL_NO_ERROR)
 		MYLOG(iluErrorString(ilGetError()));
 
-	//Load batman model
-	batman_model.Load("models/Batman/Batman.obj");
+	//Load model
+	imported_model.Load("models/Batman/Batman.obj");
 	cube_primitive.Init();
+
+
+	//--------------- LIGHTS ----------------------
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+
 
 	return ret;
 }
@@ -153,25 +157,12 @@ update_status ModuleRender::PostUpdate(float dt)
 	grid_primitive.Draw();
 	gizmo_primitive.Draw();
 
-	glColor3d(1, 1, 1);
-	cube_primitive.Draw();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glTranslatef(10.0f, 5.0f, 5.0f);
-	glColor3d(1, 1, 1);
-	cube_primitive.Draw();
-	glPopMatrix();
+	/*glColor3d(1, 1, 1);
+	cube_primitive.Draw();*/
 
 	glColor3d(1, 1, 1);
-	batman_model.Draw();
+	imported_model.Draw();
 
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glTranslatef(10.0f, 0.0f, 0.0f);
-	glColor3d(1, 1, 1);
-	batman_model.Draw();
-	glPopMatrix();
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);
@@ -186,7 +177,7 @@ bool ModuleRender::CleanUp()
 {
 	MYLOG("Destroying renderer");
 
-	batman_model.Clear();
+	imported_model.Clear();
 
 	//Destroy OpenGL context
 	SDL_GL_DeleteContext(gl_context);

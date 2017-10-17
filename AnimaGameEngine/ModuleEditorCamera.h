@@ -41,8 +41,8 @@ private:
 	float3 position = float3(0.0f, 5.0f, 10.0f);
 	float3 front_vect = float3(0.0f, 0.0f, -1.0f);
 	float3 up_vect = float3(0.0f, 1.0f, 0.0f);
-	float near_plane = 1.0f;
-	float far_plane = 100.0f;
+	float near_plane = 0.1f;
+	float far_plane = 1000.0f;
 	float vertical_fov = 60.0f;
 	float horizontal_fov;
 	int width = 1024;
@@ -50,7 +50,7 @@ private:
 	float aspect_ratio = 1.3333f;
 	float camera_speed = 30.0f;
 	float camera_speed_fast = 60.0f;
-
+	float camera_wheel_speed = 1.0f;
 };
 
 

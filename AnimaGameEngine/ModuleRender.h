@@ -28,7 +28,7 @@ private:
 	ILuint image;
 	ILubyte *image_data;
 	GLuint my_buffers[3];
-	Model batman_model;
+	Model imported_model;
 	Cube cube_primitive;
 	Grid grid_primitive;
 	Gizmo gizmo_primitive;

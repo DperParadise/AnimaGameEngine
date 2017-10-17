@@ -80,6 +80,9 @@
     <ClInclude Include="Gizmo.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Geometry Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -132,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="Gizmo.cpp">
       <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Geometry Load</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

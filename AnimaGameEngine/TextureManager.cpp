@@ -8,7 +8,7 @@ unsigned TextureManager::Load(const aiString& file)
 	
 
 	
-
+	return 1;
 }
 
 void TextureManager::Clear()

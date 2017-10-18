@@ -4,7 +4,6 @@
 #include <cstring>
 #include <map>
 #include "libraries/assimp/include/assimp/postprocess.h"
-#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
 
 class TextureManager
 {
@@ -16,19 +15,18 @@ class TextureManager
 		}
 	};
 
-	typedef std::map<aiString, unsigned, LessString> textureList;
+	typedef std::map<aiString, unsigned, LessString> TextureList;
 
-	textureList textures;
-	static TextureManager *instance;
-	ILuint image;
-	ILubyte *image_data = nullptr;
-
+	TextureList textures;
+	static std::auto_ptr<TextureManager> instance;
+	
 
 public:
 	TextureManager();
 	~TextureManager();
 
 	unsigned Load(const aiString& file);
+	unsigned TextureManager::ForceLoad(const aiString& file);
 	void Clear();
 
 	static TextureManager *GetInstance();

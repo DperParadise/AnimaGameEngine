@@ -159,6 +159,7 @@
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="SpherePrimitive.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TimerMicros.h" />
     <ClInclude Include="TimerMillis.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="SpherePrimitive.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TimerMicros.cpp" />
     <ClCompile Include="TimerMillis.cpp" />

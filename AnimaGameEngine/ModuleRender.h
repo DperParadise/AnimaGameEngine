@@ -10,6 +10,7 @@
 #include "Cube.h"
 #include "Grid.h"
 #include "Gizmo.h"
+#include "SpherePrimitive.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -32,6 +33,7 @@ private:
 	Cube cube_primitive;
 	Grid grid_primitive;
 	Gizmo gizmo_primitive;
+	SpherePrimitive sphere_primitive;
 
 public:
 

@@ -83,6 +83,9 @@
     <ClInclude Include="TextureManager.h">
       <Filter>Geometry Load</Filter>
     </ClInclude>
+    <ClInclude Include="SpherePrimitive.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -138,6 +141,9 @@
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Geometry Load</Filter>
+    </ClCompile>
+    <ClCompile Include="SpherePrimitive.cpp">
+      <Filter>Primitives</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

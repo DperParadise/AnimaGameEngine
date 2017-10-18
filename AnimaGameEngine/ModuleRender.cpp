@@ -7,8 +7,6 @@
 #include "libraries/parson/parson.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "libraries/SDL/include/SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
 #include "Config.h"
 #include "ModuleEditorCamera.h"
 #include "libraries\DevIL_Windows_SDK\include\IL\il.h"
@@ -132,6 +130,9 @@ bool ModuleRender::Init(Config *config)
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 
+	GLfloat amb[] = {0.5f, 0.5f, 0.5f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+
 
 	return ret;
 }
@@ -157,12 +158,8 @@ update_status ModuleRender::PostUpdate(float dt)
 	grid_primitive.Draw();
 	gizmo_primitive.Draw();
 
-	/*glColor3d(1, 1, 1);
-	cube_primitive.Draw();*/
-
 	glColor3d(1, 1, 1);
 	imported_model.Draw();
-
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);

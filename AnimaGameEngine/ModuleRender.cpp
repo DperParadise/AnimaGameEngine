@@ -127,12 +127,22 @@ bool ModuleRender::Init(Config *config)
 
 
 	//--------------- LIGHTS ----------------------
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
+	
+	float ambient[] = { 0.0f, 0.0f, 0.0f, 0.1f };
+	float diffuse[] = { 1.0f, 1.0f, 1.0f, 0.1f };
+	float specular[] = { 1.0f, 1.0f, 1.0f, 0.1f };
+	float position[] = { 0.0f, 1.0f, 1.0f, 0.0f };
 
-	GLfloat amb[] = {0.5f, 0.5f, 0.5f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+	GLfloat amb[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
 
 	return ret;
 }
@@ -155,8 +165,10 @@ update_status ModuleRender::PostUpdate(float dt)
 {	
 	//-------- DRAWING GEOMETRY------------
 	
+	glEnable(GL_COLOR_MATERIAL);
 	grid_primitive.Draw();
 	gizmo_primitive.Draw();
+	glDisable(GL_COLOR_MATERIAL);
 
 	glColor3d(1, 1, 1);
 	imported_model.Draw();

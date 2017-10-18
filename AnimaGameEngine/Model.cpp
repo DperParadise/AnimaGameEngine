@@ -23,10 +23,45 @@ void Model::Load(const char *file)
 	root_path = root_path.substr(0, found);	
 	root_path.push_back(separator);
 
+	
 	for (uint i = 0; i < scene->mNumMeshes; i++)
 	{
+		//load materials 	
+		Material material;
+		aiColor3D ambient;
+		aiColor3D diffuse;
+		aiColor3D specular;
+		float shininess;
+
 		uint mat_index = scene->mMeshes[i]->mMaterialIndex;	
-		if (scene->mMaterials[mat_index]->GetTextureCount(aiTextureType::aiTextureType_DIFFUSE) != 0)
+		aiMaterial *mat = scene->mMaterials[mat_index];
+		if (mat->Get(AI_MATKEY_COLOR_AMBIENT, ambient) == AI_SUCCESS)
+		{
+			material.ambient[0] = ambient.r;
+			material.ambient[1] = ambient.g;
+			material.ambient[2] = ambient.b;
+		}
+		if (mat->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse) == AI_SUCCESS)
+		{
+			material.diffuse[0] = diffuse.r;
+			material.diffuse[1] = diffuse.g;
+			material.diffuse[2] = diffuse.b;
+		}
+		if (mat->Get(AI_MATKEY_COLOR_SPECULAR, specular) == AI_SUCCESS)
+		{
+			material.specular[0] = specular.r;
+			material.specular[1] = specular.g;
+			material.specular[2] = specular.b;
+		}
+		if (mat->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS)
+		{
+			//material.shininess = shininess;
+		}
+
+		materials.push_back(material);
+
+		//load textures
+		if (mat->GetTextureCount(aiTextureType::aiTextureType_DIFFUSE) != 0)
 		{
 			num_textures++;
 			scene->mMaterials[mat_index]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &texture_file);
@@ -113,8 +148,13 @@ void Model::Draw()
 		}
 
 		glVertexPointer(3, GL_FLOAT, 0, vertex_array[i]);	
-		glNormalPointer(GL_FLOAT, 0, normal_array[i]);		
-		
+		glNormalPointer(GL_FLOAT, 0, normal_array[i]);
+
+		glMaterialfv(GL_FRONT, GL_AMBIENT, materials[i].ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[i].diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, materials[i].specular);
+		glMaterialf(GL_FRONT, GL_SHININESS, materials[i].shininess);
+
 		uint num_verts = scene->mMeshes[i]->mNumFaces * 3;
 		glDrawArrays(GL_TRIANGLES, 0, num_verts);	
 	}

@@ -122,7 +122,7 @@ bool ModuleRender::Init(Config *config)
 		MYLOG(iluErrorString(ilGetError()));
 
 	//Load model
-	imported_model.Load("models/Batman/Batman.obj");
+	imported_model.Load("models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
 	cube_primitive.Init();
 
 

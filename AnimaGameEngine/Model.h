@@ -5,6 +5,8 @@
 #include "libraries/assimp/include/assimp/Importer.hpp"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "libraries\DevIL_Windows_SDK\include\IL\il.h"
+#include "TextureManager.h"
+#include <string>
 
 class Model
 {
@@ -25,9 +27,9 @@ private:
 	float **normal_array = nullptr;
 	float **uv_array = nullptr;
 	
-	GLuint *textures = nullptr;
-	ILuint *images = nullptr;
-	ILubyte **image_data = nullptr;
+	TextureManager *textureManager = nullptr;
+	std::string root_path;
+	unsigned int num_textures = 0;
 };
 
 #endif

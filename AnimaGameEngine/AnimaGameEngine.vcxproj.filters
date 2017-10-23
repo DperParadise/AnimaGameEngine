@@ -18,6 +18,9 @@
     <Filter Include="Primitives">
       <UniqueIdentifier>{11d6e440-4f89-4439-a8f7-0812b2b95c1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject and Components">
+      <UniqueIdentifier>{145fcb29-496e-49bd-8c38-7e67bddb3677}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h">
@@ -86,6 +89,30 @@
     <ClInclude Include="SpherePrimitive.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentLoadedMesh.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentCubeMesh.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentGridMesh.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentGizmoMesh.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentSphereMesh.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -144,6 +171,30 @@
     </ClCompile>
     <ClCompile Include="SpherePrimitive.cpp">
       <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentLoadedMesh.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCubeMesh.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentGridMesh.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentGizmoMesh.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentSphereMesh.cpp">
+      <Filter>GameObject and Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

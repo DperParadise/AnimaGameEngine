@@ -1,6 +1,6 @@
 #include "Cube.h"
 #include "Globals.h"
-#include "libraries\DevIL_Windows_SDK\include\IL\ilu.h"
+#include "libraries/DevIL_Windows_SDK/include/IL/ilu.h"
 
 Cube::Cube(){}
 Cube::~Cube() {}
@@ -47,6 +47,8 @@ void Cube::Init()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	iluDeleteImage(image);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Cube::Draw()

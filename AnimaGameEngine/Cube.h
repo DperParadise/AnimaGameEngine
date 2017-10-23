@@ -2,7 +2,7 @@
 #define __CUBE_H__
 
 #include "libraries/glew-2.0.0/include/GL/glew.h"
-#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
+#include "libraries/DevIL_Windows_SDK/include/IL/il.h"
 
 
 #define NUM_VERTICES_COORD 6*2*3*3 

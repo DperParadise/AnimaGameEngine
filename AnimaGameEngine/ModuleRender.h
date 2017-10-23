@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
+#include "libraries/DevIL_Windows_SDK/include/IL/il.h"
 #include <string>
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "Model.h"
@@ -11,6 +11,8 @@
 #include "Grid.h"
 #include "Gizmo.h"
 #include "SpherePrimitive.h"
+
+#include "GameObject.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -34,6 +36,12 @@ private:
 	Grid grid_primitive;
 	Gizmo gizmo_primitive;
 	SpherePrimitive sphere_primitive;
+
+	//test gameobjects
+	GameObject *grid_GO = nullptr;
+	GameObject *cube_GO = nullptr;
+	GameObject *gizmo_GO = nullptr;
+	GameObject *sphere_GO = nullptr;
 
 public:
 

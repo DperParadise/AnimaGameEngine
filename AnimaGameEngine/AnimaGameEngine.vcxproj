@@ -143,8 +143,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentCubeMesh.h" />
+    <ClInclude Include="ComponentGizmoMesh.h" />
+    <ClInclude Include="ComponentGridMesh.h" />
+    <ClInclude Include="ComponentLoadedMesh.h" />
+    <ClInclude Include="ComponentSphereMesh.h" />
+    <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gizmo.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Grid.h" />
@@ -167,8 +175,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentCubeMesh.cpp" />
+    <ClCompile Include="ComponentGizmoMesh.cpp" />
+    <ClCompile Include="ComponentGridMesh.cpp" />
+    <ClCompile Include="ComponentLoadedMesh.cpp" />
+    <ClCompile Include="ComponentSphereMesh.cpp" />
+    <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gizmo.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="libraries\parson\parson.c" />

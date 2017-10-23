@@ -9,10 +9,14 @@
 #include "libraries/SDL/include/SDL_opengl.h"
 #include "Config.h"
 #include "ModuleEditorCamera.h"
-#include "libraries\DevIL_Windows_SDK\include\IL\il.h"
-#include "libraries\DevIL_Windows_SDK\include\IL\ilu.h"
-#include "libraries\DevIL_Windows_SDK\include\IL\ilut.h"
+#include "libraries/DevIL_Windows_SDK/include/IL/il.h"
+#include "libraries/DevIL_Windows_SDK/include/IL/ilu.h"
+#include "libraries/DevIL_Windows_SDK/include/IL/ilut.h"
 
+//test gameobjects
+#include "GameObject.h"
+#include "ComponentCubeMesh.h"
+#include "ComponentTransform.h"
 
 ModuleRender::ModuleRender()
 {
@@ -122,8 +126,8 @@ bool ModuleRender::Init(Config *config)
 		MYLOG(iluErrorString(ilGetError()));
 
 	//Load model
-	imported_model.Load("models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
-	cube_primitive.Init();
+	//imported_model.Load("models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
+	//cube_primitive.Init();
 
 
 	//--------------- LIGHTS ----------------------
@@ -143,6 +147,25 @@ bool ModuleRender::Init(Config *config)
 
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
+
+
+	//test gameObjects
+	grid_GO = new GameObject("grid primitive");
+	grid_GO->CreateComponent(component_type::TRANSFORM);
+	grid_GO->CreateComponent(component_type::GRID_MESH);
+
+	cube_GO = new GameObject("cube primitive");
+	cube_GO->CreateComponent(component_type::TRANSFORM);
+	cube_GO->CreateComponent(component_type::CUBE_MESH);
+
+	gizmo_GO = new GameObject("gizmo");
+	gizmo_GO->CreateComponent(component_type::TRANSFORM);
+	gizmo_GO->CreateComponent(component_type::GIZMO_MESH);
+
+	sphere_GO = new GameObject("sphere primitive");
+	sphere_GO->CreateComponent(component_type::TRANSFORM);
+	sphere_GO->CreateComponent(component_type::SPHERE_MESH);
+
 
 	return ret;
 }
@@ -164,14 +187,18 @@ update_status ModuleRender::Update(float dt)
 update_status ModuleRender::PostUpdate(float dt)
 {	
 	//-------- DRAWING GEOMETRY------------
-	
+	//glColor3d(1, 1, 1);
 	glEnable(GL_COLOR_MATERIAL);
-	grid_primitive.Draw();
-	gizmo_primitive.Draw();
-	glDisable(GL_COLOR_MATERIAL);
+	//grid_primitive.Draw();
+	//gizmo_primitive.Draw();
+	//glDisable(GL_COLOR_MATERIAL);
 
-	glColor3d(1, 1, 1);
-	imported_model.Draw();
+	//imported_model.Draw();
+	
+	grid_GO->Update();
+	gizmo_GO->Update();
+	//cube_GO->Update();
+	sphere_GO->Update();
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);
@@ -186,7 +213,7 @@ bool ModuleRender::CleanUp()
 {
 	MYLOG("Destroying renderer");
 
-	imported_model.Clear();
+	//imported_model.Clear();
 
 	//Destroy OpenGL context
 	SDL_GL_DeleteContext(gl_context);

@@ -16,12 +16,15 @@ ComponentSphereMesh::~ComponentSphereMesh()
 
 void ComponentSphereMesh::Update()
 {
-	aiVector3D position;
+	aiVector3D position = aiVector3D(0.0f, 0.0f, 0.0f);
 
 	for (std::vector<Component*>::iterator it = owner_go->components.begin(); it != owner_go->components.end(); it++)
 	{
 		if ((*it)->type == component_type::TRANSFORM)
+		{
 			position = ((ComponentTransform*)(*it))->position;
+			break;
+		}
 	}
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();

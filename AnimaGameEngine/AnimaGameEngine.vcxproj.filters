@@ -113,6 +113,9 @@
     <ClInclude Include="ComponentSphereMesh.h">
       <Filter>GameObject and Components</Filter>
     </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>Geometry Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -195,6 +198,9 @@
     </ClCompile>
     <ClCompile Include="ComponentSphereMesh.cpp">
       <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Importer.cpp">
+      <Filter>Geometry Load</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

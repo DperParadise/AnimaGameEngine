@@ -5,6 +5,7 @@
 #include "ComponentGridMesh.h"
 #include "ComponentGizmoMesh.h"
 #include "ComponentSphereMesh.h"
+#include "ComponentLoadedMesh.h"
 
 GameObject::GameObject(const std::string &name) : name(name) {}
 
@@ -25,7 +26,7 @@ void GameObject::Update()
 	}
 }
 
-Component *GameObject::CreateComponent(component_type type)
+Component *GameObject::CreateComponent(component_type type, const char *model_file)
 {
 	Component *comp = nullptr;
 	switch (type)
@@ -55,7 +56,9 @@ Component *GameObject::CreateComponent(component_type type)
 		components.push_back(comp);
 		break;
 
-	case component_type::LOADED_MESH:		
+	case component_type::LOADED_MESH:
+		comp = new ComponentLoadedMesh(model_file, component_type::LOADED_MESH, true, this);
+		components.push_back(comp);
 		break;
 
 	case component_type::MATERIAL:

@@ -42,6 +42,7 @@ private:
 	GameObject *cube_GO = nullptr;
 	GameObject *gizmo_GO = nullptr;
 	GameObject *sphere_GO = nullptr;
+	GameObject *loaded_mesh_GO = nullptr;
 
 public:
 

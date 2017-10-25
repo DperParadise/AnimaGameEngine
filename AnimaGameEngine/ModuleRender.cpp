@@ -17,15 +17,12 @@
 #include "GameObject.h"
 #include "ComponentCubeMesh.h"
 #include "ComponentTransform.h"
+#include "ComponentLoadedMesh.h"
 
-ModuleRender::ModuleRender()
-{
-	
-}
+ModuleRender::ModuleRender(){}
 
 // Destructor
-ModuleRender::~ModuleRender()
-{}
+ModuleRender::~ModuleRender(){}
 
 // Called before render is available
 bool ModuleRender::Init(Config *config)
@@ -166,6 +163,9 @@ bool ModuleRender::Init(Config *config)
 	sphere_GO->CreateComponent(component_type::TRANSFORM);
 	sphere_GO->CreateComponent(component_type::SPHERE_MESH);
 
+	loaded_mesh_GO = new GameObject("loaded model");
+	loaded_mesh_GO-> CreateComponent(component_type::TRANSFORM);
+	loaded_mesh_GO->CreateComponent(component_type::LOADED_MESH, "models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
 
 	return ret;
 }
@@ -196,9 +196,15 @@ update_status ModuleRender::PostUpdate(float dt)
 	//imported_model.Draw();
 	
 	grid_GO->Update();
+	glColor3d(1, 1, 1);
+
 	gizmo_GO->Update();
+	glColor3d(1, 1, 1);
+
 	//cube_GO->Update();
-	sphere_GO->Update();
+	//sphere_GO->Update();
+	loaded_mesh_GO->Update();
+	glColor3d(1, 1, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);

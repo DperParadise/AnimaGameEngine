@@ -11,12 +11,15 @@ ComponentCubeMesh::~ComponentCubeMesh() {}
 void ComponentCubeMesh::Update()
 {
 	//draw the mesh
-	aiVector3D position;
+	aiVector3D position = aiVector3D(0.0f, 0.0f, 0.0f);
 
 	for (std::vector<Component*>::iterator it = owner_go->components.begin(); it != owner_go->components.end(); it++)
 	{
 		if ((*it)->type == component_type::TRANSFORM)
-			position = ((ComponentTransform*)(*it))->position;	
+		{
+			position = ((ComponentTransform*)(*it))->position;
+			break;
+		}
 	}
 
 	glColor4f(0.5f, 0.5f, 0.5f, 1.0f);

@@ -156,6 +156,7 @@
     <ClInclude Include="Gizmo.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Importer.h" />
     <ClInclude Include="libraries\parson\parson.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Model.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gizmo.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Importer.cpp" />
     <ClCompile Include="libraries\parson\parson.c" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />

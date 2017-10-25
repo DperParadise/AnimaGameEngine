@@ -12,7 +12,7 @@ public:
 	~GameObject();
 
 	void Update();
-	Component* CreateComponent(component_type type);
+	Component* CreateComponent(component_type type, const char *model_file = '\0');
 
 	bool active = true;
 	std::string name;

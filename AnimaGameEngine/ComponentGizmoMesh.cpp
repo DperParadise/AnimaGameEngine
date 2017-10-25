@@ -11,12 +11,15 @@ ComponentGizmoMesh::~ComponentGizmoMesh() {}
 
 void ComponentGizmoMesh::Update()
 {
-	aiVector3D position;
+	aiVector3D position = aiVector3D(0.0f, 0.0f, 0.0f);
 
 	for (std::vector<Component*>::iterator it = owner_go->components.begin(); it != owner_go->components.end(); it++)
 	{
 		if ((*it)->type == component_type::TRANSFORM)
+		{
 			position = ((ComponentTransform*)(*it))->position;
+			break;
+		}
 	}
 
 	glMatrixMode(GL_MODELVIEW);
@@ -57,7 +60,7 @@ void ComponentGizmoMesh::Update()
 	glVertex3f(0.0f, 1.30f, 0.0f);
 	glVertex3f(0.0f, 1.05f, 0.0f);
 
-	glColor3f(0.0f, 0.0f, 3.0);
+	glColor3f(0.0f, 0.0f, 3.0f);
 	//axis Z
 	glVertex3i(0, 0, 0);
 	glVertex3i(0, 0, 1);

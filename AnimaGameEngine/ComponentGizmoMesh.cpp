@@ -26,6 +26,7 @@ void ComponentGizmoMesh::Update()
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
 
+	glEnable(GL_COLOR_MATERIAL);
 	glLineWidth(2.0f);
 	glBegin(GL_LINES);
 	glColor3f(3.0f, 0.0f, 0.0f);
@@ -78,6 +79,8 @@ void ComponentGizmoMesh::Update()
 	glVertex3f(0.25f, -0.25f, 1.25f);
 
 	glEnd();
+
+	glDisable(GL_COLOR_MATERIAL);
 
 	glPopMatrix();
 }

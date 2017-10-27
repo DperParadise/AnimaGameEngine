@@ -22,6 +22,8 @@ void ComponentCubeMesh::Update()
 		}
 	}
 
+	glEnable(GL_COLOR_MATERIAL);
+	
 	glColor4f(0.5f, 0.5f, 0.5f, 1.0f);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
@@ -32,6 +34,8 @@ void ComponentCubeMesh::Update()
 	glDrawArrays(GL_TRIANGLES, 0, NUM_VERT);
 	glPopMatrix();
 	glDisableClientState(GL_VERTEX_ARRAY);
+	
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 void ComponentCubeMesh::Enable()

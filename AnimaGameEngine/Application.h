@@ -3,16 +3,18 @@
 
 #include<list>
 #include "Globals.h"
-#include "Module.h"
 #include "TimerMillis.h"
 #include "TimerMicros.h"
 #include <string>
+
+class Module;
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
 class ModuleEditorCamera;
+class ModuleScene;
 
 class Application
 {
@@ -31,7 +33,7 @@ public:
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleEditorCamera* module_editor_camera;
-
+	ModuleScene* scene;
 	//------------------------------------------------- TIME CONTROL -----------------------------------------
 	TimerMillis timerMillis;
 	TimerMillis timerMillis_accumulated;

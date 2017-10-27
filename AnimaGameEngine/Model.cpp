@@ -1,7 +1,6 @@
 #include "Model.h"
 #include "libraries/assimp/include/assimp/postprocess.h"
 #include "Globals.h"
-#include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "libraries/DevIL_Windows_SDK/include/IL/il.h"
 #include "libraries/DevIL_Windows_SDK/include/IL/ilu.h"
 

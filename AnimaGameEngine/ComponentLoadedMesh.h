@@ -19,6 +19,8 @@ public:
 private:
 	const aiScene *scene = nullptr;
 	Importer *importer = nullptr;
+	unsigned int num_meshes = 0;
+	unsigned int *num_vertices = nullptr;
 	float **vertex_array = nullptr;
 	float **normal_array = nullptr;
 

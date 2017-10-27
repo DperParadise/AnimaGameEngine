@@ -6,6 +6,7 @@
 #include "ComponentGizmoMesh.h"
 #include "ComponentSphereMesh.h"
 #include "ComponentLoadedMesh.h"
+#include "ComponentMaterial.h"
 
 GameObject::GameObject(const std::string &name) : name(name) {}
 
@@ -62,6 +63,8 @@ Component *GameObject::CreateComponent(component_type type, const char *model_fi
 		break;
 
 	case component_type::MATERIAL:
+		comp = new ComponentMaterial(component_type::MATERIAL, true, this, model_file);
+		components.push_back(comp);
 		break;
 	}
 

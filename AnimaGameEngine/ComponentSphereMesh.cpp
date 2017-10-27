@@ -28,10 +28,14 @@ void ComponentSphereMesh::Update()
 	}
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
+
+	glEnable(GL_COLOR_MATERIAL);
 	glTranslatef(position.x, position.y, position.z);
 	glRotated(90, 1, 0, 0);
 	gluQuadricDrawStyle(quadric, GLU_LINE);
 	gluSphere(quadric, radius, slices, stacks);
+	glDisable(GL_COLOR_MATERIAL);
+
 	glPopMatrix();
 }
 

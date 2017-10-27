@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
@@ -6,7 +7,7 @@
 #include "ModuleAudio.h"
 #include "Config.h"
 #include "ModuleEditorCamera.h"
-
+#include "ModuleScene.h"
 
 #ifdef _MSC_VER
 	#ifdef _DEBUG 
@@ -49,11 +50,12 @@ Application::Application()
 	// Order matters: they will init/start/pre/update/post in this order
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
-	modules.push_back(module_editor_camera = new ModuleEditorCamera());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(audio = new ModuleAudio());
-	
+
+	modules.push_back(module_editor_camera = new ModuleEditorCamera());
+	modules.push_back(scene = new ModuleScene());
 	
 }
 

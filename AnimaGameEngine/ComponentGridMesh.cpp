@@ -29,6 +29,9 @@ void ComponentGridMesh::Update()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
+
+	glEnable(GL_COLOR_MATERIAL);
+	
 	glBegin(GL_LINES);
 	glColor3f(1.0f, 1.0f, 1.0f);
 	for (int z = -100; z <= 100; z += 1)
@@ -42,6 +45,9 @@ void ComponentGridMesh::Update()
 		glVertex3i(x, 0, 100);
 	}
 	glEnd();
+
+	glDisable(GL_COLOR_MATERIAL);
+
 	glPopMatrix();
 }
 

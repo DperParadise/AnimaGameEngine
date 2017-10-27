@@ -54,6 +54,7 @@ void ComponentLoadedMesh::Update()
 
 	//glEnable(GL_COLOR_MATERIAL); //test with no material
 	
+	int mat_count = 0;
 	for (uint i = 0; i < num_meshes; i++)
 	{
 		glVertexPointer(3, GL_FLOAT, 0, vertex_array[i]);
@@ -76,6 +77,13 @@ void ComponentLoadedMesh::Update()
 		glMaterialfv(GL_FRONT, GL_SPECULAR, mat.specular);
 		glMaterialf(GL_FRONT, GL_SHININESS, mat.shininess);
 		glDrawArrays(GL_TRIANGLES, 0, num_verts);
+
+		MYLOG("%d  amb = (%f, %f, %f)   diff = (%f,%f,%f)   spec = (%f,%f,%f)   shin = %f", mat_count, mat.ambient[0], mat.ambient[1], mat.ambient[2],
+			mat.diffuse[0], mat.diffuse[1], mat.diffuse[2],
+			mat.specular[0], mat.specular[1], mat.specular[2],
+			mat.shininess);
+
+		mat_count++;
 	}
 
 	

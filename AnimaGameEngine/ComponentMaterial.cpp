@@ -95,8 +95,6 @@ void ComponentMaterial::LoadMaterials(const char * file)
 		mat_count++;
 	}
 	MYLOG("Loaded %d materials", mat_count);
-
-	importer->GetInstance()->FreeScene();
 }
 
 

@@ -158,6 +158,4 @@ void ComponentLoadedMesh::LoadMesh(const char *file)
 		normal_array[i] -= mesh->mNumFaces * 3 * 3;
 		vertex_array[i] -= mesh->mNumFaces * 3 * 3;
 	}
-
-	importer->GetInstance()->FreeScene();
 }

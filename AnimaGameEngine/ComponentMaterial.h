@@ -5,6 +5,7 @@
 #include <vector>
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "libraries/assimp/include/assimp/scene.h"
+#include <string>
 
 class GameObject;
 class Importer;

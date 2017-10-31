@@ -7,6 +7,7 @@
 #include "ComponentSphereMesh.h"
 #include "ComponentLoadedMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentTexture.h"
 
 GameObject::GameObject(const std::string &name) : name(name) {}
 
@@ -64,6 +65,11 @@ Component *GameObject::CreateComponent(component_type type, const char *model_fi
 
 	case component_type::MATERIAL:
 		comp = new ComponentMaterial(component_type::MATERIAL, true, this, model_file);
+		components.push_back(comp);
+		break;
+
+	case component_type::TEXTURE:
+		comp = new ComponentTexture(model_file, component_type::TEXTURE, true, this);
 		components.push_back(comp);
 		break;
 	}

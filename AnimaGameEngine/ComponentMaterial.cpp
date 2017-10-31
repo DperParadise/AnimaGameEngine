@@ -46,7 +46,7 @@ void ComponentMaterial::LoadMaterials(const char * file)
 
 	if (scene->mNumMeshes == 0)
 	{
-		MYLOG("No meshes in the imported object");
+		MYLOG("No meshes in the imported scene");
 		return;
 	}
 

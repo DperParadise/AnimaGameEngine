@@ -8,9 +8,17 @@
 #include "Globals.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "ComponentMaterial.h"
+#include "ComponentTexture.h"
+#include "TextureManager.h"
 
 ComponentLoadedMesh::ComponentLoadedMesh(const char *file, component_type t, bool act, GameObject *go) : Component(t, act, go)
 {
+	if (file == nullptr)
+	{
+		MYLOG("Error invalid nullptr file: %s");
+		return;
+	}
+
 	LoadMesh(file);
 }
 
@@ -45,16 +53,27 @@ void ComponentLoadedMesh::Update()
 		}
 	}
 
-	aiString texture_file;
+	ComponentTexture *comp_tex = nullptr;
+	for (std::vector<Component*>::iterator it = owner_go->components.begin(); it != owner_go->components.end(); it++)
+	{
+		if ((*it)->type == component_type::TEXTURE)
+		{
+			comp_tex = ((ComponentTexture*)(*it));
+			break;
+		}
+	}
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+
+	if (comp_tex != nullptr)
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
 
-	//glEnable(GL_COLOR_MATERIAL); //test with no material
-	
-	int mat_count = 0;
+
+	//int mat_count = 0;
 	for (uint i = 0; i < num_meshes; i++)
 	{
 		glVertexPointer(3, GL_FLOAT, 0, vertex_array[i]);
@@ -71,6 +90,16 @@ void ComponentLoadedMesh::Update()
 			}
 		}
 
+		if (comp_tex != nullptr)
+		{
+			float *uv_array = comp_tex->uv_array[i];
+			std::string texture_path = comp_tex->texture_paths[i];
+			uint tex_id = comp_tex->texture_manager->GetInstance()->Load(aiString(texture_path));
+			
+			glTexCoordPointer(2, GL_FLOAT, 0, uv_array);
+			glBindTexture(GL_TEXTURE_2D, tex_id);
+		}
+
 		uint num_verts = num_vertices[i];
 		glMaterialfv(GL_FRONT, GL_AMBIENT, mat.ambient);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat.diffuse);
@@ -78,21 +107,23 @@ void ComponentLoadedMesh::Update()
 		glMaterialf(GL_FRONT, GL_SHININESS, mat.shininess);
 		glDrawArrays(GL_TRIANGLES, 0, num_verts);
 
-		MYLOG("%d  amb = (%f, %f, %f)   diff = (%f,%f,%f)   spec = (%f,%f,%f)   shin = %f", mat_count, mat.ambient[0], mat.ambient[1], mat.ambient[2],
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		/*MYLOG("%d  amb = (%f, %f, %f)   diff = (%f,%f,%f)   spec = (%f,%f,%f)   shin = %f", mat_count, mat.ambient[0], mat.ambient[1], mat.ambient[2],
 			mat.diffuse[0], mat.diffuse[1], mat.diffuse[2],
 			mat.specular[0], mat.specular[1], mat.specular[2],
 			mat.shininess);
 
-		mat_count++;
+		mat_count++;*/
 	}
-
-	
-	//glDisable(GL_COLOR_MATERIAL); //test with no material
 
 	glPopMatrix();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);	
+
+	if (comp_tex != nullptr)
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 void ComponentLoadedMesh::Enable()
@@ -107,11 +138,6 @@ void ComponentLoadedMesh::Disable()
 
 void ComponentLoadedMesh::LoadMesh(const char *file)
 {	
-	if (file == nullptr)
-	{
-		MYLOG("Error invalid nullptr file: %s");
-		return;
-	}
 
 	scene = importer->GetInstance()->ReadFile(file,  aiPostProcessSteps::aiProcess_PreTransformVertices |
 		aiPostProcessSteps::aiProcess_FlipUVs |	aiPostProcessSteps::aiProcess_Triangulate /*|aiProcessPreset_TargetRealtime_Fast*/);
@@ -125,7 +151,7 @@ void ComponentLoadedMesh::LoadMesh(const char *file)
 	num_meshes = scene->mNumMeshes;
 	if (num_meshes == 0)
 	{
-		MYLOG("No meshes in the imported object");
+		MYLOG("No meshes in the imported scene");
 		return;
 	}
 

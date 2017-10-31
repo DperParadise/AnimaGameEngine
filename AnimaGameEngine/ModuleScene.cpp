@@ -28,8 +28,9 @@ ModuleScene::~ModuleScene() {}
 
 	 GameObject *loaded_mesh_GO = CreateGameObject("loaded model");
 	 loaded_mesh_GO->CreateComponent(component_type::TRANSFORM);
-	 loaded_mesh_GO->CreateComponent(component_type::LOADED_MESH, "models/IronManFBX/IronMan.FBX");
-	 loaded_mesh_GO->CreateComponent(component_type::MATERIAL, "models/IronManFBX/IronMan.FBX");
+	 loaded_mesh_GO->CreateComponent(component_type::LOADED_MESH, "models/Batman/Batman.obj");
+	 loaded_mesh_GO->CreateComponent(component_type::MATERIAL, "models/Batman/Batman.obj");
+	 loaded_mesh_GO->CreateComponent(component_type::TEXTURE, "models/Batman/Batman.obj");
 
 	return true;
 }

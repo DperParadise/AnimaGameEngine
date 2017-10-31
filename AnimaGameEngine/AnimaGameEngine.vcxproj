@@ -150,6 +150,7 @@
     <ClInclude Include="ComponentLoadedMesh.h" />
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentSphereMesh.h" />
+    <ClInclude Include="ComponentTexture.h" />
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Cube.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="ComponentLoadedMesh.cpp" />
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentSphereMesh.cpp" />
+    <ClCompile Include="ComponentTexture.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Cube.cpp" />

@@ -122,6 +122,9 @@
     <ClInclude Include="ModuleScene.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentTexture.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -213,6 +216,9 @@
     </ClCompile>
     <ClCompile Include="ModuleScene.cpp">
       <Filter>CoreModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTexture.cpp">
+      <Filter>GameObject and Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

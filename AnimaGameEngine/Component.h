@@ -9,7 +9,8 @@ enum component_type
 	CUBE_MESH,
 	SPHERE_MESH,
 	LOADED_MESH,
-	MATERIAL
+	MATERIAL,
+	TEXTURE
 };
 
 class GameObject;

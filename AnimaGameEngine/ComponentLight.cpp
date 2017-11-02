@@ -48,6 +48,10 @@ void ComponentLight::SetPosition(float x, float y, float z, float w)
 	position[2] = z;
 	position[3] = w;
 
+	position[3] = 1.0f;
+	if (light_t == light_type::DIRECTIONAL)
+		position[3] = 0.0f;
+
 	glLightfv(SelectLight(), GL_POSITION, position);
 }
 

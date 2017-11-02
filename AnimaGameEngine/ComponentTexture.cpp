@@ -120,3 +120,8 @@ void ComponentTexture::LoadTextures(const char *file)
 	}
 }
 
+bool ComponentTexture::HasTexture() const
+{
+	return (bool)num_textures;
+}
+

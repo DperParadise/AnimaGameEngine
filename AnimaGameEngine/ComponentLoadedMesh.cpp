@@ -66,7 +66,7 @@ void ComponentLoadedMesh::Update()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 
-	if (comp_tex != nullptr)
+	if (comp_tex->HasTexture())
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	glPushMatrix();
@@ -90,7 +90,7 @@ void ComponentLoadedMesh::Update()
 			}
 		}
 
-		if (comp_tex != nullptr)
+		if (comp_tex->HasTexture())
 		{
 			float *uv_array = comp_tex->uv_array[i];
 			std::string texture_path = comp_tex->texture_paths[i];

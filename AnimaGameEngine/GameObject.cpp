@@ -8,6 +8,8 @@
 #include "ComponentLoadedMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentTexture.h"
+#include "ComponentLight.h"
+#include "ComponentAmbientLight.h"
 
 GameObject::GameObject(const std::string &name) : name(name) {}
 
@@ -34,42 +36,52 @@ Component *GameObject::CreateComponent(component_type type, const char *model_fi
 	switch (type)
 	{
 	case component_type::TRANSFORM:
-		comp = new ComponentTransform(component_type::TRANSFORM, true, this);
+		comp = new ComponentTransform(type, true, this);
 		components.push_back(comp);
 		break;
 
 	case component_type::GRID_MESH:
-		comp = new ComponentGridMesh(component_type::GRID_MESH, true, this);
+		comp = new ComponentGridMesh(type, true, this);
 		components.push_back(comp);
 		break;
 
 	case component_type::GIZMO_MESH:		
-		comp = new ComponentGizmoMesh(component_type::GIZMO_MESH, true, this);
+		comp = new ComponentGizmoMesh(type, true, this);
 		components.push_back(comp);
 		break;
 
 	case component_type::CUBE_MESH:
-		comp = new ComponentCubeMesh(component_type::CUBE_MESH, true, this);
+		comp = new ComponentCubeMesh(type, true, this);
 		components.push_back(comp);
 		break;
 
 	case component_type::SPHERE_MESH:
-		comp = new ComponentSphereMesh(component_type::SPHERE_MESH, true, this);
+		comp = new ComponentSphereMesh(type, true, this);
 		components.push_back(comp);
 		break;
 
 	case component_type::LOADED_MESH:
-		comp = new ComponentLoadedMesh(model_file, component_type::LOADED_MESH, true, this);
+		comp = new ComponentLoadedMesh(model_file, type, true, this);
 		components.push_back(comp);
 		break;
 
 	case component_type::MATERIAL:
-		comp = new ComponentMaterial(component_type::MATERIAL, true, this, model_file);
+		comp = new ComponentMaterial(type, true, this, model_file);
 		components.push_back(comp);
 		break;
 
 	case component_type::TEXTURE:
-		comp = new ComponentTexture(model_file, component_type::TEXTURE, true, this);
+		comp = new ComponentTexture(model_file, type, true, this);
+		components.push_back(comp);
+		break;
+
+	case component_type::LIGHT:
+		comp = new ComponentLight(ComponentLight::light_type::POINT, type, true, this);
+		components.push_back(comp);
+		break;
+
+	case component_type::AMBIENT_LIGHT:
+		comp = new ComponentAmbientLight(type, true, this);
 		components.push_back(comp);
 		break;
 	}

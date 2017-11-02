@@ -1,7 +1,7 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
 
-enum component_type
+enum class component_type
 {
 	TRANSFORM,
 	GRID_MESH,
@@ -10,7 +10,9 @@ enum component_type
 	SPHERE_MESH,
 	LOADED_MESH,
 	MATERIAL,
-	TEXTURE
+	TEXTURE,
+	LIGHT,
+	AMBIENT_LIGHT
 };
 
 class GameObject;

@@ -125,6 +125,12 @@
     <ClInclude Include="ComponentTexture.h">
       <Filter>GameObject and Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentLight.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentAmbientLight.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -218,6 +224,12 @@
       <Filter>CoreModules</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTexture.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentLight.cpp">
+      <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentAmbientLight.cpp">
       <Filter>GameObject and Components</Filter>
     </ClCompile>
   </ItemGroup>

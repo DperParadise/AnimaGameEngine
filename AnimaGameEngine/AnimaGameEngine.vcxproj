@@ -144,9 +144,11 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentAmbientLight.h" />
     <ClInclude Include="ComponentCubeMesh.h" />
     <ClInclude Include="ComponentGizmoMesh.h" />
     <ClInclude Include="ComponentGridMesh.h" />
+    <ClInclude Include="ComponentLight.h" />
     <ClInclude Include="ComponentLoadedMesh.h" />
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentSphereMesh.h" />
@@ -180,9 +182,11 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentAmbientLight.cpp" />
     <ClCompile Include="ComponentCubeMesh.cpp" />
     <ClCompile Include="ComponentGizmoMesh.cpp" />
     <ClCompile Include="ComponentGridMesh.cpp" />
+    <ClCompile Include="ComponentLight.cpp" />
     <ClCompile Include="ComponentLoadedMesh.cpp" />
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentSphereMesh.cpp" />

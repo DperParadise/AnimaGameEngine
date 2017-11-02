@@ -118,24 +118,6 @@ bool ModuleRender::Init(Config *config)
 		MYLOG(iluErrorString(ilGetError()));
 
 	
-	//--------------- LIGHTS ----------------------
-	
-	float ambient[] = { 0.0f, 0.0f, 0.0f, 0.1f };
-	float diffuse[] = { 1.0f, 1.0f, 1.0f, 0.1f };
-	float specular[] = { 1.0f, 1.0f, 1.0f, 0.1f };
-	float position[] = { 0.0f, 1.0f, 1.0f, 0.0f };
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-	glLightfv(GL_LIGHT0, GL_POSITION, position);
-
-	GLfloat amb[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
-
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHTING);
-
 	return ret;
 }
 
@@ -157,9 +139,6 @@ update_status ModuleRender::PostUpdate(float dt)
 {	
 	//-------- DRAWING SCENE------------
 	
-	/*glEnable(GL_COLOR_MATERIAL);
-	glDisable(GL_COLOR_MATERIAL);*/
-	
 	App->scene->Update(dt);
 	
 
@@ -175,8 +154,6 @@ update_status ModuleRender::PostUpdate(float dt)
 bool ModuleRender::CleanUp()
 {
 	MYLOG("Destroying renderer");
-
-	//imported_model.Clear();
 
 	//Destroy OpenGL context
 	SDL_GL_DeleteContext(gl_context);

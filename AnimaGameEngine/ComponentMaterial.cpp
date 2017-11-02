@@ -87,10 +87,10 @@ void ComponentMaterial::LoadMaterials(const char * file)
 
 		materials.push_back(material);
 		
-		/*MYLOG("%d  amb = (%f, %f, %f)   diff = (%f,%f,%f)   spec = (%f,%f,%f)   shin = %f", mat_count, material.ambient[0], material.ambient[1], material.ambient[2],
+		MYLOG("%d  amb = (%f, %f, %f)   diff = (%f,%f,%f)   spec = (%f,%f,%f)   shin = %f", mat_count, material.ambient[0], material.ambient[1], material.ambient[2],
 			material.diffuse[0], material.diffuse[1], material.diffuse[2], 
 			material.specular[0], material.specular[1], material.specular[2], 
-			material.shininess);*/
+			material.shininess);
 
 		mat_count++;
 	}

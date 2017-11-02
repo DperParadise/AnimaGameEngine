@@ -10,6 +10,9 @@ ComponentCubeMesh::~ComponentCubeMesh() {}
 
 void ComponentCubeMesh::Update()
 {
+	if (!active)
+		return;
+
 	//draw the mesh
 	aiVector3D position = aiVector3D(0.0f, 0.0f, 0.0f);
 

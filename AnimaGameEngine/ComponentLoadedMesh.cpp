@@ -36,7 +36,7 @@ ComponentLoadedMesh::~ComponentLoadedMesh()
 
 void ComponentLoadedMesh::Update()
 {
-	if (scene == NULL)
+	if (!active)
 	{	
 		return;
 	}

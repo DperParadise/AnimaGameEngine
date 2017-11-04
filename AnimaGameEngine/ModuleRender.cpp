@@ -148,7 +148,6 @@ update_status ModuleRender::PostUpdate(float dt)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(App->module_editor_camera->projectionMatrix);	
 
-	ImGui::Render();
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

@@ -150,8 +150,6 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
-	ImGui_ImplSdlGL3_NewFrame(App->window->window);
-
 	if(GetWindowEvent(EventWindow::WE_QUIT) == true || GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		return UPDATE_STOP;
 

@@ -15,10 +15,30 @@ bool ModuleEditorGUI::Init(Config *config)
 	return true;
 }
 
+update_status ModuleEditorGUI::PreUpdate(float dt)
+{
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+
+	return UPDATE_CONTINUE;
+}
+
 update_status ModuleEditorGUI::Update(float dt)
 {
 	ImGui::ShowTestWindow();
+	ImGui::Render();
 
 	return UPDATE_CONTINUE;
+}
+
+update_status ModuleEditorGUI::PostUpdate(float dt)
+{
+	return UPDATE_CONTINUE;
+}
+
+bool ModuleEditorGUI::CleanUp()
+{
+	MYLOG("Shutdown IMGUI");
+	ImGui_ImplSdlGL3_Shutdown();
+	return true;
 }
 

@@ -94,7 +94,7 @@ void ComponentLoadedMesh::Update()
 		{
 			float *uv_array = comp_tex->uv_array[i];
 			std::string texture_path = comp_tex->texture_paths[i];
-			uint tex_id = comp_tex->texture_manager->GetInstance()->Load(aiString(texture_path));
+			uint tex_id = TextureManager::GetInstance()->Load(aiString(texture_path));
 			
 			glTexCoordPointer(2, GL_FLOAT, 0, uv_array);
 			glBindTexture(GL_TEXTURE_2D, tex_id);
@@ -139,7 +139,7 @@ void ComponentLoadedMesh::Disable()
 void ComponentLoadedMesh::LoadMesh(const char *file)
 {	
 
-	scene = importer->GetInstance()->ReadFile(file,  aiPostProcessSteps::aiProcess_PreTransformVertices |
+	scene = importer->GetInstance()->ReadFile(file,  /*aiPostProcessSteps::aiProcess_PreTransformVertices |*/
 		aiPostProcessSteps::aiProcess_FlipUVs |	aiPostProcessSteps::aiProcess_Triangulate /*|aiProcessPreset_TargetRealtime_Fast*/);
 
 	if (scene == NULL)

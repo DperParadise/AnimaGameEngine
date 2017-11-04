@@ -8,7 +8,6 @@
 #include "Globals.h"
 
 class GameObject;
-class TextureManager;
 class ComponentTexture : public Component
 {
 public:
@@ -22,7 +21,6 @@ public:
 	bool HasTexture() const;
 
 	std::vector<std::string> texture_paths;
-	TextureManager *texture_manager = nullptr;
 	float **uv_array = nullptr;
 
 private:

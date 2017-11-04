@@ -46,7 +46,7 @@ void ComponentTexture::LoadTextures(const char *file)
 {
 	Importer *importer = nullptr;
 	
-	const aiScene *scene = importer->GetInstance()->ReadFile(file, aiPostProcessSteps::aiProcess_PreTransformVertices |
+	const aiScene *scene = importer->GetInstance()->ReadFile(file, /*aiPostProcessSteps::aiProcess_PreTransformVertices |*/
 		aiPostProcessSteps::aiProcess_FlipUVs | aiPostProcessSteps::aiProcess_Triangulate /*|aiProcessPreset_TargetRealtime_Fast*/);
 
 	if (scene == NULL)
@@ -78,7 +78,7 @@ void ComponentTexture::LoadTextures(const char *file)
 			num_textures++;
 			scene->mMaterials[mat_index]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &texture_file);
 			std::string texture_path(root_path);
-			texture_manager->GetInstance()->Load(aiString(texture_path.append(texture_file.data)));
+			TextureManager::GetInstance()->Load(aiString(texture_path.append(texture_file.data)));
 			texture_paths.push_back(texture_path);
 		}
 		else

@@ -50,7 +50,7 @@ void ComponentMaterial::LoadMaterials(const char * file)
 		return;
 	}
 
-	int mat_count = 0;
+	//int mat_count = 0;
 	for (uint i = 0; i < scene->mNumMeshes; i++)
 	{
 		//load materials 	
@@ -87,14 +87,14 @@ void ComponentMaterial::LoadMaterials(const char * file)
 
 		materials.push_back(material);
 		
-		MYLOG("%d  amb = (%f, %f, %f)   diff = (%f,%f,%f)   spec = (%f,%f,%f)   shin = %f", mat_count, material.ambient[0], material.ambient[1], material.ambient[2],
+		/*MYLOG("%d  amb = (%f, %f, %f)   diff = (%f,%f,%f)   spec = (%f,%f,%f)   shin = %f", mat_count, material.ambient[0], material.ambient[1], material.ambient[2],
 			material.diffuse[0], material.diffuse[1], material.diffuse[2], 
 			material.specular[0], material.specular[1], material.specular[2], 
 			material.shininess);
 
-		mat_count++;
+		mat_count++;*/
 	}
-	MYLOG("Loaded %d materials", mat_count);
+	//MYLOG("Loaded %d materials", mat_count);
 }
 
 

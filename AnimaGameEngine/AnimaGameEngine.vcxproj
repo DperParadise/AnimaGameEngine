@@ -156,6 +156,7 @@
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="EditorConsoleWidget.h" />
     <ClInclude Include="libraries\ImGui\imconfig.h" />
     <ClInclude Include="libraries\ImGui\imgui.h" />
     <ClInclude Include="libraries\ImGui\imgui_impl_sdl_gl3.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="EditorConsoleWidget.cpp" />
     <ClCompile Include="libraries\ImGui\imgui.cpp" />
     <ClCompile Include="libraries\ImGui\imgui_demo.cpp" />
     <ClCompile Include="libraries\ImGui\imgui_draw.cpp" />

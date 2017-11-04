@@ -21,6 +21,9 @@
     <Filter Include="GameObject and Components">
       <UniqueIdentifier>{145fcb29-496e-49bd-8c38-7e67bddb3677}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor Widgets">
+      <UniqueIdentifier>{d71d9a7a-bb40-4853-bb10-a8ac88276646}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h">
@@ -155,6 +158,9 @@
     <ClInclude Include="libraries\ImGui\stb_truetype.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="EditorConsoleWidget.h">
+      <Filter>Editor Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -270,6 +276,9 @@
     </ClCompile>
     <ClCompile Include="libraries\ImGui\imgui_impl_sdl_gl3.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorConsoleWidget.cpp">
+      <Filter>Editor Widgets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

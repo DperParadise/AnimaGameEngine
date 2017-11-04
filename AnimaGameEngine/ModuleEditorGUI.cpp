@@ -3,6 +3,9 @@
 #include "ModuleWindow.h"
 #include "Globals.h"
 
+#include "libraries/ImGui/imgui_impl_sdl_gl3.h"
+#include "libraries/ImGui/imgui.h"
+
 ModuleEditorGUI::ModuleEditorGUI() {}
 
 ModuleEditorGUI::~ModuleEditorGUI() {}
@@ -15,6 +18,12 @@ bool ModuleEditorGUI::Init(Config *config)
 	return true;
 }
 
+
+bool ModuleEditorGUI::Start()
+{
+	return true;
+}
+
 update_status ModuleEditorGUI::PreUpdate(float dt)
 {
 	ImGui_ImplSdlGL3_NewFrame(App->window->window);
@@ -24,7 +33,8 @@ update_status ModuleEditorGUI::PreUpdate(float dt)
 
 update_status ModuleEditorGUI::Update(float dt)
 {
-	ImGui::ShowTestWindow();
+	//ImGui::ShowTestWindow();
+	console.Draw();
 	ImGui::Render();
 
 	return UPDATE_CONTINUE;

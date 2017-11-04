@@ -5,7 +5,8 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleEditorCamera.h"
-#include "ModuleEditorGUI.h"
+#include "libraries/ImGui/imgui.h"
+#include "libraries/ImGui/imgui_impl_sdl_gl3.h"
 
 #define MAX_KEYS 300
 

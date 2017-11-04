@@ -131,6 +131,30 @@
     <ClInclude Include="ComponentAmbientLight.h">
       <Filter>GameObject and Components</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleEditorGUI.h">
+      <Filter>CoreModules</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\ImGui\imconfig.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\ImGui\imgui.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\ImGui\imgui_impl_sdl_gl3.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\ImGui\imgui_internal.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\ImGui\stb_rect_pack.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\ImGui\stb_textedit.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\ImGui\stb_truetype.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -231,6 +255,21 @@
     </ClCompile>
     <ClCompile Include="ComponentAmbientLight.cpp">
       <Filter>GameObject and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEditorGUI.cpp">
+      <Filter>CoreModules</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\ImGui\imgui.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\ImGui\imgui_demo.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\ImGui\imgui_draw.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\ImGui\imgui_impl_sdl_gl3.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

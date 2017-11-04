@@ -13,6 +13,7 @@
 #include "libraries/DevIL_Windows_SDK/include/IL/ilu.h"
 #include "libraries/DevIL_Windows_SDK/include/IL/ilut.h"
 #include "ModuleScene.h"
+#include "ModuleEditorGUI.h"
 
 ModuleRender::ModuleRender(){}
 
@@ -146,6 +147,8 @@ update_status ModuleRender::PostUpdate(float dt)
 	glLoadMatrixf(App->module_editor_camera->viewMatrix);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(App->module_editor_camera->projectionMatrix);	
+
+	ImGui::Render();
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

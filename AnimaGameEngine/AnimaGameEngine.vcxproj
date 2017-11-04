@@ -156,6 +156,14 @@
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="libraries\ImGui\imconfig.h" />
+    <ClInclude Include="libraries\ImGui\imgui.h" />
+    <ClInclude Include="libraries\ImGui\imgui_impl_sdl_gl3.h" />
+    <ClInclude Include="libraries\ImGui\imgui_internal.h" />
+    <ClInclude Include="libraries\ImGui\stb_rect_pack.h" />
+    <ClInclude Include="libraries\ImGui\stb_textedit.h" />
+    <ClInclude Include="libraries\ImGui\stb_truetype.h" />
+    <ClInclude Include="ModuleEditorGUI.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gizmo.h" />
     <ClInclude Include="Globals.h" />
@@ -194,6 +202,11 @@
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="libraries\ImGui\imgui.cpp" />
+    <ClCompile Include="libraries\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="libraries\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="libraries\ImGui\imgui_impl_sdl_gl3.cpp" />
+    <ClCompile Include="ModuleEditorGUI.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gizmo.cpp" />
     <ClCompile Include="Grid.cpp" />

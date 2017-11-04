@@ -15,6 +15,7 @@ class ModuleInput;
 class ModuleAudio;
 class ModuleEditorCamera;
 class ModuleScene;
+class ModuleEditorGUI;
 
 class Application
 {
@@ -34,6 +35,7 @@ public:
 	ModuleAudio* audio;
 	ModuleEditorCamera* module_editor_camera;
 	ModuleScene* scene;
+	ModuleEditorGUI* editor_gui;
 	//------------------------------------------------- TIME CONTROL -----------------------------------------
 	TimerMillis timerMillis;
 	TimerMillis timerMillis_accumulated;

@@ -5,6 +5,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleEditorCamera.h"
+#include "ModuleEditorGUI.h"
 
 #define MAX_KEYS 300
 
@@ -84,6 +85,8 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	while(SDL_PollEvent(&event) != 0)
 	{
+		ImGui_ImplSdlGL3_ProcessEvent(&event);
+
 		switch(event.type)
 		{
 			case SDL_QUIT:
@@ -146,6 +149,8 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 		}
 	}
+
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
 
 	if(GetWindowEvent(EventWindow::WE_QUIT) == true || GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		return UPDATE_STOP;

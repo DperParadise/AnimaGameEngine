@@ -4,6 +4,7 @@
 #include "libraries/SDL/include/SDL.h"
 #include "libraries/parson/parson.h"
 #include "Config.h"
+#include "ModuleEditorGUI.h"
 
 ModuleWindow::ModuleWindow()
 {
@@ -69,6 +70,9 @@ bool ModuleWindow::Init(Config *config)
 // Called before quitting
 bool ModuleWindow::CleanUp()
 {
+	MYLOG("Shutdown IMGUI");
+	ImGui_ImplSdlGL3_Shutdown();
+
 	MYLOG("Destroying SDL window and quitting all SDL systems");
 
 	//Destroy window

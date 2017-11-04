@@ -8,6 +8,7 @@
 #include "Config.h"
 #include "ModuleEditorCamera.h"
 #include "ModuleScene.h"
+#include "ModuleEditorGUI.h"
 
 #ifdef _MSC_VER
 	#ifdef _DEBUG 
@@ -53,10 +54,9 @@ Application::Application()
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(audio = new ModuleAudio());
-
 	modules.push_back(module_editor_camera = new ModuleEditorCamera());
 	modules.push_back(scene = new ModuleScene());
-	
+	modules.push_back(editor_gui = new ModuleEditorGUI());
 }
 
 Application::~Application()

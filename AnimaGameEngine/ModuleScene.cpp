@@ -11,9 +11,9 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
-	 /*GameObject *grid_GO = CreateGameObject("grid primitive");
+	 GameObject *grid_GO = CreateGameObject("grid primitive");
 	 grid_GO->CreateComponent(component_type::TRANSFORM);
-	 grid_GO->CreateComponent(component_type::GRID_MESH);*/
+	 grid_GO->CreateComponent(component_type::GRID_MESH);
 
 	 GameObject *gizmo_GO = CreateGameObject("gizmo");
 	 gizmo_GO->CreateComponent(component_type::TRANSFORM);

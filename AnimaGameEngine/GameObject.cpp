@@ -76,7 +76,7 @@ Component *GameObject::CreateComponent(component_type type, const char *model_fi
 		break;
 
 	case component_type::LIGHT:
-		comp = new ComponentLight(ComponentLight::light_type::POINT, type, true, this);
+		comp = new ComponentLight(type, true, this);
 		components.push_back(comp);
 		break;
 

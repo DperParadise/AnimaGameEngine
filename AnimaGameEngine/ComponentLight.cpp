@@ -2,7 +2,7 @@
 
 int ComponentLight::lights_counter = -1;
 
-ComponentLight::ComponentLight(light_type lt, component_type t, bool act, GameObject *go) : Component(t, act, go)
+ComponentLight::ComponentLight(component_type t, bool act, GameObject *go) : Component(t, act, go)
 {
 	lights_counter++;
 	light_index = lights_counter;
@@ -43,18 +43,44 @@ GLenum ComponentLight::SelectLight()
 	return lights[light_index];	
 }
 
-void ComponentLight::SetPosition(float x, float y, float z, float w)
+void ComponentLight::SetPosition(float x, float y, float z)
 {
 	position[0] = x;
 	position[1] = y;
 	position[2] = z;
-	position[3] = w;
-
 	position[3] = 1.0f;
-	if (light_t == light_type::DIRECTIONAL)
-		position[3] = 0.0f;
 
 	glLightfv(SelectLight(), GL_POSITION, position);
+}
+
+void ComponentLight::SetDirection(float x, float y, float z)
+{
+	position[0] = x;
+	position[1] = y;
+	position[2] = z;
+	position[3] = 0.0f;
+
+	glLightfv(SelectLight(), GL_POSITION, position);
+}
+
+void ComponentLight::SetSpotDirection(float x, float y, float z)
+{
+	spot_direction[0] = x;
+	spot_direction[1] = y;
+	spot_direction[2] = z;
+
+	glLightfv(SelectLight(), GL_SPOT_DIRECTION, spot_direction);
+}
+
+void ComponentLight::SetCutoff(float coff)
+{
+	if (coff < 0.0f)
+		coff = 0.0f;
+
+	if (coff > 90.0f)
+		coff = 180.0f;
+
+	glLightfv(SelectLight(), GL_SPOT_CUTOFF, &coff);
 }
 
 void ComponentLight::SetAmbient(float r, float g, float b, float a)

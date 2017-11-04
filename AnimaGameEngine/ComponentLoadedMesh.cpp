@@ -80,7 +80,7 @@ void ComponentLoadedMesh::Update()
 		glNormalPointer(GL_FLOAT, 0, normal_array[i]);
 
 		ComponentMaterial::Material mat;
-
+		
 		for (std::vector<Component*>::iterator it = owner_go->components.begin(); it != owner_go->components.end(); it++)
 		{
 			if ((*it)->type == component_type::MATERIAL)

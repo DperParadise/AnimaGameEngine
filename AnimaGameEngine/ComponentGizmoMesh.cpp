@@ -83,11 +83,12 @@ void ComponentGizmoMesh::Update()
 
 	glEnd();
 
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glDisable(GL_COLOR_MATERIAL);
 
 	glPopMatrix();
 
-	glColor3f(1.0f, 1.0f, 1.0f);
+	
 }
 
 void ComponentGizmoMesh::Enable()

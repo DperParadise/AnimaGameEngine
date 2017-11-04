@@ -21,9 +21,9 @@ public:
 
 	struct Material
 	{
-		GLfloat ambient[4] = { 0.0f,0.0f,0.0f,1.0f };
-		GLfloat diffuse[4] = { 0.0f,0.0f,0.0f,1.0f };
-		GLfloat specular[4] = { 0.0f,0.0f,0.0f,1.0f };
+		GLfloat ambient[4] = { 0.5f,0.0f,0.0f,1.0f };
+		GLfloat diffuse[4] = { 0.5f,0.0f,0.0f,1.0f };
+		GLfloat specular[4] = { 0.5f,0.0f,0.0f,1.0f };
 		GLfloat shininess = 32.0f;
 	};
 

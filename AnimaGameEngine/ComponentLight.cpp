@@ -25,8 +25,9 @@ void ComponentLight::Update(){}
 
 void ComponentLight::Enable()
 {
-	glEnable(SelectLight());
+	//glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 	glEnable(GL_LIGHTING);
+	glEnable(SelectLight());
 	active = true;
 }
 
@@ -38,6 +39,7 @@ void ComponentLight::Disable()
 
 GLenum ComponentLight::SelectLight()
 {	
+	GLenum light = lights[light_index];
 	return lights[light_index];	
 }
 

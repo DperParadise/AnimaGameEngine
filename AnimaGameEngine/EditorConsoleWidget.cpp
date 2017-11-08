@@ -16,16 +16,23 @@ void EditorConsoleWidget::Draw()
 	ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiSetCond_FirstUseEver);	
 	ImGui::SetNextWindowPos(ImVec2(pos_x, pos_y), ImGuiSetCond_FirstUseEver);	
 
-	ImGui::Begin(title);	
+	ImGui::Begin(title);
+
+	if (ImGui::Button("clear"))
+	{
+		buff.clear();
+	}
+
+	ImGui::BeginChild("Log", ImVec2(0, 200), true, ImGuiWindowFlags_HorizontalScrollbar);
 	ImGui::TextUnformatted(buff.begin());
-	
 	if (scroll_to_bottom)
 	{
 		ImGui::SetScrollHere(1.0f);
 		scroll_to_bottom = false;
 	}
-	
+	ImGui::EndChild();
 	ImGui::End();
+
 }
 
 

@@ -1,7 +1,7 @@
 #ifndef __FPS_GRAPH_H__
 #define __FPS_GRAPH_H__
 
-#include <vector>
+#include <string>
 
 class FPSGraphWidget
 {
@@ -10,27 +10,21 @@ public:
 	FPSGraphWidget();
 	~FPSGraphWidget();
 
-	void FillDraw(float dt);
-
-	std::vector<float> fps_vec = { 0 };
-	std::vector<float> ms_vec;
-
+	void Draw(float dt);
 
 	const char *widget_title = "Application Performance";
 	int pos_x = 0, pos_y = 0;
 	unsigned int width = 100, height = 100;
 
-	const char *title_fps = "Framerate: ";
-	const char *title_ms = "Milliseconds: ";
+	std::string framerate = "Frame rate";
+	std::string milliseconds = "Milliseconds";
 
-private:
-	
-	void Draw(float dt);
-	void Reset();
+private:	
+	static const unsigned NUM_COLS = 40;
+	static const unsigned REFRESH_FRAMES = 30;
+
+	float histogram[NUM_COLS];
+	float ms_array[NUM_COLS];
 	unsigned frames = 0;
-	 
 };
-
-
-
 #endif

@@ -127,7 +127,7 @@ update_status Application::Update()
 		timerMillis_accumulated.Start();
 	}
 
-	MYLOG("AVERAGE FPS = %f		MS LAST UPDATE = %f	   dt = %f     FPS = %d", average_fps, ms_last_update, dt, fps);
+	//MYLOG("AVERAGE FPS = %f		MS LAST UPDATE = %f	   dt = %f     FPS = %d", average_fps, ms_last_update, dt, fps);
 	
 	
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)

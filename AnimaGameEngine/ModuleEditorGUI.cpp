@@ -34,7 +34,7 @@ update_status ModuleEditorGUI::PreUpdate(float dt)
 update_status ModuleEditorGUI::Update(float dt)
 {
 	//ImGui::ShowTestWindow();
-	//console.Draw();
+	console.Draw();
 	fps_graph.FillDraw(dt);
 
 

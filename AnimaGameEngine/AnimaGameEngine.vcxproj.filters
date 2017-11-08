@@ -161,6 +161,9 @@
     <ClInclude Include="EditorConsoleWidget.h">
       <Filter>Editor Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="FPSGraphWidget.h">
+      <Filter>Editor Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -278,6 +281,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="EditorConsoleWidget.cpp">
+      <Filter>Editor Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSGraphWidget.cpp">
       <Filter>Editor Widgets</Filter>
     </ClCompile>
   </ItemGroup>

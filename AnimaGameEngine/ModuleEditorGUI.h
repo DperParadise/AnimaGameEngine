@@ -15,6 +15,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "EditorConsoleWidget.h"
+#include "FPSGraphWidget.h"
 
 class Config;
 class ModuleEditorGUI : public Module
@@ -31,7 +32,7 @@ public:
 	bool CleanUp();
 
 	EditorConsoleWidget console;
-
+	FPSGraphWidget fps_graph;
 };
 
 

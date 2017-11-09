@@ -28,7 +28,7 @@ void ComponentCubeMesh::Update()
 		}
 	}
 
-	for (std::vector<Component*>::iterator it = owner_go->components.begin(); it != owner_go->components.end(); it++)
+	/*for (std::vector<Component*>::iterator it = owner_go->components.begin(); it != owner_go->components.end(); it++)
 	{
 		if ((*it)->type == component_type::MATERIAL)
 		{
@@ -36,7 +36,7 @@ void ComponentCubeMesh::Update()
 			has_mat = true;
 			break;
 		}
-	}
+	}*/
 	
 	
 	glEnableClientState(GL_VERTEX_ARRAY);

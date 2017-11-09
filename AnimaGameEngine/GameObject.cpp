@@ -93,16 +93,19 @@ Component* GameObject::CreateTransformComp(aiNode *node)
 {
 	Component *comp = new ComponentTransform(component_type::TRANSFORM, true, this, node);
 	components.push_back(comp);
+	return comp;
 }
 
 Component* GameObject::CreateMeshComp(aiMesh *mesh)
 {
 	Component *comp = new ComponentLoadedMesh(component_type::LOADED_MESH, true, this, mesh);
 	components.push_back(comp);
+	return comp;
 }
 
-Component* GameObject::CreateMaterialComp(aiMesh *mesh)
+Component* GameObject::CreateMaterialComp(aiMesh *mesh, aiScene *scene, const char *file_name)
 {
-	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, mesh);
+	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, mesh, scene, file_name);
 	components.push_back(comp);
+	return comp;
 }

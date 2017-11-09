@@ -7,6 +7,7 @@
 
 struct aiNode;
 struct aiMesh;
+struct aiScene;
 class GameObject
 {
 public:
@@ -14,11 +15,11 @@ public:
 	~GameObject();
 
 	void Update();
-	Component* CreateComponent(component_type type, const char *model_file = nullptr);
+	//Component* CreateComponent(component_type type, const char *model_file = nullptr);
 
 	Component* CreateTransformComp(aiNode *node);
 	Component* CreateMeshComp(aiMesh *mesh);
-	Component* CreateMaterialComp(aiMesh *mesh);
+	Component* CreateMaterialComp(aiMesh *mesh, aiScene *scene, const char *file_name);
 
 	bool active = true;
 	std::string name;

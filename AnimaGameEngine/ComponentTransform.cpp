@@ -1,5 +1,6 @@
 #include "ComponentTransform.h"
 #include "libraries/assimp/include/assimp/scene.h"
+#include "libraries/glew-2.0.0/include/GL/glew.h"
 
 ComponentTransform::ComponentTransform(component_type t, bool act, GameObject *go, aiNode *node) : Component(t, act, go)
 {
@@ -16,6 +17,7 @@ ComponentTransform::ComponentTransform(component_type t, bool act, GameObject *g
 	rotation.z = 0.0f;
 	rotation.w = 0.0f;
 
+	Load(node);
 }
 
 ComponentTransform::~ComponentTransform() {}
@@ -25,7 +27,7 @@ void ComponentTransform::Load(aiNode *node)
 	node->mTransformation.Decompose(scale, rotation, position);
 }
 
-void ComponentTransform::Update() {}
+void ComponentTransform::Update(){}
 
 void ComponentTransform::Enable() {}
 

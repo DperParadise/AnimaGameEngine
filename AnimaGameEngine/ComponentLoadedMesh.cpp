@@ -1,6 +1,8 @@
 #include "ComponentLoadedMesh.h"
 #include "Globals.h"
 #include "libraries/assimp/include/assimp/scene.h"
+#include "libraries/glew-2.0.0/include/GL/glew.h"
+#include <vector>
 
 ComponentLoadedMesh::ComponentLoadedMesh(component_type t, bool act, GameObject *go, aiMesh *mesh) : Component(t, act, go)
 {
@@ -11,6 +13,7 @@ ComponentLoadedMesh::~ComponentLoadedMesh()
 {
 	RELEASE_ARRAY(vertex_array);
 	RELEASE_ARRAY(normal_array);
+	RELEASE_ARRAY(uv_array);
 }
 
 void ComponentLoadedMesh::Update()

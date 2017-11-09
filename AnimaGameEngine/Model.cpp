@@ -3,6 +3,7 @@
 #include "libraries/assimp/include/assimp/postprocess.h"
 #include "Globals.h"
 #include "GameObject.h"
+#include "Application.h"
 #include "ModuleScene.h"
 
 Model::Model(std::string name, const char *file)
@@ -23,6 +24,8 @@ void Model::Load(std::string name, const char *file)
 	
 	aiNode *root_node = scene->mRootNode;
 	LoadHierarchy(root_node, model_go, file);
+
+	App->scene->AddGameObject(model_go);
 }
 
 void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)

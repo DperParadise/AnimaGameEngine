@@ -22,7 +22,7 @@ void ComponentGridMesh::Update()
 	{
 		if ((*it)->type == component_type::TRANSFORM)
 		{
-			position = ((ComponentTransform*)(*it))->position;
+			position = ((ComponentTransform*)(*it))->local_position;
 			break;
 		}
 	}

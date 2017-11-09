@@ -15,14 +15,17 @@ public:
 	virtual ~ComponentTransform();
 
 	void Load(aiNode *node);
+	void ComputeGlobalTransform();
 
 	virtual void Update();
 	virtual void Enable();
 	virtual void Disable();
 
-	aiVector3D position;
-	aiVector3D scale;
-	aiQuaternion rotation;
+	aiVector3D local_position;
+	aiVector3D local_scale;
+	aiQuaternion local_rotation;
+
+
 
 };
 

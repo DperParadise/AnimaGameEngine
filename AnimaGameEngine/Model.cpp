@@ -21,6 +21,7 @@ void Model::Load(std::string name, const char *file)
 	aiProcessPreset_TargetRealtime_Fast*/);
 	
 	model_go = new GameObject(name);
+	model_go->parent_go = nullptr;
 	
 	aiNode *root_node = scene->mRootNode;
 	LoadHierarchy(root_node, model_go, file);
@@ -29,31 +30,27 @@ void Model::Load(std::string name, const char *file)
 }
 
 void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)
-{
-	if (node->mNumChildren != 0)
+{	
+	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		for (uint i = 0; i < node->mNumChildren; i++)
-		{
-			GameObject *child_go = new GameObject(std::string("child_go"));
-			go->children_go.push_back(child_go);
+		GameObject *child_go = new GameObject(std::string("child_go"));
+		child_go->parent_go = go;
+		go->children_go.push_back(child_go);
 
-			aiNode *child_node = node->mChildren[i];
+		aiNode *child_node = node->mChildren[i];
 
-			LoadHierarchy(child_node, child_go, file);
-		}
+		LoadHierarchy(child_node, child_go, file);
 	}
-	else
-	{
-		//load component transform
-		go->CreateTransformComp(node);
 
-		//load component mesh and material
-		for (uint i = 0; i < node->mNumMeshes; i++)
-		{
-			uint mesh_index = node->mMeshes[i];
-			go->CreateMeshComp(scene->mMeshes[mesh_index]);
-			go->CreateMaterialComp(scene->mMeshes[mesh_index], scene, file);		
-		}
+	//load component transform
+	go->CreateTransformComp(node);
+
+	//load component mesh and material
+	for (uint i = 0; i < node->mNumMeshes; i++)
+	{
+		uint mesh_index = node->mMeshes[i];
+		go->CreateMeshComp(scene->mMeshes[mesh_index]);
+		go->CreateMaterialComp(scene->mMeshes[mesh_index], scene, file);
 	}
 }
 

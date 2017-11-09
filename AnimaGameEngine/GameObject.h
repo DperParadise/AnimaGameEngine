@@ -21,6 +21,7 @@ public:
 	Component* CreateMeshComp(aiMesh *mesh);
 	Component* CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 
+	GameObject *parent_go = nullptr;
 	bool active = true;
 	std::string name;
 	std::vector<Component*> components;

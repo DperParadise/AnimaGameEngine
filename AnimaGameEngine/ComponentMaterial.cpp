@@ -3,7 +3,7 @@
 #include <string>
 #include "TextureManager.h"
 
-ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go, aiMesh *mesh, aiScene *scene, const char *file_name) : Component(t, act, go)
+ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name) : Component(t, act, go)
 {	
 	Load(mesh, scene, file_name);
 }
@@ -22,7 +22,7 @@ void ComponentMaterial::Disable()
 	active = false;
 }
 
-void ComponentMaterial::Load(aiMesh *mesh, aiScene *scene, const char *file_name)
+void ComponentMaterial::Load(aiMesh *mesh, const aiScene *scene, const char *file_name)
 {
 	//Load Material
 	unsigned mat_index = mesh->mMaterialIndex;
@@ -34,6 +34,12 @@ void ComponentMaterial::Load(aiMesh *mesh, aiScene *scene, const char *file_name
 	mat->Get(AI_MATKEY_SHININESS, material.shininess);
 
 	//Load Texture
+	if (scene->mMaterials[mat_index]->GetTextureCount(aiTextureType::aiTextureType_DIFFUSE) == 0)
+	{
+		diffuse_texture = aiString("-1");
+		return;
+	}
+
 	aiString texture_file;
 	std::string texture_path = std::string(file_name);
 	std::size_t found = texture_path.find_last_of("/\\");
@@ -41,10 +47,11 @@ void ComponentMaterial::Load(aiMesh *mesh, aiScene *scene, const char *file_name
 	texture_path = texture_path.substr(0, found);
 	texture_path.push_back(separator);
 
-	scene->mMaterials[mat_index]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &texture_file);	
+	scene->mMaterials[mat_index]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &texture_file);
 	TextureManager::GetInstance()->Load(aiString(texture_path.append(texture_file.data)));
 
-	texture = aiString(texture_path);
+	diffuse_texture = aiString(texture_path);
+	
 }
 
 

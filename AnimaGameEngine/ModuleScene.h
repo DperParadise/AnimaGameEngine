@@ -16,6 +16,8 @@ public:
 	virtual update_status Update(float dt);
 	virtual bool CleanUp();
 
+	void AddGameObject(GameObject *go);
+
 private:
 	std::vector<GameObject*> game_objects;
 	

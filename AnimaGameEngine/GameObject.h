@@ -19,7 +19,7 @@ public:
 
 	Component* CreateTransformComp(aiNode *node);
 	Component* CreateMeshComp(aiMesh *mesh);
-	Component* CreateMaterialComp(aiMesh *mesh, aiScene *scene, const char *file_name);
+	Component* CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 
 	bool active = true;
 	std::string name;

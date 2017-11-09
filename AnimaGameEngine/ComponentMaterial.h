@@ -11,7 +11,7 @@ struct aiScene;
 class ComponentMaterial : public Component
 {
 public:
-	ComponentMaterial(component_type t, bool act, GameObject *go, aiMesh *mesh, aiScene *scene, const char *file_name);
+	ComponentMaterial(component_type t, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name);
 	~ComponentMaterial();
 
 	void Update();
@@ -27,10 +27,10 @@ public:
 	};
 
 	Material material;
-	aiString texture;
+	aiString diffuse_texture;
 
 private:	
-	void Load(aiMesh *mesh, aiScene *scene, const char *file_name);
+	void Load(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	
 };
 #endif

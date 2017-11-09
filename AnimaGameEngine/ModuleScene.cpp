@@ -87,3 +87,8 @@ GameObject* ModuleScene::CreateGameObject(const std::string &name)
 
 	return go;
 }
+
+void ModuleScene::AddGameObject(GameObject *go)
+{
+	game_objects.push_back(go);
+}

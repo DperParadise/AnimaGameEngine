@@ -20,6 +20,12 @@ GameObject::~GameObject()
 		RELEASE(*it);
 	}
 	components.clear();
+
+	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
+	{
+		RELEASE(*it);
+	}
+	children_go.clear();
 }
 
 void GameObject::Update()
@@ -103,7 +109,7 @@ Component* GameObject::CreateMeshComp(aiMesh *mesh)
 	return comp;
 }
 
-Component* GameObject::CreateMaterialComp(aiMesh *mesh, aiScene *scene, const char *file_name)
+Component* GameObject::CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name)
 {
 	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, mesh, scene, file_name);
 	components.push_back(comp);

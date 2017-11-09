@@ -30,7 +30,7 @@ void GameObject::Update()
 	}
 }
 
-Component *GameObject::CreateComponent(component_type type, const char *model_file)
+Component* GameObject::CreateComponent(component_type type, const char *model_file)
 {
 	Component *comp = nullptr;
 	switch (type)
@@ -87,4 +87,22 @@ Component *GameObject::CreateComponent(component_type type, const char *model_fi
 	}
 
 	return comp;
+}
+
+Component* GameObject::CreateTransformComp(aiNode *node)
+{
+	Component *comp = new ComponentTransform(component_type::TRANSFORM, true, this, aiNode *node);
+	components.push_back(comp);
+}
+
+Component* GameObject::CreateMeshComp(aiNode *node)
+{
+	Component *comp = new ComponentLoadedMesh(component_type::LOADED_MESH, true, this, aiNode *node);
+	components.push_back(comp);
+}
+
+Component* GameObject::CreateMaterialComp(aiMesh *mesh)
+{
+	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, aiMesh *mesh);
+	components.push_back(comp);
 }

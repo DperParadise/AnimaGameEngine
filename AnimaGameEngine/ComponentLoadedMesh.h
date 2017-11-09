@@ -2,14 +2,13 @@
 #define __COMPONENT_LOADED_MESH_H__
 
 #include "Component.h"
-#include "libraries/assimp/include/assimp/scene.h"
 
 class GameObject;
-class Importer;
+struct aiMesh;
 class ComponentLoadedMesh : public Component
 {
 public:
-	ComponentLoadedMesh(const char *file, component_type t, bool act, GameObject *go);
+	ComponentLoadedMesh(component_type t, bool act, GameObject *go, aiMesh *mesh);
 	~ComponentLoadedMesh();
 
 	void Update();
@@ -17,14 +16,14 @@ public:
 	void Disable();
 	
 private:
-	const aiScene *scene = nullptr;
-	Importer *importer = nullptr;
-	unsigned int num_meshes = 0;
-	unsigned int *num_vertices = nullptr;
-	float **vertex_array = nullptr;
-	float **normal_array = nullptr;
+	
+	unsigned int num_vertices = 0;
 
-	void LoadMesh(const char *file);
+	float *vertex_array = nullptr;
+	float *normal_array = nullptr;
+	float *uv_array = nullptr;
+
+	void Load(aiMesh *mesh);
 };
 
 

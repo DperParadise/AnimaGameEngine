@@ -17,7 +17,7 @@ public:
 	Component* CreateComponent(component_type type, const char *model_file = nullptr);
 
 	Component* CreateTransformComp(aiNode *node);
-	Component* CreateMeshComp(aiNode *node);
+	Component* CreateMeshComp(aiMesh *mesh);
 	Component* CreateMaterialComp(aiMesh *mesh);
 
 	bool active = true;

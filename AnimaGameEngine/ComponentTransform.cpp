@@ -1,6 +1,7 @@
 #include "ComponentTransform.h"
+#include "libraries/assimp/include/assimp/scene.h"
 
-ComponentTransform::ComponentTransform(component_type t, bool act, GameObject *go) : Component(t, act, go)
+ComponentTransform::ComponentTransform(component_type t, bool act, GameObject *go, aiNode *node) : Component(t, act, go)
 {
 	position.x = 0.0f;
 	position.y = 0.0f;
@@ -10,11 +11,19 @@ ComponentTransform::ComponentTransform(component_type t, bool act, GameObject *g
 	scale.y = 1.0f;
 	scale.z = 1.0f;
 
-	//TODO:initialize with quaternion identity
+	rotation.x = 0.0f;
+	rotation.y = 0.0f;
+	rotation.z = 0.0f;
+	rotation.w = 0.0f;
 
 }
 
 ComponentTransform::~ComponentTransform() {}
+
+void ComponentTransform::Load(aiNode *node)
+{
+	node->mTransformation.Decompose(scale, rotation, position);
+}
 
 void ComponentTransform::Update() {}
 

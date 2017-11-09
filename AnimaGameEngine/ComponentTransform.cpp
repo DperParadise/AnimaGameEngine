@@ -15,7 +15,7 @@ ComponentTransform::ComponentTransform(component_type t, bool act, GameObject *g
 	rotation.x = 0.0f;
 	rotation.y = 0.0f;
 	rotation.z = 0.0f;
-	rotation.w = 0.0f;
+	rotation.w = 1.0f;
 
 	Load(node);
 }

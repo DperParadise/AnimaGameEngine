@@ -11,7 +11,31 @@
 #include "ComponentLight.h"
 #include "ComponentAmbientLight.h"
 
-GameObject::GameObject(const std::string &name) : name(name) {}
+GameObject::GameObject(const std::string &name, aiNode *node) : name(name) 
+{
+	if (node)
+		LoadTransform(node);
+	else
+	{
+		transform.local_position.Set(0.0f, 0.0f, 0.0f);	
+		
+		transform.local_scale.Set(0.0f, 0.0f, 0.0f);	
+		
+		transform.local_rotation.x = 0.0f;
+		transform.local_rotation.y = 0.0f;
+		transform.local_rotation.z = 0.0f;
+		transform.local_rotation.w = 1.0f;
+
+		transform.world_position.Set(0.0f, 0.0f, 0.0f);
+		
+		transform.world_scale.Set(0.0f, 0.0f, 0.0f);
+
+		transform.world_rotation.x = 0.0f;
+		transform.world_rotation.y = 0.0f;
+		transform.world_rotation.z = 0.0f;
+		transform.world_rotation.w = 1.0f;
+	}
+}
 
 GameObject::~GameObject()
 {
@@ -34,6 +58,11 @@ void GameObject::Update()
 	{
 		(*it)->Update();
 	}
+}
+
+void GameObject::LoadTransform(aiNode *node)
+{
+	node->mTransformation.Decompose(transform.local_scale, transform.local_rotation, transform.local_position);
 }
 
 //Component* GameObject::CreateComponent(component_type type, const char *model_file)
@@ -94,13 +123,6 @@ void GameObject::Update()
 //
 //	return comp;
 //}
-
-Component* GameObject::CreateTransformComp(aiNode *node)
-{
-	Component *comp = new ComponentTransform(component_type::TRANSFORM, true, this, node);
-	components.push_back(comp);
-	return comp;
-}
 
 Component* GameObject::CreateMeshComp(aiMesh *mesh)
 {

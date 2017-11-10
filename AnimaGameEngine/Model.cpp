@@ -34,7 +34,7 @@ void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)
 {	
 	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		GameObject *child_go = new GameObject(std::string("child_go"));
+		GameObject *child_go = new GameObject(std::string("child_go"), node);
 		child_go->parent_go = go;
 		go->children_go.push_back(child_go);
 
@@ -42,9 +42,6 @@ void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)
 
 		LoadHierarchy(child_node, child_go, file);
 	}
-
-	//load component transform
-	go->CreateTransformComp(node);
 
 	//load component mesh and material
 	for (uint i = 0; i < node->mNumMeshes; i++)

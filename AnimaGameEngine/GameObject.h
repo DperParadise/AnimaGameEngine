@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 #include "Component.h"
+#include "libraries/assimp/include/assimp/vector3.h"
+#include "libraries/assimp/include/assimp/quaternion.h"
+#include "libraries/assimp/include/assimp/scene.h"
 
 struct aiNode;
 struct aiMesh;
@@ -11,21 +14,36 @@ struct aiScene;
 class GameObject
 {
 public:
-	GameObject(const std::string &name);
+
+	struct Transform
+	{
+		aiVector3D local_position;
+		aiVector3D local_scale;
+		aiQuaternion local_rotation;
+
+		aiVector3D world_position;
+		aiVector3D world_scale;
+		aiQuaternion world_rotation;
+	};
+
+	GameObject(const std::string &name, aiNode *node = nullptr);
 	~GameObject();
 
 	void Update();
 	//Component* CreateComponent(component_type type, const char *model_file = nullptr);
 
-	Component* CreateTransformComp(aiNode *node);
 	Component* CreateMeshComp(aiMesh *mesh);
 	Component* CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 
+	Transform transform;
 	GameObject *parent_go = nullptr;
 	bool active = true;
 	std::string name;
 	std::vector<Component*> components;
 	std::vector<GameObject*> children_go;
+
+private:
+	void LoadTransform(aiNode *node);
 };
 
 

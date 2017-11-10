@@ -15,7 +15,6 @@ public:
 	virtual ~ComponentTransform();
 
 	void Load(aiNode *node);
-	void ComputeGlobalTransform();
 
 	virtual void Update();
 	virtual void Enable();
@@ -25,6 +24,9 @@ public:
 	aiVector3D local_scale;
 	aiQuaternion local_rotation;
 
+	aiVector3D world_position;
+	aiVector3D world_scale;
+	aiQuaternion world_rotation;
 
 
 };

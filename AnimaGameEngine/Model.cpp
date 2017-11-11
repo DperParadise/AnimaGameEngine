@@ -34,7 +34,11 @@ void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)
 {	
 	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		GameObject *child_go = new GameObject(std::string("child_go"), node);
+		std::string node_name = std::string(node->mName.data);
+		if (node_name.empty())
+			node_name.append("child_go");
+
+		GameObject *child_go = new GameObject(node_name, node);
 		child_go->parent_go = go;
 		go->children_go.push_back(child_go);
 

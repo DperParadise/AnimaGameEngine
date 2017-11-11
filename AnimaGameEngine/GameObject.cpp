@@ -58,11 +58,28 @@ void GameObject::Update()
 	{
 		(*it)->Update();
 	}
+
+	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
+	{
+		(*it)->Update();
+	}
+
 }
 
-void GameObject::LoadTransform(aiNode *node)
+void GameObject::UpdateWorldTransform(GameObject *parent_go)
 {
-	node->mTransformation.Decompose(transform.local_scale, transform.local_rotation, transform.local_position);
+	if (parent_go && parent_go->dirty)
+	{
+		CombineTransform(parent_go->transform);
+		dirty = true;
+	}
+
+	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
+	{
+		(*it)->UpdateWorldTransform(this);
+	}
+
+	dirty = false;
 }
 
 //Component* GameObject::CreateComponent(component_type type, const char *model_file)
@@ -136,4 +153,16 @@ Component* GameObject::CreateMaterialComp(aiMesh *mesh, const aiScene *scene, co
 	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, mesh, scene, file_name);
 	components.push_back(comp);
 	return comp;
+}
+
+void GameObject::LoadTransform(aiNode *node)
+{
+	node->mTransformation.Decompose(transform.local_scale, transform.local_rotation, transform.local_position);
+}
+
+void GameObject::CombineTransform(Transform &other)
+{
+	transform.world_position = other.world_position + transform.local_position;
+	transform.world_scale = transform.local_scale.SymMul(other.world_scale);
+	transform.world_rotation = other.world_rotation * transform.local_rotation;	
 }

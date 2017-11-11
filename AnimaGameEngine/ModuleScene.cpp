@@ -22,7 +22,10 @@ update_status ModuleScene::Update(float dt)
 	for (std::vector<GameObject*>::iterator it = game_objects.begin(); it != game_objects.end(); it++)
 	{
 		(*it)->Update();
+
+		(*it)->UpdateWorldTransform((*it)->parent_go);
 	}
+
 	return UPDATE_CONTINUE;
 }
 

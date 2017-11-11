@@ -31,11 +31,14 @@ public:
 
 	void Update();
 	//Component* CreateComponent(component_type type, const char *model_file = nullptr);
+	void UpdateWorldTransform(GameObject *parent_go);
+
 
 	Component* CreateMeshComp(aiMesh *mesh);
 	Component* CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 
 	Transform transform;
+	bool dirty = true;
 	GameObject *parent_go = nullptr;
 	bool active = true;
 	std::string name;
@@ -44,6 +47,7 @@ public:
 
 private:
 	void LoadTransform(aiNode *node);
+	void CombineTransform(Transform &other);
 };
 
 

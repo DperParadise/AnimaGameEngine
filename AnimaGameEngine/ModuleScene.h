@@ -22,7 +22,6 @@ private:
 	std::vector<GameObject*> game_objects;
 	
 	GameObject* CreateGameObject(const std::string &name);
-
 };
 
 

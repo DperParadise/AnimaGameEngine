@@ -20,7 +20,7 @@ GameObject::GameObject(const std::string &name, aiNode *node) : name(name)
 	{
 		transform.local_position.Set(0.0f, 0.0f, 0.0f);	
 		
-		transform.local_scale.Set(0.0f, 0.0f, 0.0f);	
+		transform.local_scale.Set(1.0f, 1.0f, 1.0f);	
 		
 		transform.local_rotation.x = 0.0f;
 		transform.local_rotation.y = 0.0f;
@@ -29,7 +29,7 @@ GameObject::GameObject(const std::string &name, aiNode *node) : name(name)
 
 		transform.world_position.Set(0.0f, 0.0f, 0.0f);
 		
-		transform.world_scale.Set(0.0f, 0.0f, 0.0f);
+		transform.world_scale.Set(1.0f, 1.0f, 1.0f);
 
 		transform.world_rotation.x = 0.0f;
 		transform.world_rotation.y = 0.0f;
@@ -169,7 +169,7 @@ void GameObject::LoadTransform(aiNode *node)
 }
 
 void GameObject::CombineTransform(Transform &other)
-{
+{ 
 	transform.world_position = other.world_position + transform.local_position;
 	transform.world_scale = transform.local_scale.SymMul(other.world_scale);
 	transform.world_rotation = other.world_rotation * transform.local_rotation;	

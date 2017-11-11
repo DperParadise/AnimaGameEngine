@@ -16,16 +16,13 @@ public:
 	void Enable();
 	void Disable();
 	
-private:
-	
-	unsigned int num_vertices = 0;
-
 	float *vertex_array = nullptr;
 	float *normal_array = nullptr;
 	float *uv_array = nullptr;
-
 	ComponentMaterial *mesh_mat = nullptr;
+	unsigned int num_vertices = 0;
 
+private:	
 	void Load(aiMesh *mesh);
 };
 

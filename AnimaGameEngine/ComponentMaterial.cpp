@@ -36,7 +36,8 @@ void ComponentMaterial::Load(aiMesh *mesh, const aiScene *scene, const char *fil
 	//Load Texture
 	if (scene->mMaterials[mat_index]->GetTextureCount(aiTextureType::aiTextureType_DIFFUSE) == 0)
 	{
-		diffuse_texture = aiString("-1");
+		diffuse_texture = aiString("default_diff_tex");
+		TextureManager::GetInstance()->LoadDefaultTexture(diffuse_texture);
 		return;
 	}
 

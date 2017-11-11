@@ -96,6 +96,21 @@ unsigned TextureManager::ForceLoad(const aiString& file)
 	return 0;
 }
 
+unsigned TextureManager::LoadDefaultTexture(const aiString& tex_name)
+{
+	GLubyte white_pixel[4] = { (GLubyte)255, (GLubyte)255, (GLubyte)255, (GLubyte)255 };
+	
+	GLuint texture_id = 0;
+	glGenTextures(1, &texture_id);
+
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_UNSIGNED_BYTE, GL_UNSIGNED_BYTE, white_pixel);
+
+	return textures[tex_name] = texture_id;
+}
+
 TextureManager* TextureManager::GetInstance()
 {
 	if (!instance.get())

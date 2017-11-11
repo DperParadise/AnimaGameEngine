@@ -27,6 +27,7 @@ public:
 
 	unsigned Load(const aiString& file);
 	unsigned TextureManager::ForceLoad(const aiString& file);
+	unsigned LoadDefaultTexture(const aiString& tex_name);
 	void Clear();
 
 	static TextureManager *GetInstance();

@@ -68,7 +68,7 @@ void ComponentMeshRenderer::Update()
 		
 		glMultMatrixf(t_rot4x4);
 
-//		glScalef(owner_go->transform.world_scale.x, owner_go->transform.world_scale.y, owner_go->transform.world_scale.z);
+		glScalef(owner_go->transform.world_scale.x, owner_go->transform.world_scale.y, owner_go->transform.world_scale.z);
 		
 		glDrawArrays(GL_TRIANGLES, 0, owner_mesh->num_vertices);
 

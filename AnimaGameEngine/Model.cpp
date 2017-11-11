@@ -47,11 +47,12 @@ void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)
 		LoadHierarchy(child_node, child_go, file);
 	}
 
-	//load component mesh and material
+	//load component mesh and material. Create mesh renderer
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		uint mesh_index = node->mMeshes[i];
-		go->CreateMeshComp(scene->mMeshes[mesh_index]);
-		go->CreateMaterialComp(scene->mMeshes[mesh_index], scene, file);
+		Component *mat_comp = go->CreateMaterialComp(scene->mMeshes[mesh_index], scene, file);
+		Component *mesh_comp = go->CreateMeshComp((ComponentMaterial*)mat_comp, scene->mMeshes[mesh_index]);
+		go->CreateMeshRenderer((ComponentLoadedMesh*)mesh_comp);
 	}
 }

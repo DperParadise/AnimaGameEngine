@@ -164,6 +164,9 @@
     <ClInclude Include="FPSGraphWidget.h">
       <Filter>Editor Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentMeshRenderer.h">
+      <Filter>GameObject and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -285,6 +288,9 @@
     </ClCompile>
     <ClCompile Include="FPSGraphWidget.cpp">
       <Filter>Editor Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMeshRenderer.cpp">
+      <Filter>GameObject and Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

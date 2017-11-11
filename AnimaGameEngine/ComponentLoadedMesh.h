@@ -5,10 +5,11 @@
 
 class GameObject;
 struct aiMesh;
+class ComponentMaterial;
 class ComponentLoadedMesh : public Component
 {
 public:
-	ComponentLoadedMesh(component_type t, bool act, GameObject *go, aiMesh *mesh);
+	ComponentLoadedMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, aiMesh *mesh);
 	~ComponentLoadedMesh();
 
 	void Update();
@@ -22,6 +23,8 @@ private:
 	float *vertex_array = nullptr;
 	float *normal_array = nullptr;
 	float *uv_array = nullptr;
+
+	ComponentMaterial *mesh_mat = nullptr;
 
 	void Load(aiMesh *mesh);
 };

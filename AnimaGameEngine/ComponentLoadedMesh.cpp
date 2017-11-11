@@ -4,7 +4,7 @@
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include <vector>
 
-ComponentLoadedMesh::ComponentLoadedMesh(component_type t, bool act, GameObject *go, aiMesh *mesh) : Component(t, act, go)
+ComponentLoadedMesh::ComponentLoadedMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, aiMesh *mesh) : mesh_mat(mat), Component(t, act, go)
 {
 	Load(mesh);
 }

@@ -10,6 +10,7 @@
 #include "ComponentTexture.h"
 #include "ComponentLight.h"
 #include "ComponentAmbientLight.h"
+#include "ComponentMeshRenderer.h"
 
 GameObject::GameObject(const std::string &name, aiNode *node) : name(name) 
 {
@@ -141,9 +142,9 @@ void GameObject::UpdateWorldTransform(GameObject *parent_go)
 //	return comp;
 //}
 
-Component* GameObject::CreateMeshComp(aiMesh *mesh)
+Component* GameObject::CreateMeshComp(ComponentMaterial *mat, aiMesh *mesh)
 {
-	Component *comp = new ComponentLoadedMesh(component_type::LOADED_MESH, true, this, mesh);
+	Component *comp = new ComponentLoadedMesh(mat, component_type::LOADED_MESH, true, this, mesh);
 	components.push_back(comp);
 	return comp;
 }
@@ -151,6 +152,13 @@ Component* GameObject::CreateMeshComp(aiMesh *mesh)
 Component* GameObject::CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name)
 {
 	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, mesh, scene, file_name);
+	components.push_back(comp);
+	return comp;
+}
+
+Component* GameObject::CreateMeshRenderer(ComponentLoadedMesh *mesh_comp)
+{
+	Component *comp = new ComponentMeshRenderer(mesh_comp, component_type::MESH_RENDERER, true, this);
 	components.push_back(comp);
 	return comp;
 }

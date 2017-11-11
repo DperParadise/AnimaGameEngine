@@ -12,7 +12,8 @@ enum class component_type
 	MATERIAL,
 	TEXTURE,
 	LIGHT,
-	AMBIENT_LIGHT
+	AMBIENT_LIGHT,
+	MESH_RENDERER
 };
 
 class GameObject;

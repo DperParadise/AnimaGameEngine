@@ -11,6 +11,8 @@
 struct aiNode;
 struct aiMesh;
 struct aiScene;
+class ComponentMaterial;
+class ComponentLoadedMesh;
 class GameObject
 {
 public:
@@ -34,8 +36,9 @@ public:
 	void UpdateWorldTransform(GameObject *parent_go);
 
 
-	Component* CreateMeshComp(aiMesh *mesh);
+	Component* CreateMeshComp(ComponentMaterial *mat, aiMesh *mesh);
 	Component* CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
+	Component* CreateMeshRenderer(ComponentLoadedMesh *mesh);
 
 	Transform transform;
 	bool dirty = true;

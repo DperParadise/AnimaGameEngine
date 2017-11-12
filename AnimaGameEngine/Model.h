@@ -1,7 +1,6 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
-#include <string>
 class Importer;
 struct aiScene;
 struct aiNode;
@@ -10,7 +9,7 @@ class Model
 {	
 
 public:
-	Model(std::string name, const char *file);
+	Model(const char *file);
 	~Model();
 
 	std::string model_name;
@@ -19,8 +18,8 @@ public:
 private:
 	const aiScene *scene;
 	Importer *importer = nullptr;
-	void Load(std::string name, const char *file);
-	void LoadHierarchy(aiNode *node, GameObject *go, const char *file);
+	void Load(const char *file);
+	GameObject* LoadHierarchy(aiNode *node, GameObject *parent_go, const char *file);
 };
 
 #endif

@@ -7,47 +7,39 @@
 #include "Application.h"
 #include "ModuleScene.h"
 
-Model::Model(std::string name, const char *file)
+Model::Model(const char *file)
 {
-	Load(name, file);
+	Load(file);
 }
 
 Model::~Model() {}
 
-void Model::Load(std::string name, const char *file)
+void Model::Load(const char *file)
 {
-	scene = importer->GetInstance()->ReadFile(file,  /*aiPostProcessSteps::aiProcess_PreTransformVertices |*/ 
-		aiPostProcessSteps::aiProcess_FlipUVs |
-		aiPostProcessSteps::aiProcess_Triangulate /*| 
-	aiProcessPreset_TargetRealtime_Fast*/);
-	
-	model_go = new GameObject(name);
-	model_go->parent_go = nullptr;
+	unsigned flags = 0;
+	//flags |= aiPostProcessSteps::aiProcess_PreTransformVertices;
+	//flags |= aiPostProcessSteps::aiProcess_FlipUVs;
+	flags |= aiPostProcessSteps::aiProcess_Triangulate;
+	//flags |= aiProcessPreset_TargetRealtime_Fast;
+
+	scene = importer->GetInstance()->ReadFile(file, flags);
 	
 	aiNode *root_node = scene->mRootNode;
-	LoadHierarchy(root_node, model_go, file);
+	model_go = LoadHierarchy(root_node, nullptr, file);
 
 	App->scene->AddGameObject(model_go);
 }
 
-void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)
+GameObject *Model::LoadHierarchy(aiNode *node, GameObject *parent_go, const char *file)
 {	
-	for (uint i = 0; i < node->mNumChildren; i++)
-	{
-		std::string node_name = std::string(node->mName.data);
-		if (node_name.empty())
-			node_name.append("child_go");
+	std::string go_name = std::string(node->mName.data);
+	if (go_name.empty())
+		go_name.append("GameObject");
 
-		GameObject *child_go = new GameObject(node_name, node);
-		child_go->parent_go = go;
-		go->children_go.push_back(child_go);
+	GameObject *go = new GameObject(go_name, node);
+	go->parent_go = parent_go;
 
-		aiNode *child_node = node->mChildren[i];
-
-		LoadHierarchy(child_node, child_go, file);
-	}
-
-	//load component mesh and material. Create mesh renderer
+	// Load/create components
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		uint mesh_index = node->mMeshes[i];
@@ -55,4 +47,12 @@ void Model::LoadHierarchy(aiNode *node, GameObject *go, const char *file)
 		Component *mesh_comp = go->CreateMeshComp((ComponentMaterial*)mat_comp, scene->mMeshes[mesh_index]);
 		go->CreateMeshRenderer((ComponentLoadedMesh*)mesh_comp);
 	}
+
+	for (uint i = 0; i < node->mNumChildren; i++)
+	{
+		GameObject *child_go = LoadHierarchy(node->mChildren[i], go, file);
+		go->children_go.push_back(child_go);
+	}
+
+	return go;
 }

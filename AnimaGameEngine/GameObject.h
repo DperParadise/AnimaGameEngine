@@ -33,7 +33,7 @@ public:
 
 	void Update();
 	//Component* CreateComponent(component_type type, const char *model_file = nullptr);
-	void UpdateWorldTransform(GameObject *parent_go);
+	void UpdateWorldTransform();
 
 
 	Component* CreateMeshComp(ComponentMaterial *mat, aiMesh *mesh);
@@ -50,7 +50,7 @@ public:
 
 private:
 	void LoadTransform(aiNode *node);
-	void CombineTransform(Transform &other);
+	void CombineTransform(GameObject *parent_go);
 };
 
 

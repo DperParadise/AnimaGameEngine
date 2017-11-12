@@ -12,9 +12,10 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
-	 //Model model_batman = Model("Batman", "models/Batman/Batman.obj");
-	 Model iron_man = Model("IronMan", "models/IronManFBX/IronMan.FBX");
-	 //Model magneto = Model("Magneto", "models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
+	 //Model model_batman = Model("models/Batman/Batman.obj");
+	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX");
+	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
+	 Model street = Model("models/street/Street.obj");
 
 	return true;
 }
@@ -25,7 +26,7 @@ update_status ModuleScene::Update(float dt)
 	{
 		(*it)->Update();
 
-		(*it)->UpdateWorldTransform((*it)->parent_go);
+		(*it)->UpdateWorldTransform();
 	}
 
 	return UPDATE_CONTINUE;

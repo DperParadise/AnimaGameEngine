@@ -67,17 +67,17 @@ void GameObject::Update()
 
 }
 
-void GameObject::UpdateWorldTransform(GameObject *parent_go)
+void GameObject::UpdateWorldTransform()
 {
-	if (parent_go && parent_go->dirty)
-	{
-		CombineTransform(parent_go->transform);
+	if (parent_go && parent_go->dirty)	
 		dirty = true;
-	}
+
+	if(dirty)
+		CombineTransform(parent_go);
 
 	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
 	{
-		(*it)->UpdateWorldTransform(this);
+		(*it)->UpdateWorldTransform();
 	}
 
 	dirty = false;
@@ -168,9 +168,18 @@ void GameObject::LoadTransform(aiNode *node)
 	node->mTransformation.Decompose(transform.local_scale, transform.local_rotation, transform.local_position);
 }
 
-void GameObject::CombineTransform(Transform &other)
+void GameObject::CombineTransform(GameObject *parent_go)
 { 
-	transform.world_position = other.world_position + transform.local_position;
-	transform.world_scale = transform.local_scale.SymMul(other.world_scale);
-	transform.world_rotation = other.world_rotation * transform.local_rotation;	
+	if (!parent_go)
+	{
+		transform.world_position = transform.local_position;
+		transform.world_scale = transform.local_scale;
+		transform.world_rotation = transform.local_rotation;
+
+		return;
+	}
+
+	transform.world_position = parent_go->transform.world_position + transform.local_position;
+	transform.world_scale = parent_go->transform.world_scale.SymMul(transform.local_scale);
+	transform.world_rotation = parent_go->transform.world_rotation * transform.local_rotation;
 }

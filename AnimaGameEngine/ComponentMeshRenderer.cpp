@@ -36,6 +36,12 @@ void ComponentMeshRenderer::Update()
 		glMaterialfv(GL_FRONT, GL_SPECULAR, owner_mesh->mesh_mat->material.specular);
 		glMaterialf(GL_FRONT, GL_SHININESS, owner_mesh->mesh_mat->material.shininess);
 
+		/*MYLOG("ambient(%f,%f,%f,%f)  diffuse(%f,%f,%f,%f)  specular(%f,%f,%f,%f)  shinniness(%f)", owner_mesh->mesh_mat->material.ambient[0],
+			owner_mesh->mesh_mat->material.ambient[1], owner_mesh->mesh_mat->material.ambient[2], owner_mesh->mesh_mat->material.ambient[3],
+			owner_mesh->mesh_mat->material.diffuse[0], owner_mesh->mesh_mat->material.diffuse[1], owner_mesh->mesh_mat->material.diffuse[2],
+			owner_mesh->mesh_mat->material.diffuse[3], owner_mesh->mesh_mat->material.specular[0], owner_mesh->mesh_mat->material.specular[1],
+			owner_mesh->mesh_mat->material.specular[2], owner_mesh->mesh_mat->material.specular[3], owner_mesh->mesh_mat->material.shininess);*/
+		
 		//Apply world transform
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();

@@ -12,7 +12,9 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
-	 Model model_batman = Model("Batman", "models/Batman/Batman.obj");
+	 //Model model_batman = Model("Batman", "models/Batman/Batman.obj");
+	 Model iron_man = Model("IronMan", "models/IronManFBX/IronMan.FBX");
+	 //Model magneto = Model("Magneto", "models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
 
 	return true;
 }

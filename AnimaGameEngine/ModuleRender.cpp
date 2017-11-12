@@ -117,7 +117,15 @@ bool ModuleRender::Init(Config *config)
 	ilutRenderer(ILUT_OPENGL);	if (ilGetError() != IL_NO_ERROR)
 		MYLOG(iluErrorString(ilGetError()));
 
-	
+	//test ambient light
+	GLfloat amb[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat dir[4] = { 1.0f, 0.0f, 0.f, 0.f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, amb);
+	glLightfv(GL_LIGHT0, GL_POSITION, dir);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+
 	return ret;
 }
 

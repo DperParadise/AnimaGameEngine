@@ -22,6 +22,10 @@ private:
 	std::vector<GameObject*> game_objects;
 	
 	GameObject* CreateGameObject(const std::string &name);
+	GameObject* FindGameObject(const std::string &name);
+	GameObject* FindInHierarchy(const std::string &name, GameObject *go);
+	void LinkGameObject(GameObject *go, GameObject *dest);
+	
 };
 
 

@@ -52,6 +52,8 @@ public:
 	std::vector<Component*> components;
 	std::vector<GameObject*> children_go;
 
+	bool game_object_selected = true;
+
 private:
 
 	void LoadTransform(aiNode *node);

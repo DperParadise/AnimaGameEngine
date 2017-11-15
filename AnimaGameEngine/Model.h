@@ -17,7 +17,7 @@ public:
 		TRIANGULATE = aiPostProcessSteps::aiProcess_Triangulate
 	};
 
-	Model(const char *file, unsigned int load_flags);
+	Model(const char *file, unsigned int load_flags = 0);
 	~Model();
 	std::string model_name;
 	GameObject *model_go = nullptr;

@@ -1,16 +1,17 @@
-#ifndef __COMPONENT_LOADED_MESH_H__
-#define __COMPONENT_LOADED_MESH_H__
+#ifndef __COMPONENT_MESH_H__
+#define __COMPONENT_MESH_H__
 
 #include "Component.h"
 
 class GameObject;
 struct aiMesh;
 class ComponentMaterial;
-class ComponentLoadedMesh : public Component
+class ComponentMesh : public Component
 {
 public:
-	ComponentLoadedMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, aiMesh *mesh);
-	~ComponentLoadedMesh();
+	ComponentMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, aiMesh *mesh);
+	ComponentMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, float *vertices, float *normals, float *uv);
+	~ComponentMesh();
 
 	void Update();
 	void Enable();

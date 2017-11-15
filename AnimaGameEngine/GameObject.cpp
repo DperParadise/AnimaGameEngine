@@ -5,7 +5,7 @@
 #include "ComponentGridMesh.h"
 #include "ComponentGizmoMesh.h"
 #include "ComponentSphereMesh.h"
-#include "ComponentLoadedMesh.h"
+#include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentTexture.h"
 #include "ComponentLight.h"
@@ -142,21 +142,35 @@ void GameObject::UpdateWorldTransform()
 //	return comp;
 //}
 
-Component* GameObject::CreateMeshComp(ComponentMaterial *mat, aiMesh *mesh)
+Component* GameObject::CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv)
 {
-	Component *comp = new ComponentLoadedMesh(mat, component_type::LOADED_MESH, true, this, mesh);
+	Component *comp = new ComponentMesh(mat, component_type::MESH, true, this, vertices, normals, uv);
 	components.push_back(comp);
 	return comp;
 }
 
-Component* GameObject::CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name)
+Component* GameObject::CreatePrimitiveMatComp(float *ambient, float *diffuse, float *specular, float shininess)
+{
+	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, ambient, diffuse, specular, shininess);
+	components.push_back(comp);
+	return comp;
+}
+
+Component* GameObject::CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh)
+{
+	Component *comp = new ComponentMesh(mat, component_type::MESH, true, this, mesh);
+	components.push_back(comp);
+	return comp;
+}
+
+Component* GameObject::CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name)
 {
 	Component *comp = new ComponentMaterial(component_type::MATERIAL, true, this, mesh, scene, file_name);
 	components.push_back(comp);
 	return comp;
 }
 
-Component* GameObject::CreateMeshRenderer(ComponentLoadedMesh *mesh_comp)
+Component* GameObject::CreateMeshRenderer(ComponentMesh *mesh_comp)
 {
 	Component *comp = new ComponentMeshRenderer(mesh_comp, component_type::MESH_RENDERER, true, this);
 	components.push_back(comp);

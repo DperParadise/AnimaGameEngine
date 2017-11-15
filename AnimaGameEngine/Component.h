@@ -8,7 +8,7 @@ enum class component_type
 	GIZMO_MESH,
 	CUBE_MESH,
 	SPHERE_MESH,
-	LOADED_MESH,
+	MESH,
 	MATERIAL,
 	TEXTURE,
 	LIGHT,

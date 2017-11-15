@@ -8,6 +8,17 @@ ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go,
 	Load(mesh, scene, file_name);
 }
 
+ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess) : Component(t, act, go)
+{
+	memcpy(material.ambient, ambient, 4 * sizeof(float));
+	memcpy(material.diffuse, diffuse, 4 * sizeof(float));
+	memcpy(material.specular, specular, 4 * sizeof(float));
+	material.shininess = shininess;
+
+	diffuse_texture = aiString("default_diff_tex");
+	TextureManager::GetInstance()->LoadDefaultTexture(diffuse_texture);
+}
+
 ComponentMaterial::~ComponentMaterial() {}
 
 void ComponentMaterial::Update() {}

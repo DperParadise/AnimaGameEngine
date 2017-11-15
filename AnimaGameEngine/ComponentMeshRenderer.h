@@ -3,11 +3,11 @@
 
 #include "Component.h"
 
-class ComponentLoadedMesh;
+class ComponentMesh;
 class ComponentMeshRenderer : public Component
 {
 public:
-	ComponentMeshRenderer(ComponentLoadedMesh *mesh_comp, component_type t, bool act, GameObject *go);
+	ComponentMeshRenderer(ComponentMesh *mesh_comp, component_type t, bool act, GameObject *go);
 	~ComponentMeshRenderer();
 
 	void Update();
@@ -15,7 +15,7 @@ public:
 	void Disable();
 
 private:
-	ComponentLoadedMesh *owner_mesh = nullptr;
+	ComponentMesh *owner_mesh = nullptr;
 };
 
 #endif // !_COMP_MESH_RENDERER_H_

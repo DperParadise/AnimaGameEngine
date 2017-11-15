@@ -1,13 +1,13 @@
 #include "ComponentMeshRenderer.h"
 #include <vector>
 #include "GameObject.h"
-#include "ComponentLoadedMesh.h"
+#include "ComponentMesh.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "Globals.h"
 #include "ComponentMaterial.h"
 #include "TextureManager.h"
 
-ComponentMeshRenderer::ComponentMeshRenderer(ComponentLoadedMesh *mesh_comp, component_type t, bool act, GameObject *go) : owner_mesh(mesh_comp), Component(t, act, go) {}
+ComponentMeshRenderer::ComponentMeshRenderer(ComponentMesh *mesh_comp, component_type t, bool act, GameObject *go) : owner_mesh(mesh_comp), Component(t, act, go){}
 
 ComponentMeshRenderer::~ComponentMeshRenderer() {}
 
@@ -22,12 +22,12 @@ void ComponentMeshRenderer::Update()
 
 		if (owner_mesh->uv_array)
 		{
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glTexCoordPointer(2, GL_FLOAT, 0, owner_mesh->uv_array);
 			uint tex_id = TextureManager::GetInstance()->Load(owner_mesh->mesh_mat->diffuse_texture);
 			glBindTexture(GL_TEXTURE_2D, tex_id);
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_FLOAT, 0, owner_mesh->uv_array);		
 		}
-			
+		
 		glVertexPointer(3, GL_FLOAT, 0, owner_mesh->vertex_array);
 		glNormalPointer(GL_FLOAT, 0, owner_mesh->normal_array);
 	
@@ -80,8 +80,6 @@ void ComponentMeshRenderer::Update()
 
 		glPopMatrix();
 
-		glBindTexture(GL_TEXTURE_2D, 0);
-
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);	
 
@@ -89,6 +87,8 @@ void ComponentMeshRenderer::Update()
 		{
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
+
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
 

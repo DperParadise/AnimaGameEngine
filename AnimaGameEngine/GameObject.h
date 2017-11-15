@@ -12,7 +12,7 @@ struct aiNode;
 struct aiMesh;
 struct aiScene;
 class ComponentMaterial;
-class ComponentLoadedMesh;
+class ComponentMesh;
 class GameObject
 {
 public:
@@ -29,16 +29,19 @@ public:
 	};
 
 	GameObject(const std::string &name, aiNode *node = nullptr);
-	~GameObject();
+	virtual ~GameObject();
 
 	void Update();
 	//Component* CreateComponent(component_type type, const char *model_file = nullptr);
 	void UpdateWorldTransform();
 
+	Component *CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv);
+	Component *CreatePrimitiveMatComp(float *ambient, float *diffuse, float *specular, float shininess);
 
-	Component* CreateMeshComp(ComponentMaterial *mat, aiMesh *mesh);
-	Component* CreateMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
-	Component* CreateMeshRenderer(ComponentLoadedMesh *mesh);
+	Component* CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh);
+	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
+	Component* CreateMeshRenderer(ComponentMesh *mesh);
+
 
 	Transform transform;
 	bool dirty = true;

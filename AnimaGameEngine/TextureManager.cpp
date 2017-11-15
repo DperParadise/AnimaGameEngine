@@ -48,6 +48,8 @@ unsigned TextureManager::ForceLoad(const aiString& file)
 		glGenTextures(1, &textureId);
 
 		glBindTexture(GL_TEXTURE_2D, textureId);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -98,17 +100,18 @@ unsigned TextureManager::ForceLoad(const aiString& file)
 
 unsigned TextureManager::LoadDefaultTexture(const aiString& tex_name)
 {
-	GLubyte white_pixel[4] = { (GLubyte)255, (GLubyte)255, (GLubyte)255, (GLubyte)255 };
+	GLubyte def_texture[1][1][4] = { (GLubyte)128 , (GLubyte)128 , (GLubyte)128 , (GLubyte)255 };
 	
-	GLuint texture_id = 0;
-	glGenTextures(1, &texture_id);
+	GLuint texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, def_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	glBindTexture(GL_TEXTURE_2D, texture_id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_UNSIGNED_BYTE, GL_UNSIGNED_BYTE, white_pixel);
-
-	return textures[tex_name] = texture_id;
+	return textures[tex_name] = texture;
 }
 
 TextureManager* TextureManager::GetInstance()

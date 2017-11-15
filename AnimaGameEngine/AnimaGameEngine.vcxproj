@@ -149,7 +149,7 @@
     <ClInclude Include="ComponentGizmoMesh.h" />
     <ClInclude Include="ComponentGridMesh.h" />
     <ClInclude Include="ComponentLight.h" />
-    <ClInclude Include="ComponentLoadedMesh.h" />
+    <ClInclude Include="ComponentMesh.h" />
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentMeshRenderer.h" />
     <ClInclude Include="ComponentSphereMesh.h" />
@@ -157,6 +157,7 @@
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="CubeGO.h" />
     <ClInclude Include="EditorConsoleWidget.h" />
     <ClInclude Include="FPSGraphWidget.h" />
     <ClInclude Include="libraries\ImGui\imconfig.h" />
@@ -198,7 +199,7 @@
     <ClCompile Include="ComponentGizmoMesh.cpp" />
     <ClCompile Include="ComponentGridMesh.cpp" />
     <ClCompile Include="ComponentLight.cpp" />
-    <ClCompile Include="ComponentLoadedMesh.cpp" />
+    <ClCompile Include="ComponentMesh.cpp" />
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentMeshRenderer.cpp" />
     <ClCompile Include="ComponentSphereMesh.cpp" />
@@ -206,6 +207,7 @@
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="CubeGO.cpp" />
     <ClCompile Include="EditorConsoleWidget.cpp" />
     <ClCompile Include="FPSGraphWidget.cpp" />
     <ClCompile Include="libraries\ImGui\imgui.cpp" />

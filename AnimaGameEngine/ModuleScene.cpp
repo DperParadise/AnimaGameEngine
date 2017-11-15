@@ -3,10 +3,13 @@
 #include "Component.h"
 #include "ComponentLight.h"
 #include "Model.h"
+#include "CubeGO.h"
 
-#include "Application.h"
-#include "ModuleInput.h"
-#include <cmath>
+
+//test rotation
+//#include "Application.h"
+//#include "ModuleInput.h"
+//#include <cmath>
 
 ModuleScene::ModuleScene() {}
 
@@ -16,13 +19,16 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
+	 CubeGO *cube_go = new CubeGO("Cube");	
+	 AddGameObject(cube_go);
+
+	 //Model street = Model("models/street/Street.obj");
 	 //Model model_batman = Model("models/Batman/Batman.obj");
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX");
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
-	 Model street = Model("models/street/Street.obj");
 
 	 //test rotation of node g Line002
-	 GameObject *crossroad = FindGameObject("g Line002");
+	 /*GameObject *crossroad = FindGameObject("g Line002");
 	 int id = 0;
 	 if (crossroad)
 	 {
@@ -36,7 +42,7 @@ ModuleScene::~ModuleScene() {}
 			 else
 				 id++;
 		 }	 
-	 }
+	 }*/
 
 	return true;
 }
@@ -50,19 +56,21 @@ update_status ModuleScene::Update(float dt)
 		(*it)->UpdateWorldTransform();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
-	{
-		//test rotation of node g Line002
-		GameObject *crossroad = FindGameObject("g Line002");
-		aiQuaternion rot;
-		rot.x = 0.0f;
-		rot.y = sin(0.5f * 0.1f);
-		rot.z = 0.0f;
-		rot.w = cos(0.5f * 0.1f);
-
-		crossroad->transform.local_rotation = crossroad->transform.local_rotation * rot;
-		crossroad->dirty = true;
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
+	//{
+	//	//test rotation of node g Line002
+	//	GameObject *crossroad = FindGameObject("g Line002");
+	//	aiQuaternion rot;
+	//	rot.x = 0.0f;
+	//	rot.y = sin(0.5f * 0.01f);
+	//	rot.z = 0.0f;
+	//	rot.w = cos(0.5f * 0.01f);
+	//	if (crossroad)
+	//	{
+	//		crossroad->transform.local_rotation = crossroad->transform.local_rotation * rot;
+	//		crossroad->dirty = true;
+	//	}
+	//}
 
 	return UPDATE_CONTINUE;
 }

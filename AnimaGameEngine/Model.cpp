@@ -43,9 +43,9 @@ GameObject *Model::LoadHierarchy(aiNode *node, GameObject *parent_go, const char
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		uint mesh_index = node->mMeshes[i];
-		Component *mat_comp = go->CreateMaterialComp(scene->mMeshes[mesh_index], scene, file);
-		Component *mesh_comp = go->CreateMeshComp((ComponentMaterial*)mat_comp, scene->mMeshes[mesh_index]);
-		go->CreateMeshRenderer((ComponentLoadedMesh*)mesh_comp);
+		Component *mat_comp = go->CreateLoadedMaterialComp(scene->mMeshes[mesh_index], scene, file);
+		Component *mesh_comp = go->CreateLoadedMeshComp((ComponentMaterial*)mat_comp, scene->mMeshes[mesh_index]);
+		go->CreateMeshRenderer((ComponentMesh*)mesh_comp);
 	}
 
 	for (uint i = 0; i < node->mNumChildren; i++)

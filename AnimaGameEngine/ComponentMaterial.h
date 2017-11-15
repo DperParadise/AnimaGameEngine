@@ -12,6 +12,7 @@ class ComponentMaterial : public Component
 {
 public:
 	ComponentMaterial(component_type t, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name);
+	ComponentMaterial(component_type t, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess);
 	~ComponentMaterial();
 
 	void Update();

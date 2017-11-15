@@ -18,11 +18,11 @@
     <Filter Include="Primitives">
       <UniqueIdentifier>{11d6e440-4f89-4439-a8f7-0812b2b95c1c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject and Components">
-      <UniqueIdentifier>{145fcb29-496e-49bd-8c38-7e67bddb3677}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Editor Widgets">
       <UniqueIdentifier>{d71d9a7a-bb40-4853-bb10-a8ac88276646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects and Components">
+      <UniqueIdentifier>{145fcb29-496e-49bd-8c38-7e67bddb3677}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,46 +93,43 @@
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentTransform.h">
-      <Filter>GameObject and Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentLoadedMesh.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentCubeMesh.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentGridMesh.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentGizmoMesh.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentSphereMesh.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="Importer.h">
       <Filter>Geometry Load</Filter>
     </ClInclude>
     <ClInclude Include="ComponentMaterial.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ModuleScene.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
     <ClInclude Include="ComponentTexture.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentLight.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentAmbientLight.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ModuleEditorGUI.h">
       <Filter>CoreModules</Filter>
@@ -165,7 +162,13 @@
       <Filter>Editor Widgets</Filter>
     </ClInclude>
     <ClInclude Include="ComponentMeshRenderer.h">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentMesh.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeGO.h">
+      <Filter>GameObjects and Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,46 +230,43 @@
       <Filter>Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
-      <Filter>GameObject and Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentLoadedMesh.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentCubeMesh.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentGridMesh.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentGizmoMesh.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentSphereMesh.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="Importer.cpp">
       <Filter>Geometry Load</Filter>
     </ClCompile>
     <ClCompile Include="ComponentMaterial.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ModuleScene.cpp">
       <Filter>CoreModules</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTexture.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentLight.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentAmbientLight.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ModuleEditorGUI.cpp">
       <Filter>CoreModules</Filter>
@@ -290,7 +290,13 @@
       <Filter>Editor Widgets</Filter>
     </ClCompile>
     <ClCompile Include="ComponentMeshRenderer.cpp">
-      <Filter>GameObject and Components</Filter>
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeGO.cpp">
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

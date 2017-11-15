@@ -6,9 +6,9 @@
 #include "CubeGO.h"
 
 //test rotation
-//#include "Application.h"
-//#include "ModuleInput.h"
-//#include <cmath>
+#include "Application.h"
+#include "ModuleInput.h"
+#include <cmath>
 
 ModuleScene::ModuleScene() {}
 
@@ -22,9 +22,9 @@ ModuleScene::~ModuleScene() {}
 	 //AddGameObject(cube_go);
 
 	 Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
-	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+	 //Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
-	 Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
+	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 
 	 //test rotation of node g Line002
 	 /*GameObject *crossroad = FindGameObject("g Line002");
@@ -72,6 +72,58 @@ update_status ModuleScene::Update(float dt)
 	//		crossroad->dirty = true;
 	//	}
 	//}
+
+	int speed = 10;
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		aiVector3D pos = game_objects[0]->transform.local_position;
+		pos.Set(pos.x, pos.y, pos.z + speed * dt);
+		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		aiVector3D pos = game_objects[0]->transform.local_position;
+		pos.Set(pos.x, pos.y, pos.z - speed * dt);
+		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		aiVector3D pos = game_objects[0]->transform.local_position;
+		pos.Set(pos.x + speed * dt, pos.y, pos.z);
+		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		aiVector3D pos = game_objects[0]->transform.local_position;
+		pos.Set(pos.x - speed * dt, pos.y, pos.z);
+		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT)
+	{
+		game_objects[0]->transform.Rotate(0.0f, speed * dt, 0.0f);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
+	{
+		aiVector3D scale = game_objects[0]->transform.local_scale;
+		scale.x += speed * dt;
+		scale.y += speed * dt;
+		scale.z += speed * dt;
+
+		game_objects[0]->transform.Scale(scale.x, scale.y, scale.z);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
+	{
+		aiVector3D scale = game_objects[0]->transform.local_scale;
+		scale.x -= speed * dt;
+		scale.y -= speed * dt;
+		scale.z -= speed * dt;
+
+		game_objects[0]->transform.Scale(scale.x, scale.y, scale.z);
+	}
+
 
 	return UPDATE_CONTINUE;
 }

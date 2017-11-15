@@ -20,6 +20,8 @@ public:
 
 	struct Transform
 	{
+	public:
+		Transform(GameObject *owner) : owner_go(owner) {}
 		aiVector3D local_position;
 		aiVector3D local_scale;
 		aiQuaternion local_rotation;
@@ -27,6 +29,12 @@ public:
 		aiVector3D world_position;
 		aiVector3D world_scale;
 		aiQuaternion world_rotation;
+
+		GameObject *owner_go = nullptr;
+		//local translation, rotation, scale
+		void Translate(float x, float y, float z);
+		void Rotate(float x, float y, float z);
+		void Scale(float x, float y, float z);
 	};
 
 	GameObject(const std::string &name, aiNode *node = nullptr);
@@ -53,6 +61,8 @@ public:
 	std::vector<GameObject*> children_go;
 
 	bool game_object_selected = true;
+
+	
 
 private:
 

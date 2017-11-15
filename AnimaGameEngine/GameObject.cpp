@@ -12,7 +12,7 @@
 #include "ComponentAmbientLight.h"
 #include "ComponentMeshRenderer.h"
 
-GameObject::GameObject(const std::string &name, aiNode *node) : name(name) 
+GameObject::GameObject(const std::string &name, aiNode *node) : name(name) , transform(this)
 {
 	if (node)
 		LoadTransform(node);
@@ -200,3 +200,25 @@ void GameObject::CombineTransform(GameObject *parent_go)
 	transform.world_scale = parent_go->transform.world_scale.SymMul(transform.local_scale);
 	transform.world_rotation = parent_go->transform.world_rotation * transform.local_rotation;
 }
+
+void GameObject::Transform::Translate(float x, float y, float z)
+{
+	local_position.Set(x, y, z);
+	owner_go->dirty = true;
+}
+
+void GameObject::Transform::Rotate(float x, float y, float z)
+{
+	aiQuaternion rot(y, z, x);
+	aiQuaternion result = local_rotation*rot;
+	local_rotation = result;
+	owner_go->dirty = true;
+}
+
+void GameObject::Transform::Scale(float x, float y, float z)
+{
+	local_scale.Set(x, y, z);
+	owner_go->dirty = true;
+}
+
+

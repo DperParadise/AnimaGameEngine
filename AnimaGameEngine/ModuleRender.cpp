@@ -87,7 +87,6 @@ bool ModuleRender::Init(Config *config)
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glClearDepth(1.0f);
-	glClearColor(0.0, 0.0f, 0.0f, 1.f);
 
 	//Check for error
 	error = glGetError();
@@ -119,7 +118,7 @@ bool ModuleRender::Init(Config *config)
 
 	//test ambient light
 	GLfloat amb[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat dir[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat dir[4] = { 1.0f, 1.0f, 1.0f, 0.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, amb);
 	glLightfv(GL_LIGHT0, GL_POSITION, dir);
@@ -131,7 +130,7 @@ bool ModuleRender::Init(Config *config)
 
 update_status ModuleRender::PreUpdate(float dt)
 {	
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	return UPDATE_CONTINUE;

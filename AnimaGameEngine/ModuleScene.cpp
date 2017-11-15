@@ -18,11 +18,11 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
-	 CubeGO *cube_go = new CubeGO("Cube");	
-	 AddGameObject(cube_go);
+	 //CubeGO *cube_go = new CubeGO("Cube");	
+	 //AddGameObject(cube_go);
 
 	 //Model street = Model("models/street/Street.obj");
-	 //Model model_batman = Model("models/Batman/Batman.obj");
+	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs);
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX");
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj");
 

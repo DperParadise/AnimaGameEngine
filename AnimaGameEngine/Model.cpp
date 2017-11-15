@@ -1,25 +1,23 @@
 #include "Importer.h"
 #include "Model.h"
 #include "libraries/assimp/include/assimp/scene.h"
-#include "libraries/assimp/include/assimp/postprocess.h"
 #include "Globals.h"
 #include "GameObject.h"
 #include "Application.h"
 #include "ModuleScene.h"
 
-Model::Model(const char *file)
+Model::Model(const char *file, unsigned int load_flags)
 {
-	Load(file);
+	Load(file, load_flags);
 }
 
 Model::~Model() {}
 
-void Model::Load(const char *file)
+void Model::Load(const char *file, unsigned int flags)
 {
-	unsigned flags = 0;
 	//flags |= aiPostProcessSteps::aiProcess_PreTransformVertices;
 	//flags |= aiPostProcessSteps::aiProcess_FlipUVs;
-	flags |= aiPostProcessSteps::aiProcess_Triangulate;
+	//flags |= aiPostProcessSteps::aiProcess_Triangulate;
 	//flags |= aiProcessPreset_TargetRealtime_Fast;
 
 	scene = importer->GetInstance()->ReadFile(file, flags);

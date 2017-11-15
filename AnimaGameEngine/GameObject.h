@@ -7,6 +7,7 @@
 #include "libraries/assimp/include/assimp/vector3.h"
 #include "libraries/assimp/include/assimp/quaternion.h"
 #include "libraries/assimp/include/assimp/scene.h"
+#include "Gizmo.h"
 
 struct aiNode;
 struct aiMesh;
@@ -52,8 +53,10 @@ public:
 	std::vector<GameObject*> children_go;
 
 private:
+
 	void LoadTransform(aiNode *node);
 	void CombineTransform(GameObject *parent_go);
+	Gizmo gizmo;
 };
 
 

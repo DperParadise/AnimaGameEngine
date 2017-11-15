@@ -5,7 +5,6 @@
 #include "Model.h"
 #include "CubeGO.h"
 
-
 //test rotation
 //#include "Application.h"
 //#include "ModuleInput.h"
@@ -54,6 +53,8 @@ update_status ModuleScene::Update(float dt)
 		(*it)->Update();
 
 		(*it)->UpdateWorldTransform();
+
+
 	}
 
 	//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)

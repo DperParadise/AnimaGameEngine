@@ -55,6 +55,8 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+	gizmo.Draw(this);
+
 	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
 		(*it)->Update();

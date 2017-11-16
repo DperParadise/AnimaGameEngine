@@ -75,8 +75,11 @@ void GameObject::UpdateWorldTransform()
 	if (parent_go && parent_go->dirty)	
 		dirty = true;
 
-	if(dirty)
+	if (dirty)
+	{
 		CombineTransform(parent_go);
+		UpdateBaseVectors(transform.world_rotation);
+	}
 
 	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
 	{
@@ -199,6 +202,14 @@ void GameObject::CombineTransform(GameObject *parent_go)
 	transform.world_position = parent_go->transform.world_position + transform.local_position;
 	transform.world_scale = parent_go->transform.world_scale.SymMul(transform.local_scale);
 	transform.world_rotation = parent_go->transform.world_rotation * transform.local_rotation;
+}
+
+void GameObject::UpdateBaseVectors(aiQuaternion world_rotation)
+{
+	aiMatrix3x3 rot_matrix = world_rotation.GetMatrix();
+	transform.forward.Set(rot_matrix.a3, rot_matrix.b3, rot_matrix.c3);
+	transform.left.Set(rot_matrix.a1, rot_matrix.b1, rot_matrix.c1);
+	transform.up.Set(rot_matrix.a2, rot_matrix.b2, rot_matrix.c2);
 }
 
 void GameObject::Transform::Translate(float x, float y, float z)

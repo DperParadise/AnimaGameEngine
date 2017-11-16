@@ -31,6 +31,10 @@ public:
 		aiQuaternion world_rotation;
 
 		GameObject *owner_go = nullptr;
+		aiVector3D forward;
+		aiVector3D left;
+		aiVector3D up;
+
 		//local translation, rotation, scale
 		void Translate(float x, float y, float z);
 		void Rotate(float x, float y, float z);
@@ -68,6 +72,7 @@ private:
 
 	void LoadTransform(aiNode *node);
 	void CombineTransform(GameObject *parent_go);
+	void UpdateBaseVectors(aiQuaternion local_rot);
 	Gizmo gizmo;
 };
 

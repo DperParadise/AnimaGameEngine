@@ -109,7 +109,9 @@ void Gizmo::Draw(const GameObject *go) const
 	glColorPointer(3, GL_FLOAT, 0, colors);
 	glLineWidth(2.0f);
 	glEnable(GL_COLOR_MATERIAL);
+	glDisable(GL_DEPTH_TEST);
 	glDrawArrays(GL_LINES, 0, num_vertices);
+	glEnable(GL_DEPTH_TEST);
 
 	glPopMatrix();
 

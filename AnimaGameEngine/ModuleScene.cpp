@@ -18,13 +18,18 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
+	 GameObject *world_origin = new GameObject("world origin");
+	 world_origin->dirty = false;
+	 AddGameObject(world_origin);
+
 	 //CubeGO *cube_go = new CubeGO("Cube");	
 	 //AddGameObject(cube_go);
-
 	 Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
-	 //Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+	  
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
+	 
 
 	 //test rotation of node g Line002
 	 /*GameObject *crossroad = FindGameObject("g Line002");
@@ -74,54 +79,75 @@ update_status ModuleScene::Update(float dt)
 	//}
 
 	int speed = 10;
+	int scale_speed = 1;
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		aiVector3D pos = game_objects[0]->transform.local_position;
-		pos.Set(pos.x, pos.y, pos.z + speed * dt);
-		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+		aiVector3D pos = game_objects[2]->transform.local_position;
+
+		aiVector3D dir = aiVector3D(game_objects[2]->transform.forward.x * speed * dt, 
+			game_objects[2]->transform.forward.y * speed * dt,	
+			game_objects[2]->transform.forward.z * speed * dt);
+
+		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		aiVector3D pos = game_objects[0]->transform.local_position;
-		pos.Set(pos.x, pos.y, pos.z - speed * dt);
-		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+		aiVector3D pos = game_objects[2]->transform.local_position;
+
+		aiVector3D dir = aiVector3D(game_objects[2]->transform.forward.x * -speed * dt,
+			game_objects[2]->transform.forward.y * -speed * dt,
+			game_objects[2]->transform.forward.z * -speed * dt);
+
+		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		aiVector3D pos = game_objects[0]->transform.local_position;
-		pos.Set(pos.x + speed * dt, pos.y, pos.z);
-		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+		aiVector3D pos = game_objects[2]->transform.local_position;
+
+		aiVector3D dir = aiVector3D(game_objects[2]->transform.left.x * speed * dt,
+			game_objects[2]->transform.left.y * speed * dt,
+			game_objects[2]->transform.left.z * speed * dt);
+
+		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		aiVector3D pos = game_objects[0]->transform.local_position;
-		pos.Set(pos.x - speed * dt, pos.y, pos.z);
-		game_objects[0]->transform.Translate(pos.x, pos.y, pos.z);
+		aiVector3D pos = game_objects[2]->transform.local_position;
+
+		aiVector3D dir = aiVector3D(game_objects[2]->transform.left.x * -speed * dt,
+			game_objects[2]->transform.left.y * -speed * dt,
+			game_objects[2]->transform.left.z * -speed * dt);
+
+		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
 	}
 
 
 	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT)
 	{
-		game_objects[0]->transform.Rotate(0.0f, speed * dt, 0.0f);
+		game_objects[2]->transform.Rotate(0.0f, speed * dt, 0.0f);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_REPEAT)
+	{
+		game_objects[2]->transform.Rotate(0.0f, -speed * dt, 0.0f);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
 	{
-		aiVector3D scale = game_objects[0]->transform.local_scale;
-		scale.x += speed * dt;
-		scale.y += speed * dt;
-		scale.z += speed * dt;
+		aiVector3D scale = game_objects[2]->transform.local_scale;
+		scale.x += scale_speed * dt;
+		scale.y += scale_speed * dt;
+		scale.z += scale_speed * dt;
 
-		game_objects[0]->transform.Scale(scale.x, scale.y, scale.z);
+		game_objects[2]->transform.Scale(scale.x, scale.y, scale.z);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
 	{
-		aiVector3D scale = game_objects[0]->transform.local_scale;
-		scale.x -= speed * dt;
-		scale.y -= speed * dt;
-		scale.z -= speed * dt;
+		aiVector3D scale = game_objects[2]->transform.local_scale;
+		scale.x -= scale_speed * dt;
+		scale.y -= scale_speed * dt;
+		scale.z -= scale_speed * dt;
 
-		game_objects[0]->transform.Scale(scale.x, scale.y, scale.z);
+		game_objects[2]->transform.Scale(scale.x, scale.y, scale.z);
 	}
 
 

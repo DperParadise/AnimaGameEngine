@@ -9,7 +9,7 @@ ComponentCubeMesh::ComponentCubeMesh(component_type t, bool act, GameObject *go)
 
 ComponentCubeMesh::~ComponentCubeMesh() {}
 
-void ComponentCubeMesh::Update()
+void ComponentCubeMesh::Update(float dt)
 {
 	if (!active)
 		return;

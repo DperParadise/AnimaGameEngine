@@ -16,7 +16,7 @@ public:
 
 	void Load(aiNode *node);
 
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual void Enable();
 	virtual void Disable();
 

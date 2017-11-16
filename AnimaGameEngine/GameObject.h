@@ -44,7 +44,7 @@ public:
 	GameObject(const std::string &name, aiNode *node = nullptr);
 	virtual ~GameObject();
 
-	void Update();
+	void Update(float dt);
 	//Component* CreateComponent(component_type type, const char *model_file = nullptr);
 	void UpdateWorldTransform();
 
@@ -54,7 +54,7 @@ public:
 	Component* CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh);
 	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	Component* CreateMeshRenderer(ComponentMesh *mesh);
-
+	Component* CreateBehaviour(std::string name);
 
 	Transform transform;
 	bool dirty = true;

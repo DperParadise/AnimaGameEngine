@@ -30,7 +30,7 @@ ComponentTexture::~ComponentTexture()
 
 }
 
-void ComponentTexture::Update() {}
+void ComponentTexture::Update(float dt) {}
 
 void ComponentTexture::Enable()
 {

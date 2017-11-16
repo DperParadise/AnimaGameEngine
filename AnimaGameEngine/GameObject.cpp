@@ -11,6 +11,7 @@
 #include "ComponentLight.h"
 #include "ComponentAmbientLight.h"
 #include "ComponentMeshRenderer.h"
+#include "ComponentBehaviour.h"
 
 GameObject::GameObject(const std::string &name, aiNode *node) : name(name) , transform(this)
 {
@@ -53,19 +54,19 @@ GameObject::~GameObject()
 	children_go.clear();
 }
 
-void GameObject::Update()
+void GameObject::Update(float dt)
 {
 	if(game_object_selected)
 		gizmo.Draw(this);
 
 	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
-		(*it)->Update();
+		(*it)->Update(dt);
 	}
 
 	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
 	{
-		(*it)->Update();
+		(*it)->Update(dt);
 	}
 
 }
@@ -179,6 +180,13 @@ Component* GameObject::CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *sce
 Component* GameObject::CreateMeshRenderer(ComponentMesh *mesh_comp)
 {
 	Component *comp = new ComponentMeshRenderer(mesh_comp, component_type::MESH_RENDERER, true, this);
+	components.push_back(comp);
+	return comp;
+}
+
+Component *GameObject::CreateBehaviour(std::string name)
+{
+	Component *comp = new ComponentBehaviour(name, component_type::BEHAVIOUR, true, this);
 	components.push_back(comp);
 	return comp;
 }

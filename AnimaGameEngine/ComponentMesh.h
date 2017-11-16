@@ -13,7 +13,7 @@ public:
 	ComponentMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, float *vertices, float *normals, float *uv);
 	~ComponentMesh();
 
-	void Update();
+	void Update(float dt);
 	void Enable();
 	void Disable();
 	

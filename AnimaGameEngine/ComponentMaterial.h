@@ -15,7 +15,7 @@ public:
 	ComponentMaterial(component_type t, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess);
 	~ComponentMaterial();
 
-	void Update();
+	void Update(float dt);
 	void Enable();
 	void Disable();
 

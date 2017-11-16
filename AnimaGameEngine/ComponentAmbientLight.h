@@ -10,7 +10,7 @@ public:
 	ComponentAmbientLight(component_type t, bool act, GameObject *go);
 	~ComponentAmbientLight();
 
-	void Update();
+	void Update(float dt);
 	void Enable();
 	void Disable();
 

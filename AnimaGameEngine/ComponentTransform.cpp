@@ -32,7 +32,7 @@ void ComponentTransform::Load(aiNode *node)
 	node->mTransformation.Decompose(local_scale, local_rotation, local_position);
 }
 
-void ComponentTransform::Update(){}
+void ComponentTransform::Update(float dt){}
 
 void ComponentTransform::Enable() {}
 

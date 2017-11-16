@@ -11,7 +11,7 @@ public:
 	ComponentLight(component_type t, bool act, GameObject *go);
 	~ComponentLight();
 
-	void Update();
+	void Update(float dt);
 	void Enable();
 	void Disable();
 	void SetPosition(float x, float y, float z);

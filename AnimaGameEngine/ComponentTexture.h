@@ -14,7 +14,7 @@ public:
 	ComponentTexture(const char *file, component_type t, bool act, GameObject *go);
 	~ComponentTexture();
 
-	void Update();
+	void Update(float dt);
 	void Enable();
 	void Disable();
 

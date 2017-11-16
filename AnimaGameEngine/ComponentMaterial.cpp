@@ -21,7 +21,7 @@ ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go,
 
 ComponentMaterial::~ComponentMaterial() {}
 
-void ComponentMaterial::Update() {}
+void ComponentMaterial::Update(float dt) {}
 
 void ComponentMaterial::Enable()
 {

@@ -21,7 +21,7 @@ ComponentLight::~ComponentLight()
 	Disable();
 }
 
-void ComponentLight::Update(){}
+void ComponentLight::Update(float dt){}
 
 void ComponentLight::Enable()
 {

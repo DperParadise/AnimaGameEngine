@@ -11,7 +11,7 @@ ComponentMeshRenderer::ComponentMeshRenderer(ComponentMesh *mesh_comp, component
 
 ComponentMeshRenderer::~ComponentMeshRenderer() {}
 
-void ComponentMeshRenderer::Update()
+void ComponentMeshRenderer::Update(float dt)
 {
 	if (active)
 	{

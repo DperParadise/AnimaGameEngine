@@ -13,7 +13,8 @@ enum class component_type
 	TEXTURE,
 	LIGHT,
 	AMBIENT_LIGHT,
-	MESH_RENDERER
+	MESH_RENDERER,
+	BEHAVIOUR
 };
 
 class GameObject;
@@ -23,7 +24,7 @@ public:
 	Component(component_type t, bool act, GameObject *go);
 	virtual ~Component();
 	
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual void Enable() = 0;
 	virtual void Disable() = 0;
 

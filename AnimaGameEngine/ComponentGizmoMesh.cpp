@@ -9,7 +9,7 @@ ComponentGizmoMesh::ComponentGizmoMesh(component_type t, bool act, GameObject *g
 
 ComponentGizmoMesh::~ComponentGizmoMesh() {}
 
-void ComponentGizmoMesh::Update()
+void ComponentGizmoMesh::Update(float dt)
 {
 	if (!active)
 		return;

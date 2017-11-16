@@ -170,6 +170,9 @@
     <ClInclude Include="CubeGO.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentBehaviour.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -296,6 +299,9 @@
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="CubeGO.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentBehaviour.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>

@@ -10,7 +10,7 @@ public:
 	ComponentMeshRenderer(ComponentMesh *mesh_comp, component_type t, bool act, GameObject *go);
 	~ComponentMeshRenderer();
 
-	void Update();
+	void Update(float dt);
 	void Enable();
 	void Disable();
 

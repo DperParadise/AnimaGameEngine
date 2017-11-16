@@ -21,7 +21,7 @@ ComponentMesh::~ComponentMesh()
 	RELEASE_ARRAY(uv_array);
 }
 
-void ComponentMesh::Update(){}
+void ComponentMesh::Update(float dt){}
 
 void ComponentMesh::Enable()
 {

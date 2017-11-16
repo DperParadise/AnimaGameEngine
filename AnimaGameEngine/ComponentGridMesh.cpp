@@ -10,7 +10,7 @@ ComponentGridMesh::ComponentGridMesh(component_type t, bool act, GameObject *go)
 
 ComponentGridMesh::~ComponentGridMesh() {}
 
-void ComponentGridMesh::Update()
+void ComponentGridMesh::Update(float dt)
 {
 	if (!active)
 		return;

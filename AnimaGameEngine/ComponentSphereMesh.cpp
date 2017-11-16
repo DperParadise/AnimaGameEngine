@@ -14,7 +14,7 @@ ComponentSphereMesh::~ComponentSphereMesh()
 	gluDeleteQuadric(quadric);
 }
 
-void ComponentSphereMesh::Update()
+void ComponentSphereMesh::Update(float dt)
 {
 	if (!active)
 		return;

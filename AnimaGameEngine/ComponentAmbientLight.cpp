@@ -12,7 +12,7 @@ ComponentAmbientLight::~ComponentAmbientLight()
 	Disable();
 }
 
-void ComponentAmbientLight::Update(){}
+void ComponentAmbientLight::Update(float dt){}
 
 void ComponentAmbientLight::Enable()
 {

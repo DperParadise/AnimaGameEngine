@@ -12,7 +12,7 @@ public:
 	ComponentCubeMesh(component_type t, bool act, GameObject *go);
 	virtual ~ComponentCubeMesh();
 
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual void Enable();
 	virtual void Disable();
 

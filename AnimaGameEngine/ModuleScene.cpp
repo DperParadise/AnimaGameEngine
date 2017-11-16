@@ -26,7 +26,9 @@ ModuleScene::~ModuleScene() {}
 	 //AddGameObject(cube_go);
 	 Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
 	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
-	  
+	 GameObject *batmanGO = FindGameObject("Batman.obj");
+	 batmanGO->CreateBehaviour("BatmanMovement");
+
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
@@ -55,7 +57,7 @@ update_status ModuleScene::Update(float dt)
 {
 	for (std::vector<GameObject*>::iterator it = game_objects.begin(); it != game_objects.end(); it++)
 	{
-		(*it)->Update();
+		(*it)->Update(dt);
 
 		(*it)->UpdateWorldTransform();
 
@@ -77,79 +79,6 @@ update_status ModuleScene::Update(float dt)
 	//		crossroad->dirty = true;
 	//	}
 	//}
-
-	int speed = 10;
-	int scale_speed = 1;
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		aiVector3D pos = game_objects[2]->transform.local_position;
-
-		aiVector3D dir = aiVector3D(game_objects[2]->transform.forward.x * speed * dt, 
-			game_objects[2]->transform.forward.y * speed * dt,	
-			game_objects[2]->transform.forward.z * speed * dt);
-
-		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		aiVector3D pos = game_objects[2]->transform.local_position;
-
-		aiVector3D dir = aiVector3D(game_objects[2]->transform.forward.x * -speed * dt,
-			game_objects[2]->transform.forward.y * -speed * dt,
-			game_objects[2]->transform.forward.z * -speed * dt);
-
-		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		aiVector3D pos = game_objects[2]->transform.local_position;
-
-		aiVector3D dir = aiVector3D(game_objects[2]->transform.left.x * speed * dt,
-			game_objects[2]->transform.left.y * speed * dt,
-			game_objects[2]->transform.left.z * speed * dt);
-
-		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		aiVector3D pos = game_objects[2]->transform.local_position;
-
-		aiVector3D dir = aiVector3D(game_objects[2]->transform.left.x * -speed * dt,
-			game_objects[2]->transform.left.y * -speed * dt,
-			game_objects[2]->transform.left.z * -speed * dt);
-
-		game_objects[2]->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT)
-	{
-		game_objects[2]->transform.Rotate(0.0f, speed * dt, 0.0f);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_REPEAT)
-	{
-		game_objects[2]->transform.Rotate(0.0f, -speed * dt, 0.0f);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
-	{
-		aiVector3D scale = game_objects[2]->transform.local_scale;
-		scale.x += scale_speed * dt;
-		scale.y += scale_speed * dt;
-		scale.z += scale_speed * dt;
-
-		game_objects[2]->transform.Scale(scale.x, scale.y, scale.z);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
-	{
-		aiVector3D scale = game_objects[2]->transform.local_scale;
-		scale.x -= scale_speed * dt;
-		scale.y -= scale_speed * dt;
-		scale.z -= scale_speed * dt;
-
-		game_objects[2]->transform.Scale(scale.x, scale.y, scale.z);
-	}
-
 
 	return UPDATE_CONTINUE;
 }
@@ -183,8 +112,10 @@ GameObject* ModuleScene::FindGameObject(const std::string &name)
 	
 	for (std::vector<GameObject*>::iterator it = game_objects.begin(); it != game_objects.end(); it++)
 	{
-		return FindInHierarchy(name, *it);
+		if (FindInHierarchy(name, *it) != nullptr)
+			return *it;
 	}
+	return nullptr;
 }
 
  GameObject* ModuleScene::FindInHierarchy(const std::string &name,  GameObject *go) 

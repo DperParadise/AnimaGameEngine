@@ -9,7 +9,7 @@ public:
 	ComponentGizmoMesh(component_type t, bool act, GameObject *go);
 	virtual ~ComponentGizmoMesh();
 
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual void Enable();
 	virtual void Disable();
 };

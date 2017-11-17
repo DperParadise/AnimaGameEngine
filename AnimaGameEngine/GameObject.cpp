@@ -90,65 +90,6 @@ void GameObject::UpdateWorldTransform()
 	dirty = false;
 }
 
-//Component* GameObject::CreateComponent(component_type type, const char *model_file)
-//{
-//	Component *comp = nullptr;
-//	switch (type)
-//	{
-//	case component_type::TRANSFORM:
-//		comp = new ComponentTransform(type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::GRID_MESH:
-//		comp = new ComponentGridMesh(type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::GIZMO_MESH:		
-//		comp = new ComponentGizmoMesh(type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::CUBE_MESH:
-//		comp = new ComponentCubeMesh(type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::SPHERE_MESH:
-//		comp = new ComponentSphereMesh(type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::LOADED_MESH:
-//		comp = new ComponentLoadedMesh(model_file, type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::MATERIAL:
-//		comp = new ComponentMaterial(type, true, this, model_file);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::TEXTURE:
-//		comp = new ComponentTexture(model_file, type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::LIGHT:
-//		comp = new ComponentLight(type, true, this);
-//		components.push_back(comp);
-//		break;
-//
-//	case component_type::AMBIENT_LIGHT:
-//		comp = new ComponentAmbientLight(type, true, this);
-//		components.push_back(comp);
-//		break;
-//	}
-//
-//	return comp;
-//}
-
 Component* GameObject::CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv)
 {
 	Component *comp = new ComponentMesh(mat, component_type::MESH, true, this, vertices, normals, uv);
@@ -187,6 +128,27 @@ Component* GameObject::CreateMeshRenderer(ComponentMesh *mesh_comp)
 Component *GameObject::CreateBehaviour(std::string name)
 {
 	Component *comp = new ComponentBehaviour(name, component_type::BEHAVIOUR, true, this);
+	components.push_back(comp);
+	return comp;
+}
+
+Component *GameObject::CreateAmbientLight()
+{
+	Component *comp = new ComponentAmbientLight(component_type::AMBIENT_LIGHT, true, this);
+	components.push_back(comp);
+	return comp;
+}
+
+Component *GameObject::CreatePointLight()
+{
+	Component *comp = new ComponentLight(component_type::POINT_LIGHT, true, this);
+	components.push_back(comp);
+	return comp;
+}
+
+Component *GameObject::CreateDirectionalLight()
+{
+	Component *comp = new ComponentLight(component_type::DIRECTIONAL_LIGHT, true, this);
 	components.push_back(comp);
 	return comp;
 }

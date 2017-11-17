@@ -7,10 +7,7 @@ ComponentAmbientLight::ComponentAmbientLight(component_type t, bool act, GameObj
 	Enable();
 }
 
-ComponentAmbientLight::~ComponentAmbientLight() 
-{
-	Disable();
-}
+ComponentAmbientLight::~ComponentAmbientLight(){}
 
 void ComponentAmbientLight::Update(float dt){}
 
@@ -27,19 +24,19 @@ void ComponentAmbientLight::Disable()
 	active = false;
 }
 
-void ComponentAmbientLight::SetDefaultAmbientL() 
+void ComponentAmbientLight::SetDefaultAmbient() 
 {
 	memcpy(amb, default_amb, 4 * sizeof(float));
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
 
-void ComponentAmbientLight::SetDarkAmbientL()
+void ComponentAmbientLight::SetDarkAmbient()
 {
 	memcpy(amb, dark_amb, 4 * sizeof(float));
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
 
-void ComponentAmbientLight::SetAmbientL(float r, float g, float b, float a)
+void ComponentAmbientLight::SetAmbient(float r, float g, float b, float a)
 {
 	amb[0] = r;
 	amb[1] = g;

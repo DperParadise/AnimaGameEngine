@@ -10,7 +10,11 @@ ComponentLight::ComponentLight(component_type t, bool act, GameObject *go) : Com
 	glLightfv(SelectLight(), GL_AMBIENT, ambient);
 	glLightfv(SelectLight(), GL_DIFFUSE, diffuse);
 	glLightfv(SelectLight(), GL_SPECULAR, specular);
-	glLightfv(SelectLight(), GL_POSITION, position);
+
+	if(t == component_type::DIRECTIONAL_LIGHT)
+		glLightfv(SelectLight(), GL_POSITION, direction);
+	else
+		glLightfv(SelectLight(), GL_POSITION, position);
 	
 	Enable();
 }
@@ -25,7 +29,6 @@ void ComponentLight::Update(float dt){}
 
 void ComponentLight::Enable()
 {
-	//glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 	glEnable(GL_LIGHTING);
 	glEnable(SelectLight());
 	active = true;

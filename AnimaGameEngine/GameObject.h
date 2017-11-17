@@ -45,7 +45,6 @@ public:
 	virtual ~GameObject();
 
 	void Update(float dt);
-	//Component* CreateComponent(component_type type, const char *model_file = nullptr);
 	void UpdateWorldTransform();
 
 	Component *CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv);
@@ -55,6 +54,9 @@ public:
 	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	Component* CreateMeshRenderer(ComponentMesh *mesh);
 	Component* CreateBehaviour(std::string name);
+	Component* CreateAmbientLight();
+	Component* CreateDirectionalLight();
+	Component* CreatePointLight();
 
 	Transform transform;
 	bool dirty = true;

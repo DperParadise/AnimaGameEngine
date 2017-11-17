@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "ComponentLight.h"
+#include "ComponentAmbientLight.h"
 #include "Model.h"
 #include "CubeGO.h"
 
@@ -22,6 +23,20 @@ ModuleScene::~ModuleScene() {}
 	 world_origin->dirty = false;
 	 AddGameObject(world_origin);
 
+	 GameObject *ambient_light = new GameObject("ambient light");
+	 ComponentAmbientLight *comp_amb_light = (ComponentAmbientLight*)ambient_light->CreateAmbientLight();
+	 AddGameObject(ambient_light);
+
+	 GameObject *directional_light = new GameObject("dir light");
+	 ComponentLight *comp_dir_light = (ComponentLight*)directional_light->CreateDirectionalLight();
+	 AddGameObject(directional_light);
+
+	 /*GameObject *point_light = new GameObject("dir light");
+	 ComponentLight *comp_point_light = (ComponentLight*)point_light->CreateDirectionalLight();
+	 comp_point_light->SetPosition(0.0f, 0.0f, 20.0f);
+	 comp_point_light->SetDiffuse(1.0f, 1.0f, 0.0f, 1.0f);
+	 AddGameObject(point_light);*/
+
 	 //CubeGO *cube_go = new CubeGO("Cube");	
 	 //AddGameObject(cube_go);
 	 Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
@@ -32,23 +47,6 @@ ModuleScene::~ModuleScene() {}
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
-
-	 //test rotation of node g Line002
-	 /*GameObject *crossroad = FindGameObject("g Line002");
-	 int id = 0;
-	 if (crossroad)
-	 {
-		 while (game_objects[0]->children_go.size() > 1)
-		 {
-			 if (game_objects[0]->children_go[id] != crossroad)
-			 {
-				 LinkGameObject(game_objects[0]->children_go[id], crossroad);
-				 id = 0;
-			 }
-			 else
-				 id++;
-		 }	 
-	 }*/
 
 	return true;
 }
@@ -63,23 +61,6 @@ update_status ModuleScene::Update(float dt)
 
 
 	}
-
-	//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
-	//{
-	//	//test rotation of node g Line002
-	//	GameObject *crossroad = FindGameObject("g Line002");
-	//	aiQuaternion rot;
-	//	rot.x = 0.0f;
-	//	rot.y = sin(0.5f * 0.01f);
-	//	rot.z = 0.0f;
-	//	rot.w = cos(0.5f * 0.01f);
-	//	if (crossroad)
-	//	{
-	//		crossroad->transform.local_rotation = crossroad->transform.local_rotation * rot;
-	//		crossroad->dirty = true;
-	//	}
-	//}
-
 	return UPDATE_CONTINUE;
 }
 

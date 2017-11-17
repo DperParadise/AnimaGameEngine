@@ -28,11 +28,11 @@ public:
 
 private:
 
-	float ambient[4] = { 1.0f, 1.0f, 1.0f, 0.1f };
-	float diffuse[4] = { 1.0f, 1.0f, 1.0f, 0.1f };
-	float specular[4] = { 1.0f, 1.0f, 1.0f, 0.1f };
+	float ambient[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float diffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float specular[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	float position[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	float direction[4] = { 0.0f, 0.0f, -1.0f, 0.0f };
+	float direction[4] = { 1.0f, 1.0f, 1.0f, 0.0f };
 	float spot_direction[3] = { 0.0f, 0.0f, -1.0f };
 	float cutoff = 45.0f;
 	GLenum SelectLight();

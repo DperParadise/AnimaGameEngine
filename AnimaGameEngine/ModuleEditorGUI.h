@@ -16,6 +16,7 @@
 #include "Globals.h"
 #include "EditorConsoleWidget.h"
 #include "FPSGraphWidget.h"
+#include "EditorSceneHierarchyWidget.h"
 
 class Config;
 class ModuleEditorGUI : public Module
@@ -33,6 +34,8 @@ public:
 
 	EditorConsoleWidget console;
 	FPSGraphWidget fps_graph;
+	EditorSceneHierarchyWidget scene_hierarchy;
+
 };
 
 

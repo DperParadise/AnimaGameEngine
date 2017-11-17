@@ -18,8 +18,9 @@ public:
 
 	void AddGameObject(GameObject *go);
 
-private:
 	std::vector<GameObject*> game_objects;
+
+private:
 	
 	GameObject* CreateGameObject(const std::string &name);
 	GameObject* FindGameObject(const std::string &name);

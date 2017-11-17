@@ -173,6 +173,9 @@
     <ClInclude Include="ComponentBehaviour.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
+    <ClInclude Include="EditorSceneHierarchyWidget.h">
+      <Filter>Editor Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -303,6 +306,9 @@
     </ClCompile>
     <ClCompile Include="ComponentBehaviour.cpp">
       <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorSceneHierarchyWidget.cpp">
+      <Filter>Editor Widgets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

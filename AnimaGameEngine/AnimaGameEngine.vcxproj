@@ -160,6 +160,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="CubeGO.h" />
     <ClInclude Include="EditorConsoleWidget.h" />
+    <ClInclude Include="EditorSceneHierarchyWidget.h" />
     <ClInclude Include="FPSGraphWidget.h" />
     <ClInclude Include="libraries\ImGui\imconfig.h" />
     <ClInclude Include="libraries\ImGui\imgui.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeGO.cpp" />
     <ClCompile Include="EditorConsoleWidget.cpp" />
+    <ClCompile Include="EditorSceneHierarchyWidget.cpp" />
     <ClCompile Include="FPSGraphWidget.cpp" />
     <ClCompile Include="libraries\ImGui\imgui.cpp" />
     <ClCompile Include="libraries\ImGui\imgui_demo.cpp" />

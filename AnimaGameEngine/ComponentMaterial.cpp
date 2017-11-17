@@ -86,4 +86,9 @@ void ComponentMaterial::Load(aiMesh *mesh, const aiScene *scene, const char *fil
 	
 }
 
+void ComponentMaterial::SetTexture(const char *file_name)
+{
+	TextureManager::GetInstance()->Load(aiString(file_name));
+}
+
 

@@ -30,6 +30,9 @@ public:
 	Material material;
 	aiString diffuse_texture;
 
+	void SetTexture(const char *file_name);
+
+
 private:	
 	void Load(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	

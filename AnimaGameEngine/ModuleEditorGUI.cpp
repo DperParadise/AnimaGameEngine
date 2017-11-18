@@ -36,9 +36,8 @@ update_status ModuleEditorGUI::Update(float dt)
 	ImGui::ShowTestWindow();
 	fps_graph.Draw(dt);
 	console.Draw();
-	scene_hierarchy.Draw();
-	
-
+	scene_hierarchy.Draw(&inspector);
+	inspector.Draw();
 
 	ImGui::Render();
 

@@ -3,11 +3,22 @@
 
 #include <string>
 
+enum class ComponentType
+{
+	MESH,
+	MESH_RENDERER,
+	MATERIAL,
+	BEHAVIOUR,
+	AMBIENT_LIGHT,
+	POINT_LIGHT,
+	DIRECTIONAL_LIGHT
+};
+
 class GameObject;
 class Component
 {
 public:
-	Component(const std::string &name, bool act, GameObject *go);
+	Component(ComponentType type, const std::string &name, bool act, GameObject *go);
 	virtual ~Component();
 	
 	virtual void Update(float dt) = 0;

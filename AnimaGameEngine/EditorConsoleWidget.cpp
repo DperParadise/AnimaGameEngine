@@ -1,6 +1,6 @@
 #include "EditorConsoleWidget.h"
 
-EditorConsoleWidget::EditorConsoleWidget(const char* title,
+EditorConsoleWidget::EditorConsoleWidget(const std::string &title,
 	int x,
 	int y,
 	unsigned int width,
@@ -16,7 +16,7 @@ void EditorConsoleWidget::Draw()
 	ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiSetCond_FirstUseEver);	
 	ImGui::SetNextWindowPos(ImVec2(pos_x, pos_y), ImGuiSetCond_FirstUseEver);	
 
-	ImGui::Begin(title);
+	ImGui::Begin(title.c_str());
 
 	if (ImGui::Button("clear"))
 	{

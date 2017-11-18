@@ -9,7 +9,7 @@ class GameObject;
 class ComponentAmbientLight : public Component
 {
 public:
-	ComponentAmbientLight(const std::string &name, bool act, GameObject *go);
+	ComponentAmbientLight(ComponentType type, const std::string &name, bool act, GameObject *go);
 	~ComponentAmbientLight();
 
 	void Update(float dt);

@@ -86,63 +86,63 @@ void GameObject::UpdateWorldTransform()
 
 Component* GameObject::CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv)
 {
-	Component *comp = new ComponentMesh(mat, std::string("Mesh"), true, this, vertices, normals, uv);
+	Component *comp = new ComponentMesh(ComponentType::MESH, mat, std::string("Mesh"), true, this, vertices, normals, uv);
 	components.push_back(comp);
 	return comp;
 }
 
 Component* GameObject::CreatePrimitiveMatComp(float *ambient, float *diffuse, float *specular, float shininess)
 {
-	Component *comp = new ComponentMaterial(std::string("Material"), true, this, ambient, diffuse, specular, shininess);
+	Component *comp = new ComponentMaterial(ComponentType::MATERIAL, std::string("Material"), true, this, ambient, diffuse, specular, shininess);
 	components.push_back(comp);
 	return comp;
 }
 
 Component* GameObject::CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh)
 {
-	Component *comp = new ComponentMesh(mat, std::string("Mesh"), true, this, mesh);
+	Component *comp = new ComponentMesh(ComponentType::MATERIAL, mat, std::string("Mesh"), true, this, mesh);
 	components.push_back(comp);
 	return comp;
 }
 
 Component* GameObject::CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name)
 {
-	Component *comp = new ComponentMaterial(std::string("Material"), true, this, mesh, scene, file_name);
+	Component *comp = new ComponentMaterial(ComponentType::MATERIAL, std::string("Material"), true, this, mesh, scene, file_name);
 	components.push_back(comp);
 	return comp;
 }
 
 Component* GameObject::CreateMeshRenderer(ComponentMesh *mesh_comp)
 {
-	Component *comp = new ComponentMeshRenderer(mesh_comp, std::string("Mesh Renderer"), true, this);
+	Component *comp = new ComponentMeshRenderer(ComponentType::MESH_RENDERER, mesh_comp, std::string("Mesh Renderer"), true, this);
 	components.push_back(comp);
 	return comp;
 }
 
 Component *GameObject::CreateBehaviour(const std::string &behav_name)
 {
-	Component *comp = new ComponentBehaviour(behav_name, std::string("Behaviour"), true, this);
+	Component *comp = new ComponentBehaviour(ComponentType::BEHAVIOUR, behav_name, std::string("Behaviour"), true, this);
 	components.push_back(comp);
 	return comp;
 }
 
 Component *GameObject::CreateAmbientLight()
 {
-	Component *comp = new ComponentAmbientLight(std::string("Ambient Light"), true, this);
+	Component *comp = new ComponentAmbientLight(ComponentType::AMBIENT_LIGHT, std::string("Ambient Light"), true, this);
 	components.push_back(comp);
 	return comp;
 }
 
 Component *GameObject::CreatePointLight()
 {
-	Component *comp = new ComponentLight(std::string("Point Light"), true, this);
+	Component *comp = new ComponentLight(ComponentType::POINT_LIGHT, std::string("Point Light"), true, this);
 	components.push_back(comp);
 	return comp;
 }
 
 Component *GameObject::CreateDirectionalLight()
 {
-	Component *comp = new ComponentLight(std::string("Directional Light"), true, this);
+	Component *comp = new ComponentLight(ComponentType::DIRECTIONAL_LIGHT, std::string("Directional Light"), true, this);
 	components.push_back(comp);
 	return comp;
 }

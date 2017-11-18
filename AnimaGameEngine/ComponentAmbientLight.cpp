@@ -1,6 +1,6 @@
 #include "ComponentAmbientLight.h"
 
-ComponentAmbientLight::ComponentAmbientLight(const std::string &name, bool act, GameObject *go) : Component(name, act, go)
+ComponentAmbientLight::ComponentAmbientLight(ComponentType type, const std::string &name, bool act, GameObject *go) : Component(type, name, act, go)
 {
 	Enable();
 }

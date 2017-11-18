@@ -4,15 +4,20 @@
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include <vector>
 
-ComponentMesh::ComponentMesh(ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, aiMesh *mesh) : mesh_mat(mat), Component(name, act, go)
+ComponentMesh::ComponentMesh(ComponentType type, 
+	ComponentMaterial *mat, 
+	const std::string &name, 
+	bool act, 
+	GameObject *go, 
+	aiMesh *mesh) : mesh_mat(mat), Component(type, name, act, go)
 {
 	Load(mesh);
 }
 
-ComponentMesh::ComponentMesh(ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, 
+ComponentMesh::ComponentMesh(ComponentType type, ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, 
 	float *vertices, 
 	float *normals, 
-	float *uv) : vertex_array(vertices), normal_array(normals), uv_array(uv), mesh_mat(mat), Component(name, act, go){}
+	float *uv) : vertex_array(vertices), normal_array(normals), uv_array(uv), mesh_mat(mat), Component(type, name, act, go){}
 
 ComponentMesh::~ComponentMesh()
 {

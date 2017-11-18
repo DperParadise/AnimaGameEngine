@@ -2,11 +2,11 @@
 #include "libraries/ImGui/imgui.h"
 #include "Globals.h"
 
-FPSGraphWidget::FPSGraphWidget(const char* title,
+FPSGraphWidget::FPSGraphWidget(const std::string &title,
 	int x,
 	int y,
 	unsigned int width,
-	unsigned int height) : widget_title(title), pos_x(x), pos_y(y), width(width), height(height) 
+	unsigned int height) : title(title), pos_x(x), pos_y(y), width(width), height(height) 
 {
 	memset(histogram, 0.0f, sizeof(histogram));
 	memset(ms_array, 0.0f, sizeof(ms_array));
@@ -40,7 +40,7 @@ void FPSGraphWidget::Draw(float dt)
 	ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowPos(ImVec2(pos_x, pos_y), ImGuiSetCond_FirstUseEver);
 
-	ImGui::Begin(widget_title);
+	ImGui::Begin(title.c_str());
 	
 	std::string title_hist = std::to_string(histogram[NUM_COLS - 1]);
 	std::string title_ms = std::to_string(ms_array[NUM_COLS - 1]);

@@ -2,7 +2,7 @@
 
 int ComponentLight::lights_counter = -1;
 
-ComponentLight::ComponentLight(const std::string &name, bool act, GameObject *go) : Component(name, act, go)
+ComponentLight::ComponentLight(ComponentType type, const std::string &name, bool act, GameObject *go) : Component(type, name, act, go)
 {
 	lights_counter++;
 	light_index = lights_counter;

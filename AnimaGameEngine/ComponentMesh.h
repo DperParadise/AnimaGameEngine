@@ -10,8 +10,8 @@ class ComponentMaterial;
 class ComponentMesh : public Component
 {
 public:
-	ComponentMesh(ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, aiMesh *mesh);
-	ComponentMesh(ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, float *vertices, float *normals, float *uv);
+	ComponentMesh(ComponentType type, ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, aiMesh *mesh);
+	ComponentMesh(ComponentType type, ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, float *vertices, float *normals, float *uv);
 	~ComponentMesh();
 
 	void Update(float dt);

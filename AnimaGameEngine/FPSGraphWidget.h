@@ -6,13 +6,13 @@
 class FPSGraphWidget
 {
 public:
-	FPSGraphWidget(const char* title, int x, int y, unsigned int width, unsigned int height);
+	FPSGraphWidget(const std::string &title, int x, int y, unsigned int width, unsigned int height);
 	FPSGraphWidget();
 	~FPSGraphWidget();
 
 	void Draw(float dt);
 
-	const char *widget_title = "Application Performance";
+	std::string title = "Application Performance";
 	int pos_x = 0, pos_y = 0;
 	unsigned int width = 100, height = 100;
 

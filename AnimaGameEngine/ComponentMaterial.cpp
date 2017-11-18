@@ -2,23 +2,25 @@
 #include "libraries/assimp/include/assimp/scene.h"
 #include "TextureManager.h"
 
-ComponentMaterial::ComponentMaterial(const std::string &name, 
+ComponentMaterial::ComponentMaterial(ComponentType type, 
+	const std::string &name, 
 	bool act, 
 	GameObject *go, 
 	aiMesh *mesh, 
 	const aiScene *scene, 
-	const char *file_name) : Component(name, act, go)
+	const char *file_name) : Component(type, name, act, go)
 {
 	Load(mesh, scene, file_name);
 }
 
-ComponentMaterial::ComponentMaterial(const std::string &name, 
+ComponentMaterial::ComponentMaterial(ComponentType type, 
+	const std::string &name, 
 	bool act, 
 	GameObject *go, 
 	float *ambient, 
 	float *diffuse, 
 	float *specular, 
-	float shininess) : Component(name, act, go)
+	float shininess) : Component(type, name, act, go)
 {
 	memcpy(material.ambient, ambient, 4 * sizeof(float));
 	memcpy(material.diffuse, diffuse, 4 * sizeof(float));

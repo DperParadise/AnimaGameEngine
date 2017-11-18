@@ -8,7 +8,7 @@ class ComponentMesh;
 class ComponentMeshRenderer : public Component
 {
 public:
-	ComponentMeshRenderer(ComponentMesh *mesh_comp, const std::string &name, bool act, GameObject *go);
+	ComponentMeshRenderer(ComponentType type, ComponentMesh *mesh_comp, const std::string &name, bool act, GameObject *go);
 	~ComponentMeshRenderer();
 
 	void Update(float dt);

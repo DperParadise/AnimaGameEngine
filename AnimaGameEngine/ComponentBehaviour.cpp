@@ -4,7 +4,11 @@
 #include "libraries/assimp/include/assimp/vector3.h"
 #include "GameObject.h"
 
-ComponentBehaviour::ComponentBehaviour(const std::string &behav_name, const std::string &name, bool act, GameObject *go) : behav_name(behav_name), Component(name, act, go){}
+ComponentBehaviour::ComponentBehaviour(ComponentType type, 
+	const std::string &behav_name, 
+	const std::string &name, 
+	bool act, 
+	GameObject *go) : behav_name(behav_name), Component(type, name, act, go){}
 
 ComponentBehaviour::~ComponentBehaviour() {}
 

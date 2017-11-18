@@ -12,8 +12,8 @@ struct aiScene;
 class ComponentMaterial : public Component
 {
 public:
-	ComponentMaterial(const std::string &name, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name);
-	ComponentMaterial(const std::string &name, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess);
+	ComponentMaterial(ComponentType type, const std::string &name, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name);
+	ComponentMaterial(ComponentType type, const std::string &name, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess);
 	~ComponentMaterial();
 
 	void Update(float dt);

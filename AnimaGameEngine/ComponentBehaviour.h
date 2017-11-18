@@ -10,7 +10,7 @@ class GameObject;
 class ComponentBehaviour : public Component
 {
 public:
-	ComponentBehaviour(const std::string &behav_name, const std::string &name, bool act, GameObject *go);
+	ComponentBehaviour(ComponentType type, const std::string &behav_name, const std::string &name, bool act, GameObject *go);
 	~ComponentBehaviour();
 
 	 void Update(float dt);

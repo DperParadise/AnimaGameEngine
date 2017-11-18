@@ -178,7 +178,7 @@ void GameObject::UpdateBaseVectors(aiQuaternion world_rotation)
 
 void GameObject::Transform::Translate(float x, float y, float z)
 {
-	local_position.Set(x, y, z);
+	local_position.Set(local_position.x + x, local_position.y + y, local_position.z + z);
 	owner_go->dirty = true;
 }
 

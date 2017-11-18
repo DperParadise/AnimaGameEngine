@@ -158,6 +158,9 @@
     <ClInclude Include="EditorSceneHierarchyWidget.h">
       <Filter>Editor Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="EditorGOInspectorWidget.h">
+      <Filter>Editor Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -272,6 +275,9 @@
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="EditorSceneHierarchyWidget.cpp">
+      <Filter>Editor Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorGOInspectorWidget.cpp">
       <Filter>Editor Widgets</Filter>
     </ClCompile>
   </ItemGroup>

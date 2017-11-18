@@ -14,9 +14,9 @@ public:
 	void Update(float dt);
 	void Enable();
 	void Disable();
-	void SetPosition(float x, float y, float z);
+	void SetPosition(float x, float y, float z);//arreglarlo : la transform del gameobject afecta.
 	void SetDirection(float x, float y, float z);
-	void SetSpotDirection(float x, float y, float z);
+	void SetSpotDirection(float x, float y, float z);//arreglarlo : la transform del gameobject afecta.
 	void SetCutoff(float coff);
 	void SetAmbient(float r, float g, float b, float a);
 	void SetDiffuse(float r, float g, float b, float a);

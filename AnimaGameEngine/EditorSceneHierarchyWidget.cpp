@@ -38,13 +38,18 @@ void EditorSceneHierarchyWidget::DrawNode(GameObject *go, void* &selected_go)
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
 		| ImGuiTreeNodeFlags_OpenOnDoubleClick | (go == selected_go ? ImGuiTreeNodeFlags_Selected : 0);
 
+	bool is_leaf = go->children_go.size() == 0;
+
+	if (is_leaf)
+		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+
 	bool node_open = ImGui::TreeNodeEx(go, node_flags, go->name.c_str());
 	if (ImGui::IsItemClicked())
 	{
 		selected_go = go;
 	}
 
-	if (node_open)
+	if (node_open && !is_leaf)
 	{
 		for (GameObject *child_go : go->children_go)
 		{

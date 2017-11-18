@@ -1,8 +1,5 @@
 #include "GameObject.h"
 #include "Globals.h"
-#include "ComponentTransform.h"
-#include "ComponentGridMesh.h"
-#include "ComponentSphereMesh.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentLight.h"

@@ -95,16 +95,7 @@
     <ClInclude Include="Component.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentTransform.h">
-      <Filter>GameObjects and Components</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>GameObjects and Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentGridMesh.h">
-      <Filter>GameObjects and Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentSphereMesh.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="Importer.h">
@@ -229,16 +220,7 @@
     <ClCompile Include="Component.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentTransform.cpp">
-      <Filter>GameObjects and Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>GameObjects and Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentGridMesh.cpp">
-      <Filter>GameObjects and Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentSphereMesh.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="Importer.cpp">

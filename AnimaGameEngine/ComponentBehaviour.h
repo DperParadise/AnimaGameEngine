@@ -4,6 +4,8 @@
 #include "Component.h"
 #include <string>
 
+//TODO : In run time: create a file, compile it as a dll and call its behaviour function inside the ComponentBehaviour::Update() 
+
 class GameObject;
 class ComponentBehaviour : public Component
 {

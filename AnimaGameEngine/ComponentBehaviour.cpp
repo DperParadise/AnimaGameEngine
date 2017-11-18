@@ -18,7 +18,7 @@ void ComponentBehaviour::Update(float dt)
 			owner_go->transform.forward.y * speed * dt,
 			owner_go->transform.forward.z * speed * dt);
 
-		owner_go->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
+		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
@@ -28,7 +28,7 @@ void ComponentBehaviour::Update(float dt)
 			owner_go->transform.forward.y * -speed * dt,
 			owner_go->transform.forward.z * -speed * dt);
 
-		owner_go->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
+		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
@@ -38,7 +38,7 @@ void ComponentBehaviour::Update(float dt)
 			owner_go->transform.left.y * speed * dt,
 			owner_go->transform.left.z * speed * dt);
 
-		owner_go->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
+		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
@@ -48,7 +48,7 @@ void ComponentBehaviour::Update(float dt)
 			owner_go->transform.left.y * -speed * dt,
 			owner_go->transform.left.z * -speed * dt);
 
-		owner_go->transform.Translate(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
+		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
 
 

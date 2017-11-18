@@ -41,9 +41,9 @@ ModuleScene::~ModuleScene() {}
 	 //AddGameObject(cube_go);
 
 	 Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
-	 /*Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
 	 GameObject *batmanGO = FindGameObject("Batman.obj");
-	 batmanGO->CreateBehaviour("BatmanMovement");*/
+	 batmanGO->CreateBehaviour("BatmanMovement");
 
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);

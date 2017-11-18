@@ -5,7 +5,6 @@ enum class component_type
 {
 	TRANSFORM,
 	GRID_MESH,
-	GIZMO_MESH,
 	CUBE_MESH,
 	SPHERE_MESH,
 	MESH,

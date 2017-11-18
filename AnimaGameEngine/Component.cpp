@@ -1,5 +1,5 @@
 #include "Component.h"
 
-Component::Component(component_type t, bool act, GameObject *go) : type(t), active(act), owner_go(go) {}
+Component::Component(const std::string &name, bool act, GameObject *go) : comp_name(name), active(act), owner_go(go) {}
 
 Component::~Component() {}

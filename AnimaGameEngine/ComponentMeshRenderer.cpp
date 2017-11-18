@@ -7,7 +7,7 @@
 #include "ComponentMaterial.h"
 #include "TextureManager.h"
 
-ComponentMeshRenderer::ComponentMeshRenderer(ComponentMesh *mesh_comp, component_type t, bool act, GameObject *go) : owner_mesh(mesh_comp), Component(t, act, go){}
+ComponentMeshRenderer::ComponentMeshRenderer(ComponentMesh *mesh_comp, const std::string &name, bool act, GameObject *go) : owner_mesh(mesh_comp), Component(name, act, go){}
 
 ComponentMeshRenderer::~ComponentMeshRenderer() {}
 

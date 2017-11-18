@@ -1,8 +1,6 @@
 #include "ComponentAmbientLight.h"
-#include "libraries/glew-2.0.0/include/GL/glew.h"
-#include <cstring>
 
-ComponentAmbientLight::ComponentAmbientLight(component_type t, bool act, GameObject *go) : Component(t, act, go)
+ComponentAmbientLight::ComponentAmbientLight(const std::string &name, bool act, GameObject *go) : Component(name, act, go)
 {
 	Enable();
 }

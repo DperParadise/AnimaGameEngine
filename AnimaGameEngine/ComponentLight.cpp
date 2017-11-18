@@ -2,7 +2,7 @@
 
 int ComponentLight::lights_counter = -1;
 
-ComponentLight::ComponentLight(component_type t, bool act, GameObject *go) : Component(t, act, go)
+ComponentLight::ComponentLight(const std::string &name, bool act, GameObject *go) : Component(name, act, go)
 {
 	lights_counter++;
 	light_index = lights_counter;
@@ -11,7 +11,7 @@ ComponentLight::ComponentLight(component_type t, bool act, GameObject *go) : Com
 	glLightfv(SelectLight(), GL_DIFFUSE, diffuse);
 	glLightfv(SelectLight(), GL_SPECULAR, specular);
 
-	if(t == component_type::DIRECTIONAL_LIGHT)
+	if(name == "Directional Light")
 		glLightfv(SelectLight(), GL_POSITION, direction);
 	else
 		glLightfv(SelectLight(), GL_POSITION, position);

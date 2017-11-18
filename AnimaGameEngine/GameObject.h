@@ -53,7 +53,7 @@ public:
 	Component* CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh);
 	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	Component* CreateMeshRenderer(ComponentMesh *mesh);
-	Component* CreateBehaviour(std::string name);
+	Component* CreateBehaviour(const std::string &behav_name);
 	Component* CreateAmbientLight();
 	Component* CreateDirectionalLight();
 	Component* CreatePointLight();

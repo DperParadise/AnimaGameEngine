@@ -2,12 +2,13 @@
 #define _COMP_MESH_RENDERER_H_
 
 #include "Component.h"
+#include <string>
 
 class ComponentMesh;
 class ComponentMeshRenderer : public Component
 {
 public:
-	ComponentMeshRenderer(ComponentMesh *mesh_comp, component_type t, bool act, GameObject *go);
+	ComponentMeshRenderer(ComponentMesh *mesh_comp, const std::string &name, bool act, GameObject *go);
 	~ComponentMeshRenderer();
 
 	void Update(float dt);

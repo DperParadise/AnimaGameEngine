@@ -3,11 +3,13 @@
 
 #include "Component.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
+#include <string>
 
+class GameObject;
 class ComponentAmbientLight : public Component
 {
 public:
-	ComponentAmbientLight(component_type t, bool act, GameObject *go);
+	ComponentAmbientLight(const std::string &name, bool act, GameObject *go);
 	~ComponentAmbientLight();
 
 	void Update(float dt);

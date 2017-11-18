@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "libraries/assimp/include/assimp/types.h"
+#include <string>
 
 class GameObject;
 struct aiMesh;
@@ -11,8 +12,8 @@ struct aiScene;
 class ComponentMaterial : public Component
 {
 public:
-	ComponentMaterial(component_type t, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name);
-	ComponentMaterial(component_type t, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess);
+	ComponentMaterial(const std::string &name, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name);
+	ComponentMaterial(const std::string &name, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess);
 	~ComponentMaterial();
 
 	void Update(float dt);
@@ -28,6 +29,7 @@ public:
 	};
 
 	Material material;
+	std::string mat_name;
 	aiString diffuse_texture;
 
 	void SetTexture(const char *file_name);

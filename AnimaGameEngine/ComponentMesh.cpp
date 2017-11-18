@@ -4,15 +4,15 @@
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include <vector>
 
-ComponentMesh::ComponentMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, aiMesh *mesh) : mesh_mat(mat), Component(t, act, go)
+ComponentMesh::ComponentMesh(ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, aiMesh *mesh) : mesh_mat(mat), Component(name, act, go)
 {
 	Load(mesh);
 }
 
-ComponentMesh::ComponentMesh(ComponentMaterial *mat, component_type t, bool act, GameObject *go, 
+ComponentMesh::ComponentMesh(ComponentMaterial *mat, const std::string &name, bool act, GameObject *go, 
 	float *vertices, 
 	float *normals, 
-	float *uv) : vertex_array(vertices), normal_array(normals), uv_array(uv), mesh_mat(mat), Component(t, act, go){}
+	float *uv) : vertex_array(vertices), normal_array(normals), uv_array(uv), mesh_mat(mat), Component(name, act, go){}
 
 ComponentMesh::~ComponentMesh()
 {
@@ -40,6 +40,11 @@ void ComponentMesh::Load(aiMesh *mesh)
 		MYLOG("mesh does not contain faces");
 		return;
 	}
+
+	if (mesh->mName.length != 0)
+		mesh_name = mesh->mName.data;
+	else
+		mesh_name = "(null)";
 
 	num_vertices = mesh->mNumFaces * 3;
 	vertex_array = new float[num_vertices * 3];

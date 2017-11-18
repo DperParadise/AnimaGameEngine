@@ -1,14 +1,24 @@
 #include "ComponentMaterial.h"
 #include "libraries/assimp/include/assimp/scene.h"
-#include <string>
 #include "TextureManager.h"
 
-ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go, aiMesh *mesh, const aiScene *scene, const char *file_name) : Component(t, act, go)
+ComponentMaterial::ComponentMaterial(const std::string &name, 
+	bool act, 
+	GameObject *go, 
+	aiMesh *mesh, 
+	const aiScene *scene, 
+	const char *file_name) : Component(name, act, go)
 {
 	Load(mesh, scene, file_name);
 }
 
-ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go, float *ambient, float *diffuse, float *specular, float shininess) : Component(t, act, go)
+ComponentMaterial::ComponentMaterial(const std::string &name, 
+	bool act, 
+	GameObject *go, 
+	float *ambient, 
+	float *diffuse, 
+	float *specular, 
+	float shininess) : Component(name, act, go)
 {
 	memcpy(material.ambient, ambient, 4 * sizeof(float));
 	memcpy(material.diffuse, diffuse, 4 * sizeof(float));
@@ -17,6 +27,8 @@ ComponentMaterial::ComponentMaterial(component_type t, bool act, GameObject *go,
 
 	diffuse_texture = aiString("default_diff_tex");
 	TextureManager::GetInstance()->LoadDefaultTexture(diffuse_texture);
+
+	mat_name = "default material";
 }
 
 ComponentMaterial::~ComponentMaterial() {}
@@ -42,7 +54,8 @@ void ComponentMaterial::Load(aiMesh *mesh, const aiScene *scene, const char *fil
 	aiColor3D amb;
 	aiColor3D diff;
 	aiColor3D spec;
-	
+	aiString material_name;
+
 	if (mat->Get(AI_MATKEY_COLOR_AMBIENT, amb) == AI_SUCCESS)
 	{
 		material.ambient[0] = amb.r;
@@ -64,6 +77,11 @@ void ComponentMaterial::Load(aiMesh *mesh, const aiScene *scene, const char *fil
 
 	mat->Get(AI_MATKEY_SHININESS, material.shininess);
 
+	if (mat->Get(AI_MATKEY_NAME, material_name) == AI_SUCCESS)
+		mat_name = material_name.data;
+	else
+		mat_name = "(null)";
+
 	//Load Texture
 	if (scene->mMaterials[mat_index]->GetTextureCount(aiTextureType::aiTextureType_DIFFUSE) == 0)
 	{
@@ -83,7 +101,6 @@ void ComponentMaterial::Load(aiMesh *mesh, const aiScene *scene, const char *fil
 	TextureManager::GetInstance()->Load(aiString(texture_path.append(texture_file.data)));
 
 	diffuse_texture = aiString(texture_path);
-	
 }
 
 void ComponentMaterial::SetTexture(const char *file_name)

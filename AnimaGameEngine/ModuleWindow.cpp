@@ -24,6 +24,7 @@ bool ModuleWindow::Init(Config *config)
 	window_height = config->GetInt("ModuleWindow", "window_height");
 	full_screen = config->GetBool("ModuleWindow", "full_screen");
 	resizable = config->GetBool("ModuleWindow", "resizable");
+	maximized = config->GetBool("ModuleWindow", "maximized");
 
 	MYLOG("Init SDL window & surface");
 	bool ret = true;
@@ -45,7 +46,10 @@ bool ModuleWindow::Init(Config *config)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
-
+		if (maximized)
+		{
+			flags |= SDL_WINDOW_MAXIMIZED;
+		}
 		window = SDL_CreateWindow(window_title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window_width, window_height, flags);
 
 		if(window == nullptr)

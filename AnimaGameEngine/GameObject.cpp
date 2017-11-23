@@ -6,6 +6,7 @@
 #include "ComponentAmbientLight.h"
 #include "ComponentMeshRenderer.h"
 #include "ComponentBehaviour.h"
+#include "libraries/MathGeoLib/MathGeoLib.h"
 
 GameObject::GameObject(const std::string &name, aiNode *node) : name(name) , transform(this)
 {
@@ -174,6 +175,9 @@ void GameObject::UpdateBaseVectors(aiQuaternion world_rotation)
 	transform.forward.Set(rot_matrix.a3, rot_matrix.b3, rot_matrix.c3);
 	transform.left.Set(rot_matrix.a1, rot_matrix.b1, rot_matrix.c1);
 	transform.up.Set(rot_matrix.a2, rot_matrix.b2, rot_matrix.c2);
+
+	//MYLOG("forward_z = (%f,%f,%f)  left_x = (%f, %f, %f)  up_y = (%f, %f, %f)", transform.forward.x, transform.forward.y, transform.forward.z,
+	//	transform.left.x, transform.left.y, transform.left.z, transform.up.x, transform.up.y, transform.up.z);
 }
 
 void GameObject::Transform::Translate(float x, float y, float z)
@@ -184,8 +188,11 @@ void GameObject::Transform::Translate(float x, float y, float z)
 
 void GameObject::Transform::Rotate(float x, float y, float z)
 {
-	aiQuaternion rot(y, z, x);
-	aiQuaternion result = local_rotation*rot;
+	//angle rotation sequence is z -> y -> x
+	float3 rot_rad = DegToRad(float3(x, y, z));
+	Quat rot = Quat::FromEulerZYX(rot_rad.z, rot_rad.y, rot_rad.x);
+
+	aiQuaternion result = local_rotation * aiQuaternion(rot.w, rot.x, rot.y, rot.z);
 	local_rotation = result;
 	owner_go->dirty = true;
 }
@@ -196,4 +203,6 @@ void GameObject::Transform::Scale(float x, float y, float z)
 	owner_go->dirty = true;
 }
 
-
+const aiVector3D GameObject::Transform::canonical_OX = aiVector3D(1.0f, 0.0f, 0.0f);
+const aiVector3D GameObject::Transform::canonical_OY = aiVector3D(0.0f, 1.0f, 0.0f);
+const aiVector3D GameObject::Transform::canonical_OZ = aiVector3D(0.0f, 0.0f, 1.0f);

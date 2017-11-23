@@ -2,8 +2,11 @@
 #include "libraries/ImGui/imgui.h"
 #include "Component.h"
 #include "GameObject.h"
-
 #include "libraries/assimp/include/assimp/vector3.h"
+#include "libraries/assimp/include/assimp/quaternion.h"
+#include "Globals.h"
+#include <cmath>
+#include "libraries/MathGeoLib/MathGeoLib.h"
 
 EditorInspectorWidget::EditorInspectorWidget(const std::string &title, 
 	int x, 
@@ -26,9 +29,7 @@ void EditorInspectorWidget::Draw(GameObject *go)
 		if (ImGui::CollapsingHeader("Transform"))
 		{
 			ImGui::Text("Position");
-			aiVector3D pos;
-			
-			pos = go->transform.local_position;
+			aiVector3D pos = go->transform.local_position;
 
 			bool x_pos_field = ImGui::InputFloat("x", &pos.x, 0.01f, 1.0f);
 			ImGui::SameLine();
@@ -50,8 +51,37 @@ void EditorInspectorWidget::Draw(GameObject *go)
 					go->dirty = true;
 				}
 			}
-		}
+			//TODO: Improve rotations stuff.
+			ImGui::Text("Rotation");
+			aiQuaternion rot = go->transform.local_rotation;
+			Quat rot_mathgeo = Quat(rot.x, rot.y, rot.z, rot.w);
+			float3 rad = rot_mathgeo.ToEulerZYX();
+			float3 degrees = RadToDeg(rad);
 
+			/*if(go->name != "world origin")
+				MYLOG("rotation q=(%f, %f, %f, %f) euler=(%f, %f, %f)", rot.x, rot.y, rot.z, rot.w, degrees.z, degrees.y, degrees.x);*/
+
+			bool x_rot_field = ImGui::InputFloat("rx", &degrees[2], 1.0f, 1.0f);
+			ImGui::SameLine();
+			ShowHelpMarker("CTRL + click on +/- for fast step");
+
+			bool y_rot_field = ImGui::InputFloat("ry", &degrees[1], 1.0f, 1.0f);
+			ImGui::SameLine();
+			ShowHelpMarker("CTRL + click on +/- for fast step");
+
+			bool z_rot_field = ImGui::InputFloat("rz", &degrees[0], 1.0f, 1.0f);
+			ImGui::SameLine();
+			ShowHelpMarker("CTRL + click on +/- for fast step");
+
+			if (x_rot_field || y_rot_field || z_rot_field)
+			{			
+				go->transform.world_rotation = go->parent_go ? go->parent_go->transform.world_rotation : aiQuaternion();			
+				go->transform.local_rotation = aiQuaternion(); //to reset rotation
+				go->transform.Rotate(degrees[2], degrees[1], degrees[0]);
+				go->dirty = true;			
+			}
+
+		}
 
 	}
 	ImGui::End();

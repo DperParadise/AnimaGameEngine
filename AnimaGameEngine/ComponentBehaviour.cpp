@@ -56,13 +56,29 @@ void ComponentBehaviour::Update(float dt)
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 	{
-		owner_go->transform.Rotate(0.0f, speed * dt, 0.0f);
+		owner_go->transform.Rotate(0.0f, 90.0f, 0.0f);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
-		owner_go->transform.Rotate(0.0f, -speed * dt, 0.0f);
+		owner_go->transform.Rotate(0.0f, -90.0f, 0.0f);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	{
+		owner_go->transform.Rotate(90.0f, 0.0f, 0.0f);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		owner_go->transform.Rotate(-90.0f, 0.0f, 0.0f);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		owner_go->transform.Rotate(0.0f, 0.0f, 90.0f);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) //mix rotations
+	{
+		owner_go->transform.Rotate(90.0f, 0.0f, 90.0f);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)

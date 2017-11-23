@@ -16,6 +16,7 @@ private:
 	std::string window_title = "";
 	bool full_screen = false;
 	bool resizable = false;
+	bool maximized = false;
 
 public:
 

@@ -31,9 +31,13 @@ public:
 		aiQuaternion world_rotation;
 
 		GameObject *owner_go = nullptr;
-		aiVector3D forward;
-		aiVector3D left;
-		aiVector3D up;
+		aiVector3D forward = aiVector3D(0.0f, 0.0f, 1.0f);
+		aiVector3D left = aiVector3D(1.0f, 0.0f, 0.0f);
+		aiVector3D up = aiVector3D(0.0f, 1.0f, 0.0f);
+
+		const static aiVector3D canonical_OX;
+		const static aiVector3D canonical_OY;
+		const static aiVector3D canonical_OZ;
 
 		//local translation, rotation, scale
 		void Translate(float x, float y, float z);

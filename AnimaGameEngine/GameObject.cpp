@@ -14,14 +14,14 @@ GameObject::GameObject(const std::string &name, aiNode *node) : name(name) , tra
 		LoadTransform(node);
 	else
 	{
-		transform.local_position.Set(0.0f, 0.0f, 0.0f);	
+		transform.relative_position.Set(0.0f, 0.0f, 0.0f);	
 		
-		transform.local_scale.Set(1.0f, 1.0f, 1.0f);	
+		transform.relative_scale.Set(1.0f, 1.0f, 1.0f);	
 		
-		transform.local_rotation.x = 0.0f;
-		transform.local_rotation.y = 0.0f;
-		transform.local_rotation.z = 0.0f;
-		transform.local_rotation.w = 1.0f;
+		transform.relative_rotation.x = 0.0f;
+		transform.relative_rotation.y = 0.0f;
+		transform.relative_rotation.z = 0.0f;
+		transform.relative_rotation.w = 1.0f;
 
 		transform.world_position.Set(0.0f, 0.0f, 0.0f);
 		
@@ -150,39 +150,42 @@ Component *GameObject::CreateDirectionalLight()
 
 void GameObject::LoadTransform(aiNode *node)
 {
-	node->mTransformation.Decompose(transform.local_scale, transform.local_rotation, transform.local_position);
+	node->mTransformation.Decompose(transform.relative_scale, transform.relative_rotation, transform.relative_position);
 }
 
 void GameObject::CombineTransform(GameObject *parent_go)
 { 
 	if (!parent_go)
 	{
-		transform.world_position = transform.local_position;
-		transform.world_scale = transform.local_scale;
-		transform.world_rotation = transform.local_rotation;
+		transform.world_position = transform.relative_position;
+		transform.world_scale = transform.relative_scale;
+		transform.world_rotation = transform.relative_rotation;
 
 		return;
 	}
 
-	transform.world_position = parent_go->transform.world_position + transform.local_position;
-	transform.world_scale = parent_go->transform.world_scale.SymMul(transform.local_scale);
-	transform.world_rotation = parent_go->transform.world_rotation * transform.local_rotation;
+	transform.world_position = parent_go->transform.world_position + transform.relative_position;
+	transform.world_scale = parent_go->transform.world_scale.SymMul(transform.relative_scale);
+	transform.world_rotation = parent_go->transform.world_rotation * transform.relative_rotation;
 }
 
 void GameObject::UpdateBaseVectors(aiQuaternion world_rotation)
 {
 	aiMatrix3x3 rot_matrix = world_rotation.GetMatrix();
-	transform.forward.Set(rot_matrix.a3, rot_matrix.b3, rot_matrix.c3);
-	transform.left.Set(rot_matrix.a1, rot_matrix.b1, rot_matrix.c1);
-	transform.up.Set(rot_matrix.a2, rot_matrix.b2, rot_matrix.c2);
+	transform.relative_forward.Set(rot_matrix.a3, rot_matrix.b3, rot_matrix.c3);
+	transform.relative_left.Set(rot_matrix.a1, rot_matrix.b1, rot_matrix.c1);
+	transform.relative_up.Set(rot_matrix.a2, rot_matrix.b2, rot_matrix.c2);
 
-	//MYLOG("forward_z = (%f,%f,%f)  left_x = (%f, %f, %f)  up_y = (%f, %f, %f)", transform.forward.x, transform.forward.y, transform.forward.z,
-	//	transform.left.x, transform.left.y, transform.left.z, transform.up.x, transform.up.y, transform.up.z);
+	//MYLOG("relative_forward_z = (%f,%f,%f)  relative_left_x = (%f, %f, %f)  relative_up_y = (%f, %f, %f)", transform.relative_forward.x, transform.relative_forward.y, transform.relative_forward.z,
+	//	transform.relative_left.x, transform.relative_left.y, transform.relative_left.z, transform.relative_up.x, transform.relative_up.y, transform.relative_up.z);
 }
 
-void GameObject::Transform::Translate(float x, float y, float z)
+//translation in relation to "this" base vectors
+void GameObject::Transform::Translate(float local_x, float local_y, float local_z)
 {
-	local_position.Set(local_position.x + x, local_position.y + y, local_position.z + z);
+	aiVector3D translation = local_x * relative_left + local_y * relative_up + local_z * relative_forward;
+	acum_rel_position += translation;
+	relative_position.Set(relative_position.x + translation.x, relative_position.y + translation.y, relative_position.z + translation.z);
 	owner_go->dirty = true;
 }
 
@@ -192,17 +195,25 @@ void GameObject::Transform::Rotate(float x, float y, float z)
 	float3 rot_rad = DegToRad(float3(x, y, z));
 	Quat rot = Quat::FromEulerZYX(rot_rad.z, rot_rad.y, rot_rad.x);
 
-	aiQuaternion result = local_rotation * aiQuaternion(rot.w, rot.x, rot.y, rot.z);
-	local_rotation = result;
+	aiQuaternion result = relative_rotation * aiQuaternion(rot.w, rot.x, rot.y, rot.z);
+	relative_rotation = result;
 	owner_go->dirty = true;
 }
 
 void GameObject::Transform::Scale(float x, float y, float z)
 {
-	local_scale.Set(x, y, z);
+	relative_scale.Set(x, y, z);
 	owner_go->dirty = true;
 }
 
-const aiVector3D GameObject::Transform::canonical_OX = aiVector3D(1.0f, 0.0f, 0.0f);
-const aiVector3D GameObject::Transform::canonical_OY = aiVector3D(0.0f, 1.0f, 0.0f);
-const aiVector3D GameObject::Transform::canonical_OZ = aiVector3D(0.0f, 0.0f, 1.0f);
+const aiVector3D GameObject::Transform::local_forward = aiVector3D(0.0f, 0.0f, 1.0f);
+const aiVector3D GameObject::Transform::local_left = aiVector3D(1.0f, 0.0f, 0.0f);
+const aiVector3D GameObject::Transform::local_up = aiVector3D(0.0f, 1.0f, 0.0f);
+
+void GameObject::Transform::ResetPosition(float rel_x, float rel_y, float rel_z)
+{
+	relative_position -= acum_rel_position;
+	acum_rel_position = aiVector3D(0.0f, 0.0f, 0.0f);
+	relative_position = aiVector3D(rel_x, rel_y, rel_z);
+	owner_go->dirty = true;
+}

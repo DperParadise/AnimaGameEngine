@@ -29,7 +29,7 @@ void EditorInspectorWidget::Draw(GameObject *go)
 		if (ImGui::CollapsingHeader("Transform"))
 		{
 			ImGui::Text("Position");
-			aiVector3D pos = go->transform.local_position;
+			aiVector3D pos = go->transform.relative_position;
 
 			bool x_pos_field = ImGui::InputFloat("x", &pos.x, 0.01f, 1.0f);
 			ImGui::SameLine();
@@ -44,16 +44,12 @@ void EditorInspectorWidget::Draw(GameObject *go)
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 			
 			if (x_pos_field || y_pos_field || z_pos_field)
-			{
-				if (pos != go->transform.local_position)
-				{
-					go->transform.local_position = pos;
-					go->dirty = true;
-				}
+			{							
+				go->transform.ResetPosition(pos.x, pos.y, pos.z);		
 			}
 			//TODO: Improve rotations stuff.
 			ImGui::Text("Rotation");
-			aiQuaternion rot = go->transform.local_rotation;
+			aiQuaternion rot = go->transform.relative_rotation;
 			Quat rot_mathgeo = Quat(rot.x, rot.y, rot.z, rot.w);
 			float3 rad = rot_mathgeo.ToEulerZYX();
 			float3 degrees = RadToDeg(rad);
@@ -76,7 +72,7 @@ void EditorInspectorWidget::Draw(GameObject *go)
 			if (x_rot_field || y_rot_field || z_rot_field)
 			{			
 				go->transform.world_rotation = go->parent_go ? go->parent_go->transform.world_rotation : aiQuaternion();			
-				go->transform.local_rotation = aiQuaternion(); //to reset rotation
+				go->transform.relative_rotation = aiQuaternion(); //to reset rotation
 				go->transform.Rotate(degrees[2], degrees[1], degrees[0]);
 				go->dirty = true;			
 			}

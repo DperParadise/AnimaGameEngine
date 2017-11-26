@@ -16,41 +16,36 @@ void ComponentBehaviour::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		aiVector3D pos = owner_go->transform.local_position;
-
-		aiVector3D dir = aiVector3D(owner_go->transform.forward.x * speed * dt,
-			owner_go->transform.forward.y * speed * dt,
-			owner_go->transform.forward.z * speed * dt);
+		aiVector3D dir = aiVector3D(owner_go->transform.local_forward.x * speed * dt,
+			owner_go->transform.local_forward.y * speed * dt,
+			owner_go->transform.local_forward.z * speed * dt);
 
 		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		aiVector3D pos = owner_go->transform.local_position;
-
-		aiVector3D dir = aiVector3D(owner_go->transform.forward.x * -speed * dt,
-			owner_go->transform.forward.y * -speed * dt,
-			owner_go->transform.forward.z * -speed * dt);
+		aiVector3D dir = aiVector3D(owner_go->transform.local_forward.x * -speed * dt,
+			owner_go->transform.local_forward.y * -speed * dt,
+			owner_go->transform.local_forward.z * -speed * dt);
 
 		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		aiVector3D pos = owner_go->transform.local_position;
-
-		aiVector3D dir = aiVector3D(owner_go->transform.left.x * speed * dt,
-			owner_go->transform.left.y * speed * dt,
-			owner_go->transform.left.z * speed * dt);
+		aiVector3D dir = aiVector3D(owner_go->transform.local_left.x * speed * dt,
+			owner_go->transform.local_left.y * speed * dt,
+			owner_go->transform.local_left.z * speed * dt);
 
 		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		aiVector3D pos = owner_go->transform.local_position;
-
-		aiVector3D dir = aiVector3D(owner_go->transform.left.x * -speed * dt,
-			owner_go->transform.left.y * -speed * dt,
-			owner_go->transform.left.z * -speed * dt);
+		aiVector3D dir = aiVector3D(owner_go->transform.local_left.x * -speed * dt,
+			owner_go->transform.local_left.y * -speed * dt,
+			owner_go->transform.local_left.z * -speed * dt);
 
 		owner_go->transform.Translate(dir.x, dir.y, dir.z);
 	}
@@ -83,7 +78,7 @@ void ComponentBehaviour::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
 	{
-		aiVector3D scale = owner_go->transform.local_scale;
+		aiVector3D scale = owner_go->transform.relative_scale;
 		scale.x += scale_speed * dt;
 		scale.y += scale_speed * dt;
 		scale.z += scale_speed * dt;
@@ -92,7 +87,7 @@ void ComponentBehaviour::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT)
 	{
-		aiVector3D scale = owner_go->transform.local_scale;
+		aiVector3D scale = owner_go->transform.relative_scale;
 		scale.x -= scale_speed * dt;
 		scale.y -= scale_speed * dt;
 		scale.z -= scale_speed * dt;

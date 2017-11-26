@@ -19,9 +19,9 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
-	 //GameObject *world_origin = new GameObject("world origin");
-	 //world_origin->dirty = false;
-	 //AddGameObject(world_origin);
+	 GameObject *world_origin = new GameObject("world origin");
+	 world_origin->dirty = false;
+	 AddGameObject(world_origin);
 
 	 /*GameObject *ambient_light = new GameObject("ambient light");
 	 ComponentAmbientLight *comp_amb_light = (ComponentAmbientLight*)ambient_light->CreateAmbientLight();

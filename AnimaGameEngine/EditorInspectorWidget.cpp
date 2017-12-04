@@ -77,6 +77,26 @@ void EditorInspectorWidget::Draw(GameObject *go)
 				go->dirty = true;			
 			}
 
+			ImGui::Text("Scale");
+			aiVector3D scale = go->transform.relative_scale;
+
+			bool x_scale_field = ImGui::InputFloat("x", &scale.x, 0.01f, 1.0f);
+			ImGui::SameLine();
+			ShowHelpMarker("CTRL + click on +/- for fast step");
+
+			bool y_scale_field = ImGui::InputFloat("y", &scale.y, 0.01f, 1.0f);
+			ImGui::SameLine();
+			ShowHelpMarker("CTRL + click on +/- for fast step");
+
+			bool z_scale_field = ImGui::InputFloat("z", &scale.z, 0.01f, 1.0f);
+			ImGui::SameLine();
+			ShowHelpMarker("CTRL + click on +/- for fast step");
+
+			if (x_scale_field || y_scale_field || z_scale_field)
+			{
+				go->transform.relative_scale = scale;
+			}
+
 		}
 
 	}

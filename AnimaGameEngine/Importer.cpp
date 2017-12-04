@@ -1,6 +1,6 @@
 #include "Importer.h"
 
-std::auto_ptr<Assimp::Importer> Importer::instance;
+std::unique_ptr<Assimp::Importer> Importer::instance;
 
 Importer::Importer(){}
 

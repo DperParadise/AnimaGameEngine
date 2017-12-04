@@ -3,7 +3,7 @@
 #include "libraries/DevIL_Windows_SDK/include/IL/il.h"
 #include <cassert>
 
-std::auto_ptr<TextureManager> TextureManager::instance;
+std::unique_ptr<TextureManager> TextureManager::instance;
 
 TextureManager::TextureManager(){}
 

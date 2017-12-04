@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include <map>
+#include <memory>
 #include "libraries/assimp/include/assimp/postprocess.h"
 
 class TextureManager
@@ -18,7 +19,7 @@ class TextureManager
 	typedef std::map<aiString, unsigned, LessString> TextureList;
 
 	TextureList textures;
-	static std::auto_ptr<TextureManager> instance;
+	static std::unique_ptr<TextureManager> instance;
 	
 
 public:

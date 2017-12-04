@@ -1,6 +1,7 @@
 #ifndef __IMPORTER_H__
 #define __IMPORTER_H__
 
+#include <memory>
 #include "libraries/assimp/include/assimp/Importer.hpp"
 
 class Importer {
@@ -12,7 +13,7 @@ public:
 	Assimp::Importer *GetInstance();
 	
 private:
-	static std::auto_ptr<Assimp::Importer> instance;
+	static std::unique_ptr<Assimp::Importer> instance;
 	
 };
 

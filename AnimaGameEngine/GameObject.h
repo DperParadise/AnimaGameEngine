@@ -33,7 +33,7 @@ public:
 		aiVector3D world_position;
 		aiVector3D world_scale;
 		aiQuaternion world_rotation;
-
+	
 		GameObject *owner_go = nullptr;
 
 		aiVector3D relative_forward = aiVector3D(0.0f, 0.0f, 1.0f);
@@ -65,6 +65,7 @@ public:
 	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	Component* CreateMeshRenderer(ComponentMesh *mesh);
 	Component* CreateBehaviour(const std::string &behav_name);
+	Component* CreateTorsoBehaviour(const std::string &behav_name);
 	Component* CreateAmbientLight();
 	Component* CreateDirectionalLight();
 	Component* CreatePointLight();
@@ -85,7 +86,7 @@ private:
 
 	void LoadTransform(aiNode *node);
 	void CombineTransform(GameObject *parent_go);
-	void UpdateBaseVectors(aiQuaternion local_rot);
+	void UpdateBaseVectors(aiQuaternion rot);
 	Gizmo gizmo;
 };
 

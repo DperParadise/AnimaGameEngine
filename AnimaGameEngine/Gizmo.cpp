@@ -71,11 +71,6 @@ Gizmo::~Gizmo()
 
 void Gizmo::Draw(const GameObject *go) const
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	
-	glTranslatef(go->transform.world_position.x, go->transform.world_position.y, go->transform.world_position.z);
-
 	aiMatrix3x3 rot = go->transform.world_rotation.GetMatrix(); //matrix in row-major order. Transpose before feeding openGL 
 	GLfloat rot4x4[16] = { 0.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 0.0f,
@@ -100,8 +95,24 @@ void Gizmo::Draw(const GameObject *go) const
 		}
 	}
 
-	glMultMatrixf(t_rot4x4);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
 
+	//if (go->parent_go)
+	//{
+	//	glTranslatef(go->parent_go->transform.world_position.x, go->parent_go->transform.world_position.y, go->parent_go->transform.world_position.z);
+	//	glMultMatrixf(t_rot4x4);
+
+		//aiVector3D diff_positions = go->transform.world_position - go->parent_go->transform.world_position;
+		//glTranslatef(diff_positions.x, diff_positions.y, diff_positions.z);
+
+	//}
+	//else
+	//{
+		glTranslatef(go->transform.world_position.x, go->transform.world_position.y, go->transform.world_position.z);
+		glMultMatrixf(t_rot4x4);
+	//}
+	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 

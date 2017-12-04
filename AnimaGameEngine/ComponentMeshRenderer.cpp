@@ -46,12 +46,7 @@ void ComponentMeshRenderer::Update(float dt)
 			owner_mesh->mesh_mat->material.diffuse[3], owner_mesh->mesh_mat->material.specular[0], owner_mesh->mesh_mat->material.specular[1],
 			owner_mesh->mesh_mat->material.specular[2], owner_mesh->mesh_mat->material.specular[3], owner_mesh->mesh_mat->material.shininess);*/
 		
-		//Apply world transform
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-			
-		glTranslatef(owner_go->transform.world_position.x, owner_go->transform.world_position.y, owner_go->transform.world_position.z);
-			
+				
 		aiMatrix3x3 rot = owner_go->transform.world_rotation.GetMatrix(); //matrix in row-major order. Transpose before feeding openGL 
 		GLfloat rot4x4[16] = {		0.0f, 0.0f, 0.0f, 0.0f,
 									0.0f, 0.0f, 0.0f, 0.0f,
@@ -75,8 +70,25 @@ void ComponentMeshRenderer::Update(float dt)
 				t_rot4x4[i * 4 + j] = rot4x4[j * 4 + i];
 			}
 		}
-		
-		glMultMatrixf(t_rot4x4);
+
+	
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+
+		//if (owner_go->parent_go)
+		//
+		//	glTranslatef(owner_go->parent_go->transform.world_position.x, owner_go->parent_go->transform.world_position.y, owner_go->parent_go->transform.world_position.z);		
+		//	glMultMatrixf(t_rot4x4);
+
+			//aiVector3D diff_positions = owner_go->transform.world_position - owner_go->parent_go->transform.world_position;
+			//glTranslatef(diff_positions.x, diff_positions.y, diff_positions.z);	
+
+		//}
+		//else
+		//{
+			glTranslatef(owner_go->transform.world_position.x, owner_go->transform.world_position.y, owner_go->transform.world_position.z);
+			glMultMatrixf(t_rot4x4);
+		//}
 
 		glScalef(owner_go->transform.world_scale.x, owner_go->transform.world_scale.y, owner_go->transform.world_scale.z);
 		

@@ -19,9 +19,9 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
-	 GameObject *world_origin = new GameObject("world origin");
-	 world_origin->dirty = false;
-	 AddGameObject(world_origin);
+	 //GameObject *world_origin = new GameObject("world origin");
+	 //world_origin->dirty = false;
+	 //AddGameObject(world_origin);
 
 	 /*GameObject *ambient_light = new GameObject("ambient light");
 	 ComponentAmbientLight *comp_amb_light = (ComponentAmbientLight*)ambient_light->CreateAmbientLight();
@@ -44,7 +44,8 @@ ModuleScene::~ModuleScene() {}
 	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
 	 GameObject *batmanGO = FindGameObject("Batman.obj");
 	 batmanGO->CreateBehaviour("BatmanMovement");
-
+	 GameObject *torsoGO = FindGameObject("BatmanTorso");
+	 torsoGO->CreateTorsoBehaviour("TorsoBehaviour");
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
@@ -94,8 +95,9 @@ GameObject* ModuleScene::FindGameObject(const std::string &name)
 	
 	for (std::vector<GameObject*>::iterator it = game_objects.begin(); it != game_objects.end(); it++)
 	{
-		if (FindInHierarchy(name, *it) != nullptr)
-			return *it;
+		GameObject *found = nullptr;
+		if ((found = FindInHierarchy(name, *it)) != nullptr)
+			return found;
 	}
 	return nullptr;
 }

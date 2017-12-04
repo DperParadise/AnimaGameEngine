@@ -161,6 +161,9 @@
     <ClInclude Include="EditorInspectorWidget.h">
       <Filter>Editor Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentTorsoBehaviour.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -279,6 +282,9 @@
     </ClCompile>
     <ClCompile Include="EditorInspectorWidget.cpp">
       <Filter>Editor Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTorsoBehaviour.cpp">
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

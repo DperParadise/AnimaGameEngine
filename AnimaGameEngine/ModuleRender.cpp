@@ -111,9 +111,13 @@ bool ModuleRender::Init(Config *config)
 		MYLOG(iluErrorString(ilGetError()));
 
 	// Initialize ILU
-	iluInit();	if (ilGetError() != IL_NO_ERROR)
-		MYLOG(iluErrorString(ilGetError()));	// Initialize ILUT with OpenGL support.
-	ilutRenderer(ILUT_OPENGL);	if (ilGetError() != IL_NO_ERROR)
+	iluInit();
+	if (ilGetError() != IL_NO_ERROR)
+		MYLOG(iluErrorString(ilGetError()));
+
+	// Initialize ILUT with OpenGL support.
+	ilutRenderer(ILUT_OPENGL);
+	if (ilGetError() != IL_NO_ERROR)
 		MYLOG(iluErrorString(ilGetError()));
 
 

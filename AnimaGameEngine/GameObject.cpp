@@ -8,6 +8,9 @@
 #include "ComponentBehaviour.h"
 #include "libraries/MathGeoLib/MathGeoLib.h"
 
+//test
+#include "ComponentTorsoBehaviour.h"
+
 GameObject::GameObject(const std::string &name, aiNode *node) : name(name) , transform(this)
 {
 	if (node)
@@ -51,9 +54,6 @@ GameObject::~GameObject()
 
 void GameObject::Update(float dt)
 {
-	if(game_object_selected)
-		gizmo.Draw(this);
-
 	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
 		(*it)->Update(dt);
@@ -64,6 +64,8 @@ void GameObject::Update(float dt)
 		(*it)->Update(dt);
 	}
 
+	if (game_object_selected)
+		gizmo.Draw(this);
 }
 
 void GameObject::UpdateWorldTransform()
@@ -74,7 +76,7 @@ void GameObject::UpdateWorldTransform()
 	if (dirty)
 	{
 		CombineTransform(parent_go);
-		UpdateBaseVectors(transform.world_rotation);
+		//UpdateBaseVectors(transform.world_rotation);
 	}
 
 	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
@@ -120,9 +122,16 @@ Component* GameObject::CreateMeshRenderer(ComponentMesh *mesh_comp)
 	return comp;
 }
 
-Component *GameObject::CreateBehaviour(const std::string &behav_name)
+Component* GameObject::CreateBehaviour(const std::string &behav_name)
 {
 	Component *comp = new ComponentBehaviour(ComponentType::BEHAVIOUR, behav_name, std::string("Behaviour"), true, this);
+	components.push_back(comp);
+	return comp;
+}
+
+Component* GameObject::CreateTorsoBehaviour(const std::string &behav_name)
+{
+	Component *comp = new ComponentTorsoBehaviour(ComponentType::BEHAVIOUR, behav_name, std::string("TorsoBehaviour"), true, this);
 	components.push_back(comp);
 	return comp;
 }
@@ -169,14 +178,14 @@ void GameObject::CombineTransform(GameObject *parent_go)
 	transform.world_rotation = parent_go->transform.world_rotation * transform.relative_rotation;
 }
 
-void GameObject::UpdateBaseVectors(aiQuaternion world_rotation)
+void GameObject::UpdateBaseVectors(aiQuaternion rot)
 {
-	aiMatrix3x3 rot_matrix = world_rotation.GetMatrix();
+	aiMatrix3x3 rot_matrix = rot.GetMatrix();
 	transform.relative_forward.Set(rot_matrix.a3, rot_matrix.b3, rot_matrix.c3);
 	transform.relative_left.Set(rot_matrix.a1, rot_matrix.b1, rot_matrix.c1);
 	transform.relative_up.Set(rot_matrix.a2, rot_matrix.b2, rot_matrix.c2);
 
-	//MYLOG("relative_forward_z = (%f,%f,%f)  relative_left_x = (%f, %f, %f)  relative_up_y = (%f, %f, %f)", transform.relative_forward.x, transform.relative_forward.y, transform.relative_forward.z,
+	//MYLOG("%s : relative_forward_z = (%f,%f,%f)  relative_left_x = (%f, %f, %f)  relative_up_y = (%f, %f, %f)", name.c_str(), transform.relative_forward.x, transform.relative_forward.y, transform.relative_forward.z,
 	//	transform.relative_left.x, transform.relative_left.y, transform.relative_left.z, transform.relative_up.x, transform.relative_up.y, transform.relative_up.z);
 }
 
@@ -194,9 +203,9 @@ void GameObject::Transform::Rotate(float x, float y, float z)
 	//angle rotation sequence is z -> y -> x
 	float3 rot_rad = DegToRad(float3(x, y, z));
 	Quat rot = Quat::FromEulerZYX(rot_rad.z, rot_rad.y, rot_rad.x);
-
 	aiQuaternion result = relative_rotation * aiQuaternion(rot.w, rot.x, rot.y, rot.z);
 	relative_rotation = result;
+	owner_go->UpdateBaseVectors(relative_rotation);
 	owner_go->dirty = true;
 }
 

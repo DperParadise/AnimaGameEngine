@@ -25,6 +25,7 @@ public:
 	virtual void Enable() = 0;
 	virtual void Disable() = 0;
 
+	ComponentType comp_type;
 	std::string comp_name;
 	bool active = true;
 	GameObject *owner_go = nullptr;

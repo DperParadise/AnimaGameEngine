@@ -7,6 +7,9 @@
 #include "Globals.h"
 #include <cmath>
 #include "libraries/MathGeoLib/MathGeoLib.h"
+#include "ComponentMeshRenderer.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 EditorInspectorWidget::EditorInspectorWidget(const std::string &title, 
 	int x, 
@@ -96,11 +99,46 @@ void EditorInspectorWidget::Draw(GameObject *go)
 			{
 				go->transform.relative_scale = scale;
 			}
-
 		}
 
+		for (Component *comp : go->components)
+		{
+			ShowComponentInfo(comp);
+		}
 	}
+	
 	ImGui::End();
+}
+
+void EditorInspectorWidget::ShowComponentInfo(Component *comp)
+{
+	switch (comp->comp_type)
+	{
+	case ComponentType::MESH_RENDERER:
+		ShowMeshRendererInfo((ComponentMeshRenderer*)comp);
+		break;
+	}
+}
+
+void EditorInspectorWidget::ShowMeshRendererInfo(ComponentMeshRenderer *mr)
+{
+	if (ImGui::CollapsingHeader("Mesh renderer"))
+	{
+		ImGui::Checkbox("Active", &mr->owner_go->active);
+		ImGui::NewLine();
+		ImGui::Text("Mesh:");
+		ImGui::Text(mr->owner_mesh->mesh_name.c_str());
+		ImGui::NewLine();
+		ImGui::Text("Material:");
+		ImGui::Text(mr->owner_mesh->mesh_mat->mat_name.c_str());
+		ImGui::ColorEdit4("ambient", mr->owner_mesh->mesh_mat->material.ambient);
+		ImGui::ColorEdit4("diffuse", mr->owner_mesh->mesh_mat->material.diffuse);
+		ImGui::ColorEdit4("specular", mr->owner_mesh->mesh_mat->material.specular);
+		ImGui::InputFloat("shininess", &mr->owner_mesh->mesh_mat->material.shininess, 0.01f, 1.0f);
+		ImGui::NewLine();
+		ImGui::Text("Diffuse Texture:");
+		ImGui::Text(mr->owner_mesh->mesh_mat->diffuse_texture.data);
+	}
 }
 
 void EditorInspectorWidget::ShowHelpMarker(const char* desc)

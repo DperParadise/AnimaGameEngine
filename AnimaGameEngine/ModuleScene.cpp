@@ -27,9 +27,9 @@ ModuleScene::~ModuleScene() {}
 	 ComponentAmbientLight *comp_amb_light = (ComponentAmbientLight*)ambient_light->CreateAmbientLight();
 	 AddGameObject(ambient_light);*/
 
-	 /*GameObject *directional_light = new GameObject("dir light");
+	 GameObject *directional_light = new GameObject("dir light");
 	 ComponentLight *comp_dir_light = (ComponentLight*)directional_light->CreateDirectionalLight();
-	 AddGameObject(directional_light);*/
+	 AddGameObject(directional_light);
 
 	 /*GameObject *point_light = new GameObject("dir light");
 	 ComponentLight *comp_point_light = (ComponentLight*)point_light->CreateDirectionalLight();

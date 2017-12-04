@@ -2,8 +2,10 @@
 #define __EDITOR_INSPECTOR_WIDGET_H__
 
 #include <string>
+#include "Component.h"
 
 class GameObject;
+class ComponentMeshRenderer;
 class EditorInspectorWidget
 {
 public:
@@ -19,6 +21,8 @@ public:
 
 private:
 	void ShowHelpMarker(const char* desc);
+	void ShowComponentInfo(Component *comp);
+	void ShowMeshRendererInfo(ComponentMeshRenderer *mr);
 	
 
 };

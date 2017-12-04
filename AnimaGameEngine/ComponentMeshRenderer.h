@@ -15,7 +15,6 @@ public:
 	void Enable();
 	void Disable();
 
-private:
 	ComponentMesh *owner_mesh = nullptr;
 };
 

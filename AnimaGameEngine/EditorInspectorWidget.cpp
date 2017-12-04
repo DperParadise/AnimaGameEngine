@@ -29,6 +29,8 @@ void EditorInspectorWidget::Draw(GameObject *go)
 	ImGui::Begin(title.c_str());
 	if (go)
 	{
+		ImGui::Checkbox("Active", &go->active);
+
 		if (ImGui::CollapsingHeader("Transform"))
 		{
 			ImGui::Text("Position");
@@ -124,7 +126,7 @@ void EditorInspectorWidget::ShowMeshRendererInfo(ComponentMeshRenderer *mr)
 {
 	if (ImGui::CollapsingHeader("Mesh renderer"))
 	{
-		ImGui::Checkbox("Active", &mr->owner_go->active);
+		ImGui::Checkbox("Active", &mr->active);
 		ImGui::NewLine();
 		ImGui::Text("Mesh:");
 		ImGui::Text(mr->owner_mesh->mesh_name.c_str());

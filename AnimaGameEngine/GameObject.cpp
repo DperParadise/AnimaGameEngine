@@ -54,6 +54,9 @@ GameObject::~GameObject()
 
 void GameObject::Update(float dt)
 {
+	if (!active)
+		return;
+
 	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
 		(*it)->Update(dt);
@@ -70,6 +73,9 @@ void GameObject::Update(float dt)
 
 void GameObject::UpdateWorldTransform()
 {
+	if (!active)
+		return;
+
 	if (parent_go && parent_go->dirty)	
 		dirty = true;
 

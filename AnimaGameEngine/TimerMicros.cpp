@@ -19,6 +19,7 @@ float TimerMicros::Read()
 	{
 		current = SDL_GetPerformanceCounter();
 		ret = (float)(current - previous);
+		previous = current;
 	}
 
 	else

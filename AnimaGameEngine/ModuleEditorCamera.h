@@ -51,6 +51,7 @@ private:
 	float camera_speed = 30.0f;
 	float camera_speed_fast = 60.0f;
 	float camera_wheel_speed = 1.0f;
+	float sensitivity = 0.001f;
 };
 
 

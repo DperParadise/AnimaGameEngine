@@ -145,19 +145,23 @@ update_status ModuleEditorCamera::Update(float dt)
 
 		//Use mouse motion to move the camera
 		iPoint increment = App->input->GetMouseMotion();
-		if (increment.x != 0 || increment.y != 0)
-		{
-			float3 inc_vector;
-			inc_vector.x = 0.0f;
-			inc_vector.y = 0.0f;
-			inc_vector.z = 0.0f;
-
-			inc_vector += frustum.Front() + frustum.WorldRight() * increment.x * 0.5f * dt;
-			inc_vector += frustum.Up() * -increment.y * 0.5 * dt;
-			float3x3 m = float3x3::LookAt(frustum.Front(), inc_vector.Normalized(), frustum.Up(), float3::unitY);
+		if (increment.y != 0)
+		{	
+			float3 new_front = frustum.Front() - increment.y * sensitivity * frustum.Up(); //debería * dt pero tiene variaciones de dt muy feas. Revisarlo
+			float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
 			float3 front = m.MulDir(frustum.Front()).Normalized();
 			float3 up = m.MulDir(frustum.Up()).Normalized();
-			SetOrientation(front, up);		
+			SetOrientation(front, up);
+			
+		}
+
+		if (increment.x != 0)
+		{
+			float3 new_front = frustum.Front() + increment.x * sensitivity * frustum.WorldRight(); //debería * dt pero tiene variaciones de dt muy feas. Revisarlo
+			float3x3 m = float3x3::LookAt(frustum.Front(), new_front.Normalized(), frustum.Up(), float3::unitY);
+			float3 front = m.MulDir(frustum.Front()).Normalized();
+			float3 up = m.MulDir(frustum.Up()).Normalized();
+			SetOrientation(front, up);
 		}
 	}
 

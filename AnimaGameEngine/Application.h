@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "TimerMillis.h"
 #include "TimerMicros.h"
+#include "TimerChrono.h"
 #include <string>
 
 class Module;
@@ -37,20 +38,18 @@ public:
 	ModuleScene* scene;
 	ModuleEditorGUI* editor_gui;
 	//------------------------------------------------- TIME CONTROL -----------------------------------------
-	TimerMillis timerMillis;
-	TimerMillis timerMillis_accumulated;
-	TimerMicros timerMicros;
+	TimerChrono timer_chrono;
 
 	int frames_accumulated = 0;
 	int time_accumulated = 0;
-	float average_fps = 0.0f;
-	float ms_last_update = 0.0f;
-	int fps = 0;
-	int fps_cap = 0;
+	double average_fps = 0.0f;
+	double ms_last_update = 0.0f;
+	double fps = 0.0f;
+	double ms_cap = 0.0f;
 	Uint32 wait_time = 0;
 
 	//dt in seconds
-	float dt = 0.0f;
+	double dt = 0.0f;
 
 private:
 

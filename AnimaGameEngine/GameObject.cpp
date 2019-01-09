@@ -82,12 +82,14 @@ void GameObject::UpdateWorldTransform()
 	if (dirty)
 	{
 		CombineTransform(parent_go);
-		//UpdateBaseVectors(transform.world_rotation);
-	}
 
-	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
-	{
-		(*it)->UpdateWorldTransform();
+		//UpdateBaseVectors(transform.world_rotation);
+
+
+		for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
+		{
+			(*it)->UpdateWorldTransform();
+		}
 	}
 
 	dirty = false;

@@ -52,7 +52,7 @@ Application::Application()
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(renderer = new ModuleRender());
-	modules.push_back(textures = new ModuleTextures());
+	//modules.push_back(textures = new ModuleTextures());  //Module textures not needed. It comes from legacy code in 2D engine
 	modules.push_back(audio = new ModuleAudio());
 	modules.push_back(module_editor_camera = new ModuleEditorCamera());
 	modules.push_back(scene = new ModuleScene());
@@ -77,8 +77,8 @@ bool Application::Init()
 	}
 
 	MYLOG("Load Application configuration");
-	fps_cap = config->GetInt("Application", "fps_cap");
-
+	ms_cap = 1.0 / ((double)config->GetInt("Application", "fps_cap") / 1000.0);
+	
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Init(config); // we init everything, even if not anabled
 
@@ -87,12 +87,11 @@ bool Application::Init()
 		if((*it)->IsEnabled() == true)
 			ret = (*it)->Start();
 	}
-
+	
 	RELEASE(config);
 
 	//------------------------------------- START TIMERS-----------------------------------
-	timerMillis.Start();
-	timerMillis_accumulated.Start();
+	timer_chrono.Start();
 
 	return ret;
 }
@@ -102,33 +101,23 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 
 	//---------------------------------------   TIME CONTROL ---------------------------------------
-	ms_last_update = timerMillis.Read();
-	timerMillis.Start();
-	dt = ms_last_update / 1000;
-	fps = 1 / dt;
+	dt = timer_chrono.Read(); //milliseconds
+	wait_time = 0.0;
 
-	if (fps_cap != 0)   
+	if (dt < ms_cap)
 	{
-		if (fps > fps_cap)
-		{
-			wait_time = 1000 / fps_cap - ms_last_update;
-			SDL_Delay(wait_time);
-		}
-	}
-	
-	time_accumulated = timerMillis_accumulated.Read();
-	frames_accumulated++;
-	if(time_accumulated != 0)
-		average_fps = 1000 * (float)frames_accumulated / time_accumulated;
-
-	if (frames_accumulated == 1000)
-	{
-		frames_accumulated = 0;
-		timerMillis_accumulated.Start();
+		wait_time = ms_cap - dt;
+		timer_chrono.Delay(wait_time);
 	}
 
-	//MYLOG("AVERAGE FPS = %f		MS LAST UPDATE = %f	   dt = %f     FPS = %d", average_fps, ms_last_update, dt, fps);
-	
+	dt /= 1000.0;
+
+#ifdef _DEBUG
+	//Comment out when debugging
+	//ms_last_update = dt * 1000.0;
+	//fps = 1.0 / dt;
+	//MYLOG("MS LAST UPDATE = %f    WAIT TIME = %d    dt = %f    FPS = %d", ms_last_update, wait_time, dt, (int)fps);
+#endif	
 	
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 

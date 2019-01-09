@@ -18,6 +18,7 @@ Uint32 TimerMillis::Read()
 	{
 		current = SDL_GetTicks();
 		ret = current - previous;
+		previous = current;
 	}
 
 	else

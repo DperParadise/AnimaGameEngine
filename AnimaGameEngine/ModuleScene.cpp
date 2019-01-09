@@ -19,18 +19,20 @@ ModuleScene::~ModuleScene() {}
 {	 
 	 //create gameobjects
 
-	 //GameObject *world_origin = new GameObject("world origin");
-	 //world_origin->dirty = false;
-	 //AddGameObject(world_origin);
+	 
+	 GameObject *world_origin = new GameObject("world origin");
+	 world_origin->dirty = false;
+	 AddGameObject(world_origin);
+	 
 
-	 /*GameObject *ambient_light = new GameObject("ambient light");
+	 GameObject *ambient_light = new GameObject("ambient light");
 	 ComponentAmbientLight *comp_amb_light = (ComponentAmbientLight*)ambient_light->CreateAmbientLight();
-	 AddGameObject(ambient_light);*/
-
+	 AddGameObject(ambient_light);
+	 
 	 GameObject *directional_light = new GameObject("dir light");
 	 ComponentLight *comp_dir_light = (ComponentLight*)directional_light->CreateDirectionalLight();
 	 AddGameObject(directional_light);
-
+	 
 	 /*GameObject *point_light = new GameObject("dir light");
 	 ComponentLight *comp_point_light = (ComponentLight*)point_light->CreateDirectionalLight();
 	 comp_point_light->SetPosition(0.0f, 0.0f, 20.0f);
@@ -40,13 +42,13 @@ ModuleScene::~ModuleScene() {}
 	 //CubeGO *cube_go = new CubeGO("Cube");	
 	 //AddGameObject(cube_go);
 
-	 //Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
+	 Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
 	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
 	 GameObject *batmanGO = FindGameObject("Batman.obj");
-	 batmanGO->CreateBehaviour("BatmanMovement");
-	 GameObject *torsoGO = FindGameObject("BatmanTorso");
-	 torsoGO->CreateTorsoBehaviour("TorsoBehaviour");
-	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
+	 //batmanGO->CreateBehaviour("BatmanMovement");
+	 //GameObject *torsoGO = FindGameObject("BatmanTorso");
+	 //torsoGO->CreateTorsoBehaviour("TorsoBehaviour");
+	 Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
 

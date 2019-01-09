@@ -164,6 +164,9 @@
     <ClInclude Include="ComponentTorsoBehaviour.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
+    <ClInclude Include="TimerChrono.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -285,6 +288,9 @@
     </ClCompile>
     <ClCompile Include="ComponentTorsoBehaviour.cpp">
       <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerChrono.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -39,10 +39,6 @@ public:
 	ModuleEditorGUI* editor_gui;
 	//------------------------------------------------- TIME CONTROL -----------------------------------------
 	TimerChrono timer_chrono;
-
-	int frames_accumulated = 0;
-	int time_accumulated = 0;
-	double average_fps = 0.0f;
 	double ms_last_update = 0.0f;
 	double fps = 0.0f;
 	double ms_cap = 0.0f;

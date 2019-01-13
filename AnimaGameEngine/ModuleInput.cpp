@@ -114,8 +114,8 @@ update_status ModuleInput::PreUpdate(float dt)
 
 					case SDL_WINDOWEVENT_SIZE_CHANGED:						
 						App->window->OnResize(event.window.data1, event.window.data2);					
-						App->module_editor_camera->OnResize(event.window.data1, event.window.data2);
-						App->renderer->OnResize(event.window.data1, event.window.data2);
+						App->module_editor_camera->OnResize();
+						App->renderer->OnResize();
 						break;
 				}
 			break;

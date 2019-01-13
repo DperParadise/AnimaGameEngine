@@ -141,9 +141,9 @@ update_status ModuleRender::Update(float dt)
 update_status ModuleRender::PostUpdate(float dt)
 {	
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->module_editor_camera->viewMatrix);
+	glLoadMatrixf(&App->module_editor_camera->GetViewMatrix()[0][0]);
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->module_editor_camera->projectionMatrix);	
+	glLoadMatrixf(&App->module_editor_camera->GetProjectionMatrix()[0][0]);	
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
@@ -160,10 +160,10 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-void ModuleRender::OnResize(int window_width, int window_height)
+void ModuleRender::OnResize()
 {
-	glViewport(0, 0, window_width, window_height);
+	glViewport(0, 0, App->window->window_width, App->window->window_height);
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->module_editor_camera->projectionMatrix);
+	glLoadMatrixf(&App->module_editor_camera->GetProjectionMatrix()[0][0]);
 }
 

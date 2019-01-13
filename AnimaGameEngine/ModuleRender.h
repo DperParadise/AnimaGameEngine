@@ -31,7 +31,7 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	void OnResize(int window_width, int window_height);
+	void OnResize();
 
 };
 

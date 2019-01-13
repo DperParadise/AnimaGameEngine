@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 #include "Module.h"
-#include "libraries/MathGeoLib/MathGeoLib.h"
+#include "libraries/glm/glm.hpp"
 
 
 class Config;
@@ -16,42 +16,36 @@ public:
 	bool Init(Config *config);
 	update_status Update(float dt);
 	bool CleanUp();
+	
+	void OnResize();
 
-	void SetVerticalFOVAndAspectRatio(float vertical_fov, int width, int height);
-	float GetVerticalFOV();
-	float GetAspectRatio();
-	void SetPlaneDistances(float near, float far);
-	void SetPosition(const float3 &pos);
-	void SetOrientation(const float3 &front, const float3 &up);
-	void LookAt(const float3 &point);
-	void ComputeProjectionMatrix();
-	void ComputeViewMatrix();
-
-	void OnResize(int window_width, int window_height);
-
-	Frustum frustum;
-	float projectionMatrix[16];
-	float viewMatrix[16];
-
-	float3 lookat_point;
+	const glm::mat4& GetProjectionMatrix() const;
+	const glm::mat4& GetViewMatrix() const;
 
 private:
-	FrustumProjectiveSpace projectiveSpace = FrustumProjectiveSpace::FrustumSpaceGL;
-	FrustumHandedness handedness = FrustumHandedness::FrustumRightHanded;
-	float3 position = float3(0.0f, 5.0f, 10.0f);
-	float3 front_vect = float3(0.0f, 0.0f, -1.0f);
-	float3 up_vect = float3(0.0f, 1.0f, 0.0f);
-	float near_plane = 0.1f;
-	float far_plane = 1000.0f;
-	float vertical_fov = 60.0f;
-	float horizontal_fov;
-	int width = 1024;
-	int height = 768;
-	float aspect_ratio = 1.3333f;
-	float camera_speed = 30.0f;
-	float camera_speed_fast = 60.0f;
-	float camera_wheel_speed = 1.0f;
-	float sensitivity = 0.001f;
+	glm::mat4 projectionMatrix;
+	glm::mat4 viewMatrix;
+	glm::vec3 position = glm::vec3(0.0f, 10.0f, 10.0f);
+	float pitch = 0.0f;
+	float yaw = -90.0f;
+	glm::vec3 cameraFront;
+	glm::vec3 cameraUp;
+	glm::vec3 cameraRight;
+
+	float nearPlane = 0.1f;
+	float farPlane = 100.0f;
+	float verticalFOV = 70.0f;
+	int width = 0.0f;
+	int height = 0.0f;
+	float aspectRatio = 0.0f;
+	float cameraSpeedSlow = 30.0f;
+	float cameraSpeedFast = 60.0f;
+	float cameraWheelSpeed = 30.0f;
+	float sensitivity = 20.0f;
+
+	void UpdateProjectionMatrix();
+	void UpdateViewMatrix();
+	void SetOrientation();
 };
 
 

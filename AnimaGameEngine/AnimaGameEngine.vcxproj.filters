@@ -24,6 +24,9 @@
     <Filter Include="GameObjects and Components">
       <UniqueIdentifier>{145fcb29-496e-49bd-8c38-7e67bddb3677}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{a817e9a6-a450-4f6b-a402-dc591779598d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h">
@@ -167,6 +170,9 @@
     <ClInclude Include="TimerChrono.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -291,6 +297,9 @@
     </ClCompile>
     <ClCompile Include="TimerChrono.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Shader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

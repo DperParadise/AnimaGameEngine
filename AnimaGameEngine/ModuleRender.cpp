@@ -22,6 +22,7 @@ ModuleRender::~ModuleRender(){}
 // Called before render is available
 bool ModuleRender::Init(Config *config)
 {
+	
 	MYLOG("Load ModuleRender configuration");
 	vsync = config->GetBool("ModuleRender", "vsync");
 
@@ -45,14 +46,14 @@ bool ModuleRender::Init(Config *config)
 	}
 
 	//------------------------- INIT GLEW----------------------------------------------------
-
+	
 	GLenum initialization = glewInit();
 	if (initialization != GLEW_OK)
 	{
 		MYLOG("Error on glewInit()");
 		return false;
 	}
-
+	
 	//test glew Initialization
 	MYLOG("Using Glew %s", glewGetString(GLEW_VERSION));
 
@@ -61,9 +62,10 @@ bool ModuleRender::Init(Config *config)
 	MYLOG("OpenGL version supported %s", glGetString(GL_VERSION));
 	MYLOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
+	//TODO: Fix this with OpenGL 3.3
 	//Init projection matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
 
 	//Check for error
 	GLenum error = glGetError();
@@ -73,9 +75,10 @@ bool ModuleRender::Init(Config *config)
 		ret = false;
 	}
 
+	//TODO: Fix this with OpenGL 3.3
 	//Init modelview matrix
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
 
 	//Check for error
 	 error = glGetError();
@@ -84,9 +87,11 @@ bool ModuleRender::Init(Config *config)
 		MYLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 		ret = false;
 	}
-
+	//TODO: Fix this with OpenGL 3.3
+	/*
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glClearDepth(1.0f);
+	*/
 
 	//Check for error
 	error = glGetError();
@@ -95,12 +100,13 @@ bool ModuleRender::Init(Config *config)
 		MYLOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 		ret = false;
 	}
-
+	//TODO: Fix this with OpenGL 3.3
+	/*
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST); //If enabled, glClear(GL_DEPTH_BUFFER_BIT)  must be called in PreUpdate
-	//glEnable(GL_CULL_FACE); //If disabled, back faces are visible
+	glEnable(GL_CULL_FACE); //If disabled, back faces are visible
 	glEnable(GL_TEXTURE_2D);
-
+	*/
 	glViewport(0, 0, (GLint)App->window->window_width, (GLint)App->window->window_height);
 
 
@@ -139,12 +145,13 @@ update_status ModuleRender::Update(float dt)
 }
 
 update_status ModuleRender::PostUpdate(float dt)
-{	
+{	//TODO: Fix this with OpenGL 3.3
+	/*
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(&App->module_editor_camera->GetViewMatrix()[0][0]);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&App->module_editor_camera->GetProjectionMatrix()[0][0]);	
-
+	*/
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

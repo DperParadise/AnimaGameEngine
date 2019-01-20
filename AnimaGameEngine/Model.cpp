@@ -1,6 +1,6 @@
 #include "Importer.h"
 #include "Model.h"
-#include "libraries/assimp/include/assimp/scene.h"
+#include "libraries/assimp/include/scene.h"
 #include "Globals.h"
 #include "GameObject.h"
 #include "Application.h"
@@ -42,6 +42,8 @@ GameObject *Model::LoadHierarchy(aiNode *node, GameObject *parent_go, const char
 	{
 		uint mesh_index = node->mMeshes[i];
 		Component *mat_comp = go->CreateLoadedMaterialComp(scene->mMeshes[mesh_index], scene, file);
+		//TODO: En lugar de un mesh component, se crea una mesh y se le pasa al mesh renderer
+		//TODO: En lugar de un material component, se crea un shader y se le pasa al mesh renderer
 		Component *mesh_comp = go->CreateLoadedMeshComp((ComponentMaterial*)mat_comp, scene->mMeshes[mesh_index]);
 		go->CreateMeshRenderer((ComponentMesh*)mesh_comp);
 	}

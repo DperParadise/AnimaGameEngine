@@ -18,7 +18,7 @@
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/DevIL.lib")
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
-		#pragma comment (lib, "libraries/assimp/lib/assimp-vc140-mt.lib")
+		#pragma comment (lib, "libraries/assimp/lib/debug/assimp-vc140-mt.lib")
 	#else
 		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")
 		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -26,21 +26,7 @@
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/DevIL.lib")
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
-		#pragma comment (lib, "libraries/assimp/lib/assimp-vc140-mt.lib")
-	#endif
-	
-	#ifdef _WIN64
-		#ifdef _DEBUG
-			#pragma comment(lib, "libraries/MathGeoLib/libx64/deb/MathGeoLib.lib")
-		#else
-			#pragma comment(lib, "libraries/MathGeoLib/libx64/rel/MathGeoLib.lib")
-		#endif
-	#else
-		#ifdef _DEBUG
-			#pragma comment(lib, "libraries/MathGeoLib/libx86/deb/MathGeoLib.lib")
-		#else
-			#pragma comment(lib, "libraries/MathGeoLib/libx86/rel/MathGeoLib.lib")
-		#endif
+		#pragma comment (lib, "libraries/assimp/lib/release/assimp-vc140-mt.lib")
 	#endif
 #endif
 

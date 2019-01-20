@@ -1,7 +1,7 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
-#include "libraries/assimp/include/assimp/postprocess.h"
+#include "libraries/assimp/include/postprocess.h"
 
 class Importer;
 struct aiScene;

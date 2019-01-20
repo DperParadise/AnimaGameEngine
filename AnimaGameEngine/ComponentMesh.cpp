@@ -1,6 +1,6 @@
 #include "ComponentMesh.h"
 #include "Globals.h"
-#include "libraries/assimp/include/assimp/scene.h"
+#include "libraries/assimp/include/scene.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include <vector>
 

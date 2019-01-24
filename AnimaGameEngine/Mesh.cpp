@@ -31,6 +31,11 @@ unsigned int Mesh::GetVAO() const
 	return VAO;
 }
 
+const auto & Mesh::GetIndices() const
+{
+	return indices;
+}
+
 void Mesh::LoadVertices(const aiMesh * mesh)
 {
 	const aiVector3D zero3D(0.0f, 0.0f, 0.0f);
@@ -117,8 +122,6 @@ void Mesh::SetVertexBuffers()
 void Mesh::ClearVertexVectors()
 {
 	vertices.clear();
-	indices.clear();
-	
 }
 
 void Mesh::LoadTextures(const aiScene *aiScene, const aiMesh *mesh, const std::string &texturePath)
@@ -186,6 +189,9 @@ void Mesh::LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const
 			case aiTextureType::aiTextureType_HEIGHT:
 				texture.type = "height";
 				break;
+			default:
+				// TODO: ver cómo manejar el caso de una textura "inesperada"
+				texture.type = "default";
 			}
 
 			textures.push_back(tex);

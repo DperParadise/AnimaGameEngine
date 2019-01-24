@@ -33,6 +33,7 @@ public:
 		void LoadMesh(const aiScene *scene, const aiMesh *mesh, const std::string &texturePath);
 		const std::vector<Texture>& GetTextures() const;
 		unsigned int GetVAO() const;
+		const auto& GetIndices() const;
 
 private:
 		unsigned VAO, VBO, EBO;

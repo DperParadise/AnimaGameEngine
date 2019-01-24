@@ -13,9 +13,9 @@ public:
 	ModuleEditorCamera();
 	virtual ~ModuleEditorCamera();
 
-	bool Init(Config *config);
-	update_status Update(float dt);
-	bool CleanUp();
+	bool Init(Config *config) override;
+	update_status Update(float dt) override;
+	bool CleanUp() override;
 	
 	void OnResize();
 

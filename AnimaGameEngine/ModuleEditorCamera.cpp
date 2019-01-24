@@ -3,12 +3,13 @@
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
 #include "libraries/glm/gtc/matrix_transform.hpp"
+#include "libraries/SDL/include/SDL.h"
 
 ModuleEditorCamera::ModuleEditorCamera() {}
 
 ModuleEditorCamera::~ModuleEditorCamera() {}
 
-bool ModuleEditorCamera::Init(Config *config)
+bool ModuleEditorCamera::Init(Config *config) 
 {
 	aspectRatio = (float)App->window->window_width / (float)App->window->window_height;
 	

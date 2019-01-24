@@ -66,11 +66,6 @@ public:
 	{ 
 		return true; 
 	}
-
-	// Callbacks ---
-	virtual void OnResize(int window_widht, int window_height){}
-
-
 private:
 	bool active = true;
 	float dt = 0.0f;

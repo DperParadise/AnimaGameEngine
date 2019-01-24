@@ -6,50 +6,27 @@
 #include "ComponentAmbientLight.h"
 #include "ComponentMeshRenderer.h"
 #include "ComponentBehaviour.h"
-#include "libraries/MathGeoLib/MathGeoLib.h"
+#include "libraries/assimp/include/vector3.h"
+#include "libraries/assimp/include/quaternion.h"
+#include "libraries/assimp/include/scene.h"
+#include "ComponentTransform.h"
 
 //test
 #include "ComponentTorsoBehaviour.h"
 
-GameObject::GameObject(const std::string &name, aiNode *node) : name(name) , transform(this)
+GameObject::GameObject(const std::string &name, const aiNode *node) : name(name)
 {
+	transform = new ComponentTransform(ComponentType::TRANSFORM, "transform", this);
+
 	if (node)
-		LoadTransform(node);
-	else
 	{
-		transform.relative_position.Set(0.0f, 0.0f, 0.0f);	
-		
-		transform.relative_scale.Set(1.0f, 1.0f, 1.0f);	
-		
-		transform.relative_rotation.x = 0.0f;
-		transform.relative_rotation.y = 0.0f;
-		transform.relative_rotation.z = 0.0f;
-		transform.relative_rotation.w = 1.0f;
-
-		transform.world_position.Set(0.0f, 0.0f, 0.0f);
-		
-		transform.world_scale.Set(1.0f, 1.0f, 1.0f);
-
-		transform.world_rotation.x = 0.0f;
-		transform.world_rotation.y = 0.0f;
-		transform.world_rotation.z = 0.0f;
-		transform.world_rotation.w = 1.0f;
+		LoadTransform(node);
 	}
 }
 
 GameObject::~GameObject()
 {
-	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); it++)
-	{
-		RELEASE(*it);
-	}
-	components.clear();
-
-	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
-	{
-		RELEASE(*it);
-	}
-	children_go.clear();
+	Clear();
 }
 
 void GameObject::Update(float dt)
@@ -62,12 +39,12 @@ void GameObject::Update(float dt)
 		(*it)->Update(dt);
 	}
 
-	for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
+	for (std::vector<GameObject*>::iterator it = childrenGO.begin(); it != childrenGO.end(); it++)
 	{
 		(*it)->Update(dt);
 	}
 
-	if (game_object_selected)
+	if (selectedGO)
 		gizmo.Draw(this);
 }
 
@@ -76,23 +53,38 @@ void GameObject::UpdateWorldTransform()
 	if (!active)
 		return;
 
-	if (parent_go && parent_go->dirty)	
+	if (parentGO && parentGO->dirty)
 		dirty = true;
 
 	if (dirty)
 	{
-		CombineTransform(parent_go);
+		CombineTransform(parentGO);
 
-		//UpdateBaseVectors(transform.world_rotation);
-
-
-		for (std::vector<GameObject*>::iterator it = children_go.begin(); it != children_go.end(); it++)
+		for (std::vector<GameObject*>::iterator it = childrenGO.begin(); it != childrenGO.end(); it++)
 		{
 			(*it)->UpdateWorldTransform();
 		}
 	}
 
 	dirty = false;
+}
+
+void GameObject::Translate(const glm::vec3 & pos)
+{
+	transform->Translate(pos);
+	dirty = true;
+}
+
+void GameObject::Scale(const glm::vec3 & scale)
+{
+	transform->Scale(scale);
+	dirty = true;
+}
+
+void GameObject::Rotate(float angle, const glm::vec3 &axis)
+{
+	transform->Rotate(angle, axis);
+	dirty = true;
 }
 
 Component* GameObject::CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv)
@@ -165,72 +157,59 @@ Component *GameObject::CreateDirectionalLight()
 	return comp;
 }
 
-void GameObject::LoadTransform(aiNode *node)
+void GameObject::LoadTransform(const aiNode *node)
 {
-	node->mTransformation.Decompose(transform.relative_scale, transform.relative_rotation, transform.relative_position);
+	//Assimp types
+	aiVector3D pos;
+	aiVector3D scale;
+	aiQuaternion rot;
+
+	node->mTransformation.Decompose(scale, rot, pos);
+
+	// TODO: override asignment operator to assign between glm and assimp types
+	//glm types
+	glm::vec3 posGLM(pos.x, pos.y, pos.z);
+	glm::vec3 scaleGLM(scale.x, scale.y, scale.z);
+	glm::quat rotGLM(rot.x, rot.y, rot.z, rot.w);
+
+	transform->SetRelativePositionWorldAxis(posGLM);
+	transform->SetRelativeScaleWorldAxis(scaleGLM);
+	transform->SetRelativeRotationWorldAxis(rotGLM);
 }
 
-void GameObject::CombineTransform(GameObject *parent_go)
+void GameObject::CombineTransform(GameObject *parentGO)
 { 
-	if (!parent_go)
+
+	//The world position will be the same as the relativePosition taken from the Asimp Decompose() method
+	if (!parentGO)
 	{
-		transform.world_position = transform.relative_position;
-		transform.world_scale = transform.relative_scale;
-		transform.world_rotation = transform.relative_rotation;
+		transform->SetWorldPosition(transform->GetRelativePositionWorldAxis());
+		transform->SetWorldScale(transform->GetRelativeScaleWorldAxis());
+		transform->SetWorldRotation(transform->GetRelativeRotationWorldAxis());
 
 		return;
 	}
 
-	transform.world_position = parent_go->transform.world_position + transform.relative_position;
-	transform.world_scale = parent_go->transform.world_scale.SymMul(transform.relative_scale);
-	transform.world_rotation = parent_go->transform.world_rotation * transform.relative_rotation;
+	transform->SetWorldPosition(parentGO->transform->GetWorldPosition() + transform->GetRelativePositionWorldAxis());
+	transform->SetWorldScale(parentGO->transform->GetWorldScale() * transform->GetRelativeScaleWorldAxis());
+	
+	// TODO: Check quaternions mult order
+	transform->SetWorldRotation(parentGO->transform->GetWorldRotation * transform->GetRelativeRotationWorldAxis());
 }
 
-void GameObject::UpdateBaseVectors(aiQuaternion rot)
+void GameObject::Clear()
 {
-	aiMatrix3x3 rot_matrix = rot.GetMatrix();
-	transform.relative_forward.Set(rot_matrix.a3, rot_matrix.b3, rot_matrix.c3);
-	transform.relative_left.Set(rot_matrix.a1, rot_matrix.b1, rot_matrix.c1);
-	transform.relative_up.Set(rot_matrix.a2, rot_matrix.b2, rot_matrix.c2);
+	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		RELEASE(*it);
+	}
+	components.clear();
 
-	//MYLOG("%s : relative_forward_z = (%f,%f,%f)  relative_left_x = (%f, %f, %f)  relative_up_y = (%f, %f, %f)", name.c_str(), transform.relative_forward.x, transform.relative_forward.y, transform.relative_forward.z,
-	//	transform.relative_left.x, transform.relative_left.y, transform.relative_left.z, transform.relative_up.x, transform.relative_up.y, transform.relative_up.z);
-}
+	for (std::vector<GameObject*>::iterator it = childrenGO.begin(); it != childrenGO.end(); it++)
+	{
+		RELEASE(*it);
+	}
+	childrenGO.clear();
 
-//translation in relation to "this" base vectors
-void GameObject::Transform::Translate(float local_x, float local_y, float local_z)
-{
-	aiVector3D translation = local_x * relative_left + local_y * relative_up + local_z * relative_forward;
-	acum_rel_position += translation;
-	relative_position.Set(relative_position.x + translation.x, relative_position.y + translation.y, relative_position.z + translation.z);
-	owner_go->dirty = true;
-}
-
-void GameObject::Transform::Rotate(float x, float y, float z)
-{
-	//angle rotation sequence is z -> y -> x
-	float3 rot_rad = DegToRad(float3(x, y, z));
-	Quat rot = Quat::FromEulerZYX(rot_rad.z, rot_rad.y, rot_rad.x);
-	aiQuaternion result = relative_rotation * aiQuaternion(rot.w, rot.x, rot.y, rot.z);
-	relative_rotation = result;
-	owner_go->UpdateBaseVectors(relative_rotation);
-	owner_go->dirty = true;
-}
-
-void GameObject::Transform::Scale(float x, float y, float z)
-{
-	relative_scale.Set(x, y, z);
-	owner_go->dirty = true;
-}
-
-const aiVector3D GameObject::Transform::local_forward = aiVector3D(0.0f, 0.0f, 1.0f);
-const aiVector3D GameObject::Transform::local_left = aiVector3D(1.0f, 0.0f, 0.0f);
-const aiVector3D GameObject::Transform::local_up = aiVector3D(0.0f, 1.0f, 0.0f);
-
-void GameObject::Transform::ResetPosition(float rel_x, float rel_y, float rel_z)
-{
-	relative_position -= acum_rel_position;
-	acum_rel_position = aiVector3D(0.0f, 0.0f, 0.0f);
-	relative_position = aiVector3D(rel_x, rel_y, rel_z);
-	owner_go->dirty = true;
+	RELEASE(transform)
 }

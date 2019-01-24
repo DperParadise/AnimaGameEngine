@@ -5,6 +5,7 @@
 
 enum class ComponentType
 {
+	TRANSFORM,
 	CAMERA,
 	MESH,
 	MESH_RENDERER,
@@ -19,17 +20,23 @@ class GameObject;
 class Component
 {
 public:
-	Component(ComponentType type, const std::string &name, bool act, GameObject *go);
+	Component(ComponentType type, const std::string &name, GameObject *go, bool act = true);
 	virtual ~Component();
 	
 	virtual void Update(float dt);
 	virtual void Enable();
 	virtual void Disable();
 
-	ComponentType comp_type;
-	std::string comp_name;
+	ComponentType GetComponentType() const;
+	const std::string &GetComponentName() const;
+	bool IsActive() const;
+	const GameObject* GetOwnerGO() const;
+
+private:
+	ComponentType type;
+	std::string name;
 	bool active = true;
-	GameObject *owner_go = nullptr;
+	GameObject *ownerGO = nullptr;
 
 };
 

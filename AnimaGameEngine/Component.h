@@ -5,6 +5,7 @@
 
 enum class ComponentType
 {
+	CAMERA,
 	MESH,
 	MESH_RENDERER,
 	MATERIAL,
@@ -21,9 +22,9 @@ public:
 	Component(ComponentType type, const std::string &name, bool act, GameObject *go);
 	virtual ~Component();
 	
-	virtual void Update(float dt) = 0;
-	virtual void Enable() = 0;
-	virtual void Disable() = 0;
+	virtual void Update(float dt);
+	virtual void Enable();
+	virtual void Disable();
 
 	ComponentType comp_type;
 	std::string comp_name;

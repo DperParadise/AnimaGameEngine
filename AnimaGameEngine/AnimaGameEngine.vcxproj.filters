@@ -176,6 +176,9 @@
     <ClInclude Include="Mesh.h">
       <Filter>Geometry Load</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -306,6 +309,9 @@
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Geometry Load</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

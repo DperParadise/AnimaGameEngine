@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ComponentCamera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentAmbientLight.h" />
     <ClInclude Include="ComponentBehaviour.h" />
@@ -195,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentAmbientLight.cpp" />
     <ClCompile Include="ComponentBehaviour.cpp" />

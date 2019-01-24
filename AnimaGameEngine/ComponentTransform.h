@@ -17,16 +17,36 @@ public:
 	void Scale(const glm::vec3 &scale);
 	void ResetPosition();
 
+	const glm::vec3& GetRelativePositionWorldAxis() const;
+	const glm::vec3& GetRelativeScaleWorldAxis() const;
+	const glm::quat& GetRelativeRotationWorldAxis() const;
+
+	const glm::vec3& GetWorldPosition() const;
+	const glm::vec3& GetWorldScale() const;
+	const glm::quat& GetWorldRotation() const;
+
+	//Set transform on world's axis
+	void SetRelativePositionWorldAxis(const glm::vec3& pos);
+	void SetRelativeScaleWorldAxis(const glm::vec3& scale);
+	void SetRelativeRotationWorldAxis(const glm::quat& rot);
+
+	//On world axis
+	void SetWorldPosition(const glm::vec3& pos);
+	void SetWorldScale(const glm::vec3& scale);
+	void SetWorldRotation(const glm::quat& rot);
+
 private:
 	glm::vec3 acumRelPosition;
 
+	//vectors on world axis
 	glm::vec3 relativePosition;
 	glm::vec3 relativeScale;
 	glm::quat relativeRotation;
 
-	glm::vec3 relativeForward;
-	glm::vec3 relativeLeft;
-	glm::vec3 relativeUp;
+	//base vectors of this transform
+	glm::vec3 ownForward;
+	glm::vec3 ownLeft;
+	glm::vec3 ownUp;
 
 	glm::vec3 worldPosition;
 	glm::vec3 worldScale;

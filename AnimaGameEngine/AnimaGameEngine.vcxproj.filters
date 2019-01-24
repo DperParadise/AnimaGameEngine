@@ -179,6 +179,9 @@
     <ClInclude Include="ComponentCamera.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -311,6 +314,9 @@
       <Filter>Geometry Load</Filter>
     </ClCompile>
     <ClCompile Include="ComponentCamera.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>

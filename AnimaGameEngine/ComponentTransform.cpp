@@ -21,9 +21,9 @@ void ComponentTransform::Rotate(float angle, const glm::vec3 & axis)
 	worldRotation = glm::rotate(worldRotation, glm::radians(angle), axis);
 
 	//TODO: Check rotation order => rotation*vector or vector*rotation
-	relativeForward = worldRotation * relativeForward;
-	relativeUp = worldRotation * relativeUp;
-	relativeLeft = worldRotation * relativeLeft;
+	ownForward = worldRotation * ownForward;
+	ownUp = worldRotation * ownUp;
+	ownLeft = worldRotation * ownLeft;
 }
 
 void ComponentTransform::Scale(const glm::vec3 & scale)
@@ -34,4 +34,64 @@ void ComponentTransform::Scale(const glm::vec3 & scale)
 void ComponentTransform::ResetPosition()
 {
 	// TODO: What to reset?
+}
+
+const glm::vec3 & ComponentTransform::GetRelativePositionWorldAxis() const
+{
+	return relativePosition;
+}
+
+const glm::vec3 & ComponentTransform::GetRelativeScaleWorldAxis() const
+{
+	return relativeScale;
+}
+
+const glm::quat & ComponentTransform::GetRelativeRotationWorldAxis() const
+{
+	return relativeRotation;
+}
+
+const glm::vec3 & ComponentTransform::GetWorldPosition() const
+{
+	return worldPosition;
+}
+
+const glm::vec3 & ComponentTransform::GetWorldScale() const
+{
+	return worldScale;
+}
+
+const glm::quat & ComponentTransform::GetWorldRotation() const
+{
+	return worldRotation;
+}
+
+void ComponentTransform::SetRelativePositionWorldAxis(const glm::vec3 & pos)
+{
+	relativePosition = pos;
+}
+
+void ComponentTransform::SetRelativeScaleWorldAxis(const glm::vec3 & scale)
+{
+	relativeScale = scale;
+}
+
+void ComponentTransform::SetRelativeRotationWorldAxis(const glm::quat & rot)
+{
+	relativeRotation = rot;
+}
+
+void ComponentTransform::SetWorldPosition(const glm::vec3 & pos)
+{
+	worldPosition = pos;
+}
+
+void ComponentTransform::SetWorldScale(const glm::vec3 & scale)
+{
+	worldScale = scale;
+}
+
+void ComponentTransform::SetWorldRotation(const glm::quat & rot)
+{
+	worldRotation = rot;
 }

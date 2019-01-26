@@ -1,6 +1,6 @@
 #include "Component.h"
 
-Component::Component(ComponentType type, const std::string &name, GameObject *go, bool act) : type(type), name(name), ownerGO(go), active(act) {}
+Component::Component(ComponentType type, const std::string &name, GameObject *owner, bool act) : type(type), name(name), ownerGO(owner), active(act) {}
 
 Component::~Component() {}
 

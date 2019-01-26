@@ -6,6 +6,7 @@
 enum class ComponentType
 {
 	TRANSFORM,
+	GIZMO,
 	CAMERA,
 	MESH,
 	MESH_RENDERER,
@@ -20,7 +21,7 @@ class GameObject;
 class Component
 {
 public:
-	Component(ComponentType type, const std::string &name, GameObject *go, bool act = true);
+	Component(ComponentType type, const std::string &name, GameObject *owner, bool act = true);
 	virtual ~Component();
 	
 	virtual void Update(float dt);

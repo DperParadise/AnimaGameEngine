@@ -182,6 +182,9 @@
     <ClInclude Include="ComponentTransform.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentGizmo.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -317,6 +320,9 @@
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentGizmo.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>

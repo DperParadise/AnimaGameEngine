@@ -30,6 +30,7 @@ public:
 	void Update(float dt);
 
 	bool IsPlaying() const;
+	void SetPlaying();
 
 private:
 	const Mesh *mesh = nullptr;

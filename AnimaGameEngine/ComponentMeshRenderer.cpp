@@ -105,3 +105,8 @@ bool ComponentMeshRenderer::IsPlaying() const
 {
 	return isPlaying;
 }
+
+void ComponentMeshRenderer::SetPlaying()
+{
+	isPlaying = true;
+}

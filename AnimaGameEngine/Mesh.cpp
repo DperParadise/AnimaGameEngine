@@ -31,7 +31,7 @@ unsigned int Mesh::GetVAO() const
 	return VAO;
 }
 
-const auto & Mesh::GetIndices() const
+ const std::vector<unsigned int> & Mesh::GetIndices() const
 {
 	return indices;
 }
@@ -58,7 +58,6 @@ void Mesh::LoadVertices(const aiMesh * mesh)
 		vertex.bitangent = glm::vec3(bitangent.x, bitangent.y, bitangent.z);
 
 		vertices.push_back(vertex);
-
 	}
 }
 
@@ -160,41 +159,32 @@ void Mesh::LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const
 		Texture texture;
 		if(AlreadyLoaded(std::string(name.data), texture))
 		{
-			Texture tex;
-			tex.id = texture.id;
-			tex.name = texture.name;
-			tex.type = texture.type;
-
-			textures.push_back(tex);
+			textures.push_back(texture);
 			loadedTextures.push_back(textures.back());
 		}
 		else
 		{
 			unsigned textureId = CreateOpenGLTexture(texturePath + "/" + std::string(name.data));
-			Texture tex;
-			tex.id = textureId;
-			tex.name = std::string(name.data);
-			
+			texture.id = textureId;
+			texture.name = std::string(name.data);
+
 			switch (type)
 			{
 			case aiTextureType::aiTextureType_DIFFUSE:
-				texture.type = "diffuse";
+				texture.type = "texture_diffuse";
 				break;
 			case aiTextureType::aiTextureType_SPECULAR:
-				texture.type = "specular";
+				texture.type = "texture_specular";
 				break;
 			case aiTextureType::aiTextureType_NORMALS:
-				texture.type = "normals";
+				texture.type = "texture_normals";
 				break;
 			case aiTextureType::aiTextureType_HEIGHT:
-				texture.type = "height";
+				texture.type = "texture_height";
 				break;
-			default:
-				// TODO: ver cómo manejar el caso de una textura "inesperada"
-				texture.type = "default";
 			}
 
-			textures.push_back(tex);
+			textures.push_back(texture);
 			loadedTextures.push_back(textures.back());
 		}
 	}

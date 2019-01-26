@@ -4,18 +4,42 @@
 #include "Component.h"
 #include <string>
 
-class ComponentMesh;
+
+class Mesh;
+class Shader;
+class ComponentCamera;
+class ModuleEditorCamera;
+
+namespace glm
+{
+	class mat4;
+}
+
 class ComponentMeshRenderer : public Component
 {
 public:
-	ComponentMeshRenderer(ComponentType type, ComponentMesh *mesh_comp, const std::string &name, bool act, GameObject *go);
+	ComponentMeshRenderer(	ComponentType type, 
+							const Mesh *mesh, 
+							const Shader *shader,
+							const ComponentCamera *compCamera,
+							const std::string &name, 
+							bool act, 
+							GameObject *ownerGO);
 	~ComponentMeshRenderer();
 
 	void Update(float dt);
-	void Enable();
-	void Disable();
 
-	ComponentMesh *owner_mesh = nullptr;
+	bool IsPlaying() const;
+
+private:
+	const Mesh *mesh = nullptr;
+	const Shader *shader = nullptr;
+	const ComponentCamera *sceneCamera = nullptr;
+	const ModuleEditorCamera *editorCamera = nullptr;
+	bool isPlaying = false;
+
+
+
 };
 
 #endif // !_COMP_MESH_RENDERER_H_

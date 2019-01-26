@@ -18,9 +18,10 @@ ComponentMeshRenderer::ComponentMeshRenderer(
 	const Mesh *mesh,
 	const Shader *shader,
 	const ComponentCamera *compCamera,
+	const ModuleEditorCamera *editorCam,
 	const std::string &name, 
 	bool act, 
-	GameObject *ownerGO) : mesh(mesh), camera(compCamera), Component(type, name, ownerGO){}
+	GameObject *ownerGO) : mesh(mesh), sceneCamera(compCamera), editorCamera(editorCam), Component(type, name, ownerGO){}
 
 ComponentMeshRenderer::~ComponentMeshRenderer() {}
 

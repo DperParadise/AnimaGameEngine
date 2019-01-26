@@ -22,6 +22,7 @@ public:
 							const Mesh *mesh, 
 							const Shader *shader,
 							const ComponentCamera *compCamera,
+							const ModuleEditorCamera *editorCam,
 							const std::string &name, 
 							bool act, 
 							GameObject *ownerGO);

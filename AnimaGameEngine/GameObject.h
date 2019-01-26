@@ -23,12 +23,14 @@ public:
 	GameObject(const std::string &name, const aiNode *node = nullptr);
 	virtual ~GameObject();
 
-	void Update(float dt);
+	virtual void Update(float dt);
 	void UpdateWorldTransform();
 
 	void Translate(const glm::vec3 &translation);
 	void Rotate(float angle, const glm::vec3 &axis);
 	void Scale(const glm::vec3 &scale);
+
+	const ComponentTransform *GetTransform() const;
 
 	Component *CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv);
 	Component *CreatePrimitiveMatComp(float *ambient, float *diffuse, float *specular, float shininess);

@@ -81,6 +81,11 @@ void GameObject::Scale(const glm::vec3 & scale)
 	dirty = true;
 }
 
+const ComponentTransform* GameObject::GetTransform() const
+{
+	return transform;
+}
+
 void GameObject::Rotate(float angle, const glm::vec3 &axis)
 {
 	transform->Rotate(angle, axis);

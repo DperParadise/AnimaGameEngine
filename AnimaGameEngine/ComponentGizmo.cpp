@@ -13,8 +13,7 @@ ComponentGizmo::ComponentGizmo(
 	const std::string& vertexPath,
 	const std::string &fragmentPath,
 	ComponentType type,
-	const std::string &name,
-	GameObject *ownerGO) : Component(type, name, ownerGO)
+	GameObject *ownerGO) : Component(type, ownerGO)
 {
 	GenerateVertexData();
 	ComputeNumVerticesToDraw();

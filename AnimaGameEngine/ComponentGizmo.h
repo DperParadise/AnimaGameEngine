@@ -14,7 +14,6 @@ public:
 	ComponentGizmo(const std::string& vertexPath, 
 		const std::string &fragmentPath, 
 		ComponentType type, 
-		const std::string &name, 
 		GameObject *ownerGO);
 
 	~ComponentGizmo();

@@ -2,6 +2,7 @@
 #define __MODEL_H__
 
 #include "libraries/assimp/include/postprocess.h"
+#include <string>
 
 class Importer;
 struct aiScene;
@@ -17,16 +18,17 @@ public:
 		TRIANGULATE = aiPostProcessSteps::aiProcess_Triangulate
 	};
 
-	Model(const char *file, unsigned int load_flags = 0);
+	Model(const std::string &filePath, unsigned int load_flags = 0);
 	~Model();
-	std::string model_name;
-	GameObject *model_go = nullptr;
+	
 
 private:
 	const aiScene *scene;
 	Importer *importer = nullptr;
-	void Load(const char *file, unsigned int flags);
-	GameObject* LoadHierarchy(aiNode *node, GameObject *parent_go, const char *file);
+	std::string modelName;
+	GameObject *modelGO = nullptr;
+	void Load(const std::string &filePath, unsigned int flags);
+	GameObject* LoadHierarchy(aiNode *node, GameObject *parentGO, const std::string &filePath);
 };
 
 #endif

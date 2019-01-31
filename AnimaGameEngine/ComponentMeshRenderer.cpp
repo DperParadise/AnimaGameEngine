@@ -11,21 +11,23 @@
 #include "ComponentCamera.h"
 #include "Mesh.h"
 #include "ModuleEditorCamera.h"
-
+#include "Globals.h"
 
 ComponentMeshRenderer::ComponentMeshRenderer(
 	ComponentType type, 
 	const Mesh *mesh,
 	const Shader *shader,
 	const ComponentCamera *compCamera,
-	const ModuleEditorCamera *editorCam,
-	const std::string &name, 
-	bool act, 
-	GameObject *ownerGO) : mesh(mesh), sceneCamera(compCamera), editorCamera(editorCam), Component(type, name, ownerGO){}
+	GameObject *ownerGO,
+	bool active) : mesh(mesh), camera(compCamera), Component(type, ownerGO, active){}
 
-ComponentMeshRenderer::~ComponentMeshRenderer() {}
+ComponentMeshRenderer::~ComponentMeshRenderer() 
+{
+	RELEASE(mesh);
+	RELEASE(shader);
+}
 
-//Draw the geometry
+//Draw the mesh
 void ComponentMeshRenderer::Update(float dt) {
 	if (IsActive())
 	{
@@ -52,18 +54,10 @@ void ComponentMeshRenderer::Update(float dt) {
 		shader->SetMat4("model", model);
 		shader->SetMat4("normalMatrix", normalMatrix);
 
-		//Check if we need to use the editor camera or the in-scene camera
-		if (IsPlaying())
-		{
-			shader->SetMat4("view", sceneCamera->GetViewMatrix());
-			shader->SetMat4("projection", sceneCamera->GetProjectionMatrix());
-		}
-		else
-		{
-			shader->SetMat4("view", editorCamera->GetViewMatrix());
-			shader->SetMat4("projection", editorCamera->GetProjectionMatrix());
-		}
-
+		shader->SetMat4("view", camera->GetViewMatrix());
+		shader->SetMat4("projection", camera->GetProjectionMatrix());
+		
+	
 		//Bind Textures
 		unsigned int diffuse_nr = 1;
 		unsigned int specular_nr = 1;
@@ -100,14 +94,4 @@ void ComponentMeshRenderer::Update(float dt) {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindVertexArray(0);
 	}
-}
-
-bool ComponentMeshRenderer::IsPlaying() const
-{
-	return isPlaying;
-}
-
-void ComponentMeshRenderer::SetPlaying()
-{
-	isPlaying = true;
 }

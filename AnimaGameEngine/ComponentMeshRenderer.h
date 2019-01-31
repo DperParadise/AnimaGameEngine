@@ -22,22 +22,16 @@ public:
 							const Mesh *mesh, 
 							const Shader *shader,
 							const ComponentCamera *compCamera,
-							const ModuleEditorCamera *editorCam,
-							const std::string &name, 
-							bool act, 
-							GameObject *ownerGO);
+							GameObject *ownerGO,
+							bool act = true);
 	~ComponentMeshRenderer();
 
 	void Update(float dt);
 
-	bool IsPlaying() const;
-	void SetPlaying();
-
 private:
 	const Mesh *mesh = nullptr;
 	const Shader *shader = nullptr;
-	const ComponentCamera *sceneCamera = nullptr;
-	const ModuleEditorCamera *editorCamera = nullptr;
+	const ComponentCamera *camera = nullptr;
 	bool isPlaying = false;
 
 

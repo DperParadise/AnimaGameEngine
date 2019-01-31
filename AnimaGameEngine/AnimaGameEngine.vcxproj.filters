@@ -185,6 +185,9 @@
     <ClInclude Include="ComponentGizmo.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
+    <ClInclude Include="CameraGO.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -323,6 +326,9 @@
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentGizmo.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraGO.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>

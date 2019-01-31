@@ -12,9 +12,11 @@ struct aiNode;
 struct aiMesh;
 struct aiScene;
 class ComponentMaterial;
-class ComponentMesh;
 class ComponentTransform;
-
+class Mesh;
+class Shader;
+class ComponentCamera;
+class ModuleEditorCamera;
 
 class GameObject
 {
@@ -37,12 +39,22 @@ public:
 
 	Component* CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh);
 	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
-	Component* CreateMeshRenderer(ComponentMesh *mesh);
+	Component* AddMeshRenderer(const Mesh *mesh, const Shader *shader, const ComponentCamera *camera);
+	Component* AddGizmo(const std::string& vertexPath, const std::string &fragmentPath, ComponentType type);
+	Component* AddCamera(ComponentType type);
 	Component* CreateBehaviour(const std::string &behav_name);
 	Component* CreateTorsoBehaviour(const std::string &behav_name);
 	Component* CreateAmbientLight();
 	Component* CreateDirectionalLight();
 	Component* CreatePointLight();
+
+	GameObject *GetParentGO() const;
+	void SetParentGO(GameObject *parentGO);
+
+	void AddChildGO(GameObject *childGO);
+
+	Component *FindComponentByType(ComponentType type);
+	
 
 private:
 

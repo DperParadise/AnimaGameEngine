@@ -10,6 +10,8 @@
 #include "libraries/assimp/include/quaternion.h"
 #include "libraries/assimp/include/scene.h"
 #include "ComponentTransform.h"
+#include "ComponentGizmo.h"
+#include "ComponentCamera.h"
 
 //test
 #include "ComponentTorsoBehaviour.h"
@@ -120,9 +122,23 @@ Component* GameObject::CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *sce
 	return comp;
 }
 
-Component* GameObject::CreateMeshRenderer(ComponentMesh *mesh_comp)
+Component* GameObject::AddMeshRenderer(const Mesh *mesh, const Shader *shader, const ComponentCamera *camera)
 {
-	Component *comp = new ComponentMeshRenderer(ComponentType::MESH_RENDERER, mesh_comp, std::string("Mesh Renderer"), true, this);
+	Component *comp = new ComponentMeshRenderer(ComponentType::MESH_RENDERER, mesh, shader, camera, this);
+	components.push_back(comp);
+	return comp;
+}
+
+Component * GameObject::AddGizmo(const std::string & vertexPath, const std::string & fragmentPath, ComponentType type)
+{
+	Component *comp = new ComponentGizmo(vertexPath, fragmentPath, type, this);
+	components.push_back(comp);
+	return comp;
+}
+
+Component * GameObject::AddCamera(ComponentType type)
+{
+	Component *comp = new ComponentCamera(type, this);
 	components.push_back(comp);
 	return comp;
 }
@@ -153,6 +169,33 @@ Component *GameObject::CreatePointLight()
 	Component *comp = new ComponentLight(ComponentType::POINT_LIGHT, std::string("Point Light"), true, this);
 	components.push_back(comp);
 	return comp;
+}
+
+GameObject * GameObject::GetParentGO() const
+{
+	return parentGO;
+}
+
+void GameObject::SetParentGO(GameObject * parentGO)
+{
+	this->parentGO = parentGO;
+}
+
+void GameObject::AddChildGO(GameObject *childGO)
+{
+	if (childGO)
+		childrenGO.push_back(childGO);
+}
+
+Component * GameObject::FindComponentByType(ComponentType type)
+{
+	Component *found = nullptr;
+	for (Component *component : components)
+	{
+		if (component->GetComponentType() == type)
+			found = component;
+	}
+	return found;
 }
 
 Component *GameObject::CreateDirectionalLight()

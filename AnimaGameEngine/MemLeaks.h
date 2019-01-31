@@ -8,7 +8,7 @@
 	#ifdef _DEBUG
 		#ifndef DBG_NEW
 			#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-			#define new_memleaks DBG_NEW  //new DBG_NEW
+			#define new_memleaks DBG_NEW  //new DBG_NEW <= TODO: Check why this define causes problems with Assimp "new"
 		#endif
 	#endif  // _DEBUG
 

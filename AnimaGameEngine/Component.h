@@ -21,7 +21,7 @@ class GameObject;
 class Component
 {
 public:
-	Component(ComponentType type, const std::string &name, GameObject *owner, bool act = true);
+	Component(ComponentType type, GameObject *owner, bool act = true);
 	virtual ~Component();
 	
 	virtual void Update(float dt);
@@ -29,13 +29,11 @@ public:
 	virtual void Disable();
 
 	ComponentType GetComponentType() const;
-	const std::string &GetComponentName() const;
 	bool IsActive() const;
 	const GameObject* GetOwnerGO() const;
 
 private:
 	ComponentType type;
-	std::string name;
 	bool active = true;
 	GameObject *ownerGO = nullptr;
 

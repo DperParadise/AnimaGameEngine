@@ -1,6 +1,6 @@
 #include "Component.h"
 
-Component::Component(ComponentType type, const std::string &name, GameObject *owner, bool act) : type(type), name(name), ownerGO(owner), active(act) {}
+Component::Component(ComponentType type, GameObject *owner, bool act) : type(type), ownerGO(owner), active(act) {}
 
 Component::~Component() {}
 
@@ -18,11 +18,6 @@ void Component::Disable()
 ComponentType Component::GetComponentType() const
 {
 	return type;
-}
-
-const std::string & Component::GetComponentName() const
-{
-	return name;
 }
 
 bool Component::IsActive() const

@@ -1,8 +1,8 @@
 #include "ComponentCamera.h"
 #include "libraries/glm/gtc/matrix_transform.hpp"
 
-ComponentCamera::ComponentCamera(ComponentType type, const std::string &name, bool act, GameObject *ownerGO) : 
-	Component(type, name, ownerGO){}
+ComponentCamera::ComponentCamera(ComponentType type, GameObject *ownerGO) : 
+	Component(type, ownerGO){}
 
 ComponentCamera:: ~ComponentCamera(){}
 

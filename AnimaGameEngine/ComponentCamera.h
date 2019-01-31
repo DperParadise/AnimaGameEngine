@@ -10,15 +10,15 @@ class Config;
 class ComponentCamera: public Component
 {
 public:
-	ComponentCamera(ComponentType type, const std::string &name, bool act, GameObject *ownerGO);
+	ComponentCamera(ComponentType type, GameObject *ownerGO);
 	virtual ~ComponentCamera();
 
-	virtual void Update(float dt) override;
+	 void Update(float dt) override;
 	
-	virtual void OnResize(uint width, uint height);
+	 void OnResize(uint width, uint height);
 
-	virtual const glm::mat4& GetProjectionMatrix() const;
-	virtual const glm::mat4& GetViewMatrix() const;
+	 const glm::mat4& GetProjectionMatrix() const;
+	 const glm::mat4& GetViewMatrix() const;
 
 private:
 	glm::mat4 projectionMatrix;
@@ -41,8 +41,8 @@ private:
 	float cameraWheelSpeed = 30.0f;
 	float sensitivity = 20.0f;
 
-	virtual void UpdateProjectionMatrix() = 0;
-	virtual void UpdateViewMatrix() = 0;
-	virtual void SetOrientation() = 0;
+	 void UpdateProjectionMatrix();
+	 void UpdateViewMatrix();
+	 void SetOrientation();
 };
 #endif

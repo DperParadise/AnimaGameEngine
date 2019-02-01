@@ -8,6 +8,7 @@ enum class ComponentType
 	TRANSFORM,
 	GIZMO,
 	CAMERA,
+	EDITOR_CAMERA,
 	MESH,
 	MESH_RENDERER,
 	MATERIAL,
@@ -25,8 +26,8 @@ public:
 	virtual ~Component();
 	
 	virtual void Update(float dt);
-	virtual void Enable();
-	virtual void Disable();
+	void Enable();
+	void Disable();
 
 	ComponentType GetComponentType() const;
 	bool IsActive() const;

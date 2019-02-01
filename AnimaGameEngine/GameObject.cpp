@@ -12,6 +12,7 @@
 #include "ComponentTransform.h"
 #include "ComponentGizmo.h"
 #include "ComponentCamera.h"
+#include "ComponentEditorCamera.h"
 
 //test
 #include "ComponentTorsoBehaviour.h"
@@ -129,18 +130,25 @@ Component* GameObject::AddMeshRenderer(const Mesh *mesh, const Shader *shader, c
 	return comp;
 }
 
-Component * GameObject::AddGizmo(const std::string & vertexPath, const std::string & fragmentPath, ComponentType type)
+Component * GameObject::AddGizmoComponent(const std::string & vertexPath, const std::string & fragmentPath)
 {
-	Component *comp = new ComponentGizmo(vertexPath, fragmentPath, type, this);
+	Component *comp = new ComponentGizmo(vertexPath, fragmentPath, ComponentType::GIZMO, this);
 	components.push_back(comp);
 	return comp;
 }
 
-Component * GameObject::AddCamera(ComponentType type)
+Component * GameObject::AddCameraComponent()
 {
-	Component *comp = new ComponentCamera(type, this);
+	Component *comp = new ComponentCamera(ComponentType::CAMERA, this);
 	components.push_back(comp);
 	return comp;
+}
+
+Component * GameObject::AddEditorCameraComponent()
+{
+	Component *comp = new ComponentEditorCamera(ComponentType::EDITOR_CAMERA, this);
+	components.push_back(comp);
+	return nullptr;
 }
 
 Component* GameObject::CreateBehaviour(const std::string &behav_name)

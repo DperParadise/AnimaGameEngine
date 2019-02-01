@@ -40,8 +40,9 @@ public:
 	Component* CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh);
 	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	Component* AddMeshRenderer(const Mesh *mesh, const Shader *shader, const ComponentCamera *camera);
-	Component* AddGizmo(const std::string& vertexPath, const std::string &fragmentPath, ComponentType type);
-	Component* AddCamera(ComponentType type);
+	Component* AddGizmoComponent(const std::string& vertexPath, const std::string &fragmentPath);
+	Component* AddCameraComponent();
+	Component* AddEditorCameraComponent();
 	Component* CreateBehaviour(const std::string &behav_name);
 	Component* CreateTorsoBehaviour(const std::string &behav_name);
 	Component* CreateAmbientLight();

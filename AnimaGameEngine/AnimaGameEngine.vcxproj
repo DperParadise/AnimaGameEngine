@@ -149,6 +149,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentAmbientLight.h" />
     <ClInclude Include="ComponentBehaviour.h" />
+    <ClInclude Include="ComponentEditorCamera.h" />
     <ClInclude Include="ComponentGizmo.h" />
     <ClInclude Include="ComponentLight.h" />
     <ClInclude Include="ComponentMesh.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="CubeGO.h" />
+    <ClInclude Include="EditorCameraGO.h" />
     <ClInclude Include="EditorConsoleWidget.h" />
     <ClInclude Include="EditorInspectorWidget.h" />
     <ClInclude Include="EditorSceneHierarchyWidget.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentAmbientLight.cpp" />
     <ClCompile Include="ComponentBehaviour.cpp" />
+    <ClCompile Include="ComponentEditorCamera.cpp" />
     <ClCompile Include="ComponentGizmo.cpp" />
     <ClCompile Include="ComponentLight.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />
@@ -214,6 +217,7 @@
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeGO.cpp" />
+    <ClCompile Include="EditorCameraGO.cpp" />
     <ClCompile Include="EditorConsoleWidget.cpp" />
     <ClCompile Include="EditorInspectorWidget.cpp" />
     <ClCompile Include="EditorSceneHierarchyWidget.cpp" />

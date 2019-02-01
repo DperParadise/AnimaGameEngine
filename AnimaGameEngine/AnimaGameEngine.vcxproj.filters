@@ -188,6 +188,12 @@
     <ClInclude Include="CameraGO.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentEditorCamera.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorCameraGO.h">
+      <Filter>GameObjects and Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -329,6 +335,12 @@
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="CameraGO.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentEditorCamera.cpp">
+      <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorCameraGO.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
   </ItemGroup>

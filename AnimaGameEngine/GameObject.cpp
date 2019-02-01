@@ -132,7 +132,7 @@ Component* GameObject::AddMeshRenderer(const Mesh *mesh, const Shader *shader, c
 
 Component * GameObject::AddGizmoComponent(const std::string & vertexPath, const std::string & fragmentPath)
 {
-	Component *comp = new ComponentGizmo(vertexPath, fragmentPath, ComponentType::GIZMO, this);
+	Component *comp = new ComponentGizmo(ComponentType::GIZMO, vertexPath, fragmentPath, this);
 	components.push_back(comp);
 	return comp;
 }

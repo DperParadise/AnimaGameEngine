@@ -10,9 +10,9 @@
 #include "ModuleEditorCamera.h"
 
 ComponentGizmo::ComponentGizmo(
+	ComponentType type,
 	const std::string& vertexPath,
 	const std::string &fragmentPath,
-	ComponentType type,
 	GameObject *ownerGO) : Component(type, ownerGO)
 {
 	GenerateVertexData();

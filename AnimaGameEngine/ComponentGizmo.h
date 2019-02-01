@@ -11,9 +11,9 @@ class ModuleEditorCamera;
 class ComponentGizmo : public Component
 {
 public:
-	ComponentGizmo(const std::string& vertexPath, 
+	ComponentGizmo(ComponentType type, 
+		const std::string& vertexPath,
 		const std::string &fragmentPath, 
-		ComponentType type, 
 		GameObject *ownerGO);
 
 	~ComponentGizmo();

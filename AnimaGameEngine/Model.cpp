@@ -65,7 +65,7 @@ GameObject *Model::LoadHierarchy(aiNode *node, GameObject *parentGO, const std::
 		Component *mesh_comp = go->CreateLoadedMeshComp((ComponentMaterial*)mat_comp, scene->mMeshes[mesh_index]);
 		go->CreateMeshRenderer((ComponentMesh*)mesh_comp);
 		*/
-		go->AddGizmo("shaders/vertex.vert", "shaders/fragment.frag", ComponentType::GIZMO);
+		go->AddGizmoComponent("shaders/vertex.vert", "shaders/fragment.frag");
 	}
 
 	for (uint i = 0; i < node->mNumChildren; i++)

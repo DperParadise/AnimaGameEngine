@@ -1,8 +1,16 @@
 #include "ComponentCamera.h"
 #include "libraries/glm/gtc/matrix_transform.hpp"
+#include "Application.h"
+#include "ModuleWindow.h"
+
 
 ComponentCamera::ComponentCamera(ComponentType type, GameObject *ownerGO) : 
-	Component(type, ownerGO){}
+	Component(type, ownerGO)
+{
+	aspectRatio = (float)App->window->window_width / (float)App->window->window_height;
+
+	SetOrientation();
+}
 
 ComponentCamera:: ~ComponentCamera(){}
 

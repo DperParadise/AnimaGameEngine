@@ -13,14 +13,14 @@ public:
 	ComponentCamera(ComponentType type, GameObject *ownerGO);
 	virtual ~ComponentCamera();
 
-	 void Update(float dt) override;
+	 virtual void Update(float dt);
 	
 	 void OnResize(uint width, uint height);
 
 	 const glm::mat4& GetProjectionMatrix() const;
 	 const glm::mat4& GetViewMatrix() const;
 
-private:
+protected:
 	glm::mat4 projectionMatrix;
 	glm::mat4 viewMatrix;
 	glm::vec3 position = glm::vec3(0.0f, 10.0f, 10.0f);

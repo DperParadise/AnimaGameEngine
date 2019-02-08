@@ -2,7 +2,7 @@
 #define __IMPORTER_H__
 
 #include <memory>
-#include "libraries/assimp/include/assimp/Importer.hpp"
+#include <assimp/Importer.hpp>
 
 class Importer {
 

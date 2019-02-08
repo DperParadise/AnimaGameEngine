@@ -4,7 +4,7 @@
 #include "libraries/glm/glm.hpp"
 #include <string>
 #include <vector>
-#include "libraries/assimp/include/material.h"
+#include <assimp/material.h>
 
 struct aiMesh;
 struct aiScene;
@@ -20,7 +20,6 @@ struct Vertex
 
 struct Texture 
 {
-
 	unsigned id;
 	std::string name;
 	std::string type;
@@ -41,7 +40,7 @@ private:
 		std::vector<unsigned> indices;
 		std::vector<Texture> textures;
 
-		static std::vector<const Texture&> loadedTextures;
+		static std::vector<Texture> loadedTextures;
 
 		void LoadVertices(const aiMesh *mesh);
 		bool LoadIndices(const aiMesh *mesh);

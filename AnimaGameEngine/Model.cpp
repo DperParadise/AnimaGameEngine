@@ -1,6 +1,6 @@
 #include "Importer.h"
 #include "Model.h"
-#include "libraries/assimp/include/scene.h"
+#include <assimp/scene.h>
 #include "Globals.h"
 #include "GameObject.h"
 #include "Application.h"
@@ -55,7 +55,7 @@ GameObject *Model::LoadHierarchy(aiNode *node, GameObject *parentGO, const std::
 
 		Shader *shader = new Shader("shaders/vertex.vert", "shaders/fragment.frag"); //TODO: Implement a way to manage shaders
 
-		ComponentCamera *camera = (ComponentCamera*)App->scene->activeCamera->FindComponentByType(ComponentType::CAMERA);
+		ComponentCamera *camera = (ComponentCamera*)App->scene->activeCameraGO->FindComponentByType(ComponentType::CAMERA);
 		go->AddMeshRenderer(mesh, shader, camera);
 		/*
 		uint mesh_index = node->mMeshes[i];

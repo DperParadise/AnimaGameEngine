@@ -18,7 +18,9 @@
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/DevIL.lib")
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
-		#pragma comment (lib, "libraries/assimp/lib/debug/assimp-vc140-mt.lib")
+		#pragma comment (lib, "3rdparty/lib/assimp-vc140-mt.lib")
+		#pragma comment (lib, "3rdparty/lib/glfw3.lib")
+
 	#else
 		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")
 		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -27,6 +29,7 @@
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
 		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
 		#pragma comment (lib, "libraries/assimp/lib/release/assimp-vc140-mt.lib")
+		#pragma comment (lib, "3rdparty/lib/glfw3.lib")
 	#endif
 #endif
 
@@ -41,7 +44,7 @@ Application::Application()
 	//TODO: Module textures not needed. It comes from legacy code in 2D engine
 	//modules.push_back(textures = new ModuleTextures());  
 	modules.push_back(audio = new ModuleAudio());
-	modules.push_back(module_editor_camera = new ModuleEditorCamera());
+	//modules.push_back(module_editor_camera = new ModuleEditorCamera());
 	modules.push_back(scene = new ModuleScene());
 	//TODO: Under refactor to support opengl 3.3
 	//modules.push_back(editor_gui = new ModuleEditorGUI()); 
@@ -67,8 +70,10 @@ bool Application::Init()
 	MYLOG("Load Application configuration");
 	ms_cap = 1.0 / ((double)config->GetInt("Application", "fps_cap") / 1000.0);
 	
-	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
+	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
+	{
 		ret = (*it)->Init(config); // we init everything, even if not anabled
+	}
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 	{

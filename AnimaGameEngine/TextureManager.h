@@ -4,7 +4,8 @@
 #include <cstring>
 #include <map>
 #include <memory>
-#include "libraries/assimp/include/assimp/postprocess.h"
+#include <assimp/postprocess.h>
+
 
 class TextureManager
 {

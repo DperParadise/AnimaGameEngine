@@ -1,10 +1,12 @@
 #include "Mesh.h"
-#include "libraries/assimp/include/Importer.hpp"
-#include "libraries/assimp/include/scene.h"
-#include "libraries/assimp/include/postprocess.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "libraries/DevIL_Windows_SDK/include/IL/il.h"
 #include "Globals.h"
+
+std::vector<Texture> Mesh::loadedTextures = std::vector<Texture>();
 
 Mesh::Mesh()
 {
@@ -73,10 +75,8 @@ bool Mesh::LoadIndices(const aiMesh * mesh)
 		indices.push_back(face.mIndices[0]);
 		indices.push_back(face.mIndices[1]);
 		indices.push_back(face.mIndices[2]);
-
-		return true;
-
 	}
+	return true;
 }
 
 void Mesh::SetVertexBuffers()
@@ -196,7 +196,7 @@ unsigned Mesh::CreateOpenGLTexture(const std::string texturePath)
 	ilGenImages(1, &imageId);
 	ilBindImage(imageId);
 
-	if (ilLoadImage(texturePath.data))
+	if (ilLoadImage(texturePath.data()))
 	{
 		GLuint textureId = 0;
 		glGenTextures(1, &textureId);

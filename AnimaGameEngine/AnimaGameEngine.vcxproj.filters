@@ -104,17 +104,8 @@
     <ClInclude Include="Importer.h">
       <Filter>Geometry Load</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentMaterial.h">
-      <Filter>GameObjects and Components</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleScene.h">
       <Filter>CoreModules</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentLight.h">
-      <Filter>GameObjects and Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentAmbientLight.h">
-      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="ModuleEditorGUI.h">
       <Filter>CoreModules</Filter>
@@ -149,13 +140,7 @@
     <ClInclude Include="ComponentMeshRenderer.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentMesh.h">
-      <Filter>GameObjects and Components</Filter>
-    </ClInclude>
     <ClInclude Include="CubeGO.h">
-      <Filter>GameObjects and Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentBehaviour.h">
       <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="EditorSceneHierarchyWidget.h">
@@ -163,9 +148,6 @@
     </ClInclude>
     <ClInclude Include="EditorInspectorWidget.h">
       <Filter>Editor Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentTorsoBehaviour.h">
-      <Filter>GameObjects and Components</Filter>
     </ClInclude>
     <ClInclude Include="TimerChrono.h">
       <Filter>Utils</Filter>
@@ -262,17 +244,8 @@
     <ClCompile Include="Importer.cpp">
       <Filter>Geometry Load</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentMaterial.cpp">
-      <Filter>GameObjects and Components</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleScene.cpp">
       <Filter>CoreModules</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentLight.cpp">
-      <Filter>GameObjects and Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentAmbientLight.cpp">
-      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="ModuleEditorGUI.cpp">
       <Filter>CoreModules</Filter>
@@ -298,13 +271,7 @@
     <ClCompile Include="ComponentMeshRenderer.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentMesh.cpp">
-      <Filter>GameObjects and Components</Filter>
-    </ClCompile>
     <ClCompile Include="CubeGO.cpp">
-      <Filter>GameObjects and Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentBehaviour.cpp">
       <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="EditorSceneHierarchyWidget.cpp">
@@ -312,9 +279,6 @@
     </ClCompile>
     <ClCompile Include="EditorInspectorWidget.cpp">
       <Filter>Editor Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentTorsoBehaviour.cpp">
-      <Filter>GameObjects and Components</Filter>
     </ClCompile>
     <ClCompile Include="TimerChrono.cpp">
       <Filter>Utils</Filter>

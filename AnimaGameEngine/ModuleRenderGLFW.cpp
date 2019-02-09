@@ -38,13 +38,16 @@ bool ModuleRenderGLFW::Init(Config * config)
 	//if (ilGetError() != IL_NO_ERROR)
 	//	MYLOG(iluErrorString(ilGetError()));
 
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glEnable(GL_DEPTH_TEST);
+
 	return true;
 }
 
 update_status ModuleRenderGLFW::PreUpdate(float dt)
 {
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 
 	return update_status::UPDATE_CONTINUE;
 }

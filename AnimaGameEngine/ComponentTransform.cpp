@@ -6,8 +6,17 @@ const glm::vec3 ComponentTransform::worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 const glm::vec3 ComponentTransform::worldForward = glm::vec3(0.0f, 0.0f, 1.0f);
 const glm::vec3 ComponentTransform::worldLeft = glm::vec3(1.0f, 0.0f, 0.0f);
 
-ComponentTransform::ComponentTransform(ComponentType type, const std::string &name, GameObject *ownerGO) : 
-	Component(type, ownerGO){ }
+ComponentTransform::ComponentTransform(ComponentType type, GameObject *ownerGO) : 
+	Component(type, ownerGO){
+
+	relativePosition = glm::vec3(0.0f);
+	relativeScale = glm::vec3(1.0f);
+	relativeRotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);
+
+	worldPosition = glm::vec3(0.0f);
+	worldScale = glm::vec3(1.0f);
+	worldRotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);
+}
 
 ComponentTransform::~ComponentTransform() {}
 

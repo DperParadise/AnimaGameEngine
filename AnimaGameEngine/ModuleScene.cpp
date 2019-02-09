@@ -25,10 +25,12 @@ ModuleScene::~ModuleScene()
 	 activeCameraGO = editorCameraGO;
 	 activeCameraComponent = (ComponentEditorCamera*)editorCameraGO->FindComponentByType(ComponentType::CAMERA);
 
+	 /*
 	 GameObject *world_origin = new GameObject("world origin");
 	 world_origin->SetDirty();
 	 AddGameObject(world_origin);
-	 
+	 */
+
 	 /*
 	 GameObject *world_origin = new GameObject("world origin");
 	 world_origin->dirty = false;
@@ -53,7 +55,7 @@ ModuleScene::~ModuleScene()
 	 //AddGameObject(cube_go);
 
 	 //Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
-	 //Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
 	 //GameObject *batmanGO = FindGameObject("Batman.obj");
 	 //batmanGO->CreateBehaviour("BatmanMovement");
 	 //GameObject *torsoGO = FindGameObject("BatmanTorso");

@@ -8,7 +8,7 @@
 class ComponentTransform : public Component
 {
 public:
-	ComponentTransform(ComponentType type, const std::string &name, GameObject *ownerGO);
+	ComponentTransform(ComponentType type, GameObject *ownerGO);
 	~ComponentTransform();
 
 	

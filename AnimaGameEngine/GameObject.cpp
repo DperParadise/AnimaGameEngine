@@ -11,7 +11,7 @@
 
 GameObject::GameObject(const std::string &name, const aiNode *node) : name(name)
 {
-	transform = new ComponentTransform(ComponentType::TRANSFORM, "transform", this);
+	transform = new ComponentTransform(ComponentType::TRANSFORM, this);
 	AddGizmoComponent("shaders/gizmo.vert", "shaders/gizmo.frag"); //TODO: Implement a way to manage shaders
 
 	if (node)

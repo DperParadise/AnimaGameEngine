@@ -33,6 +33,11 @@ unsigned int Mesh::GetVAO() const
 	return VAO;
 }
 
+unsigned int Mesh::GetEBO() const
+{
+	return EBO;
+}
+
  const std::vector<unsigned int> & Mesh::GetIndices() const
 {
 	return indices;
@@ -42,7 +47,8 @@ void Mesh::LoadVertices(const aiMesh * mesh)
 {
 	const aiVector3D zero3D(0.0f, 0.0f, 0.0f);
 
-	vertices.resize(mesh->mNumVertices);
+	//vertices.resize(mesh->mNumVertices);
+	numVertices = mesh->mNumVertices;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
 	{
@@ -91,7 +97,7 @@ void Mesh::SetVertexBuffers()
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 	
 	//vertex positions
 	glEnableVertexAttribArray(0);

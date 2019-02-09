@@ -18,7 +18,7 @@ ComponentMeshRenderer::ComponentMeshRenderer(
 	const Shader *shader,
 	const ComponentCamera *compCamera,
 	GameObject *ownerGO,
-	bool active) : mesh(mesh), camera(compCamera), Component(type, ownerGO, active){}
+	bool active) : mesh(mesh), shader(shader), camera(compCamera), Component(type, ownerGO, active){}
 
 ComponentMeshRenderer::~ComponentMeshRenderer() 
 {
@@ -87,7 +87,14 @@ void ComponentMeshRenderer::Update(float dt) {
 
 		//Draw
 		glBindVertexArray(mesh->GetVAO());
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->GetEBO());
 		glDrawElements(GL_TRIANGLES, mesh->GetIndices().size(), GL_UNSIGNED_INT, 0);
+
+
+		GLenum error = glGetError();
+		if(error != GL_NO_ERROR)
+			MYLOG("Error OpenGL: %s", gluErrorString(error))
+
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, 0);

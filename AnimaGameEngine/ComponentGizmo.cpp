@@ -51,7 +51,7 @@ void ComponentGizmo::Update(float dt)
 		shader->Use();
 		shader->SetMat4("model", model);
 		
-		ComponentCamera *camera = (ComponentCamera*)App->scene->activeCameraGO->FindComponentByType(ComponentType::CAMERA);
+		ComponentCamera *camera = (ComponentCamera*)App->scene->activeCameraComponent;
 
 		shader->SetMat4("view", camera->GetViewMatrix());
 		shader->SetMat4("projection", camera->GetProjectionMatrix());

@@ -21,7 +21,9 @@ ModuleScene::~ModuleScene()
 {	 
 	 //create gameobjects
 	 editorCameraGO = new EditorCameraGO("editor camera");
+	 
 	 activeCameraGO = editorCameraGO;
+	 activeCameraComponent = (ComponentEditorCamera*)editorCameraGO->FindComponentByType(ComponentType::CAMERA);
 
 	 GameObject *world_origin = new GameObject("world origin");
 	 world_origin->SetDirty();

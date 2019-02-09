@@ -8,6 +8,8 @@
 
 class GameObject;
 class EditorCameraGO;
+class ComponentEditorCamera;
+class ComponentCamera;
 
 class ModuleScene : public Module
 {
@@ -25,6 +27,7 @@ public:
 
 	std::vector<GameObject*> gameObjects;
 	GameObject *activeCameraGO = nullptr;
+	ComponentCamera *activeCameraComponent = nullptr;
 	EditorCameraGO *editorCameraGO = nullptr;
 
 private:

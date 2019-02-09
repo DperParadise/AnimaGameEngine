@@ -25,7 +25,7 @@ public:
 private:
 	glm::mat4 projectionMatrix;
 	glm::mat4 viewMatrix;
-	glm::vec3 position = glm::vec3(0.0f, 10.0f, 10.0f);
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 10.0f);
 	float pitch = 0.0f;
 	float yaw = -90.0f;
 	glm::vec3 cameraFront;
@@ -35,8 +35,8 @@ private:
 	float nearPlane = 0.1f;
 	float farPlane = 100.0f;
 	float verticalFOV = 70.0f;
-	int width = 0.0f;
-	int height = 0.0f;
+	int width = 0;
+	int height = 0;
 	float aspectRatio = 0.0f;
 	float cameraSpeedSlow = 30.0f;
 	float cameraSpeedFast = 60.0f;
@@ -46,6 +46,7 @@ private:
 	void UpdateProjectionMatrix();
 	void UpdateViewMatrix();
 	void SetOrientation();
+	void SetViewport(unsigned width, unsigned height);
 };
 
 

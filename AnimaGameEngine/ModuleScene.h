@@ -7,6 +7,8 @@
 #include <string>
 
 class GameObject;
+class EditorCameraGO;
+
 class ModuleScene : public Module
 {
 public:
@@ -17,16 +19,21 @@ public:
 	virtual bool CleanUp();
 
 	void AddGameObject(GameObject *go);
+	void SetActiveCamera(GameObject *camera);
 
-	std::vector<GameObject*> game_objects;
+	void OnResize(unsigned width, unsigned height);
+
+	std::vector<GameObject*> gameObjects;
+	GameObject *activeCameraGO = nullptr;
+	EditorCameraGO *editorCameraGO = nullptr;
 
 private:
-	
-	GameObject* CreateGameObject(const std::string &name);
+	/*
+	GameObject* CreateGameObject(const std::string &name);	
 	GameObject* FindGameObject(const std::string &name);
 	GameObject* FindInHierarchy(const std::string &name, GameObject *go);
 	void LinkGameObject(GameObject *go, GameObject *dest);
-	
+	*/
 };
 
 

@@ -1,3 +1,4 @@
+/*
 #ifndef __CUBE_GO_H__
 #define __CUBE_GO_H__
 
@@ -36,3 +37,4 @@ private:
 
 #endif // !__CUBE_GO_H__
 
+*/

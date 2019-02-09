@@ -25,7 +25,6 @@ private:
 	unsigned int numVertices = 34;
 	unsigned int VBO, VAO;
 	Shader *shader = nullptr;
-	const ModuleEditorCamera *camera = nullptr;
 
 	void CreateShader(const std::string& vertexPath, const std::string &fragmentPath);
 	void GenerateVertexData();

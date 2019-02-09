@@ -1,9 +1,9 @@
 #include "Application.h"
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleRender.h"
+#include "ModuleWindowGLFW.h"
+#include "ModuleRenderGLFW.h"
 #include "ModuleTextures.h"
-#include "ModuleInput.h"
+#include "ModuleInputGLFW.h"
 #include "ModuleAudio.h"
 #include "Config.h"
 #include "ModuleEditorCamera.h"
@@ -38,14 +38,16 @@ using namespace std;
 Application::Application()
 {
 	// Order matters: they will init/start/pre/update/post in this order
-	modules.push_back(input = new ModuleInput());
-	modules.push_back(window = new ModuleWindow());
-	modules.push_back(renderer = new ModuleRender()); 
+	modules.push_back(window = new ModuleWindowGLFW());
+	modules.push_back(input = new ModuleInputGLFW());
+	modules.push_back(scene = new ModuleScene());
+	modules.push_back(renderer = new ModuleRenderGLFW());
+	
 	//TODO: Module textures not needed. It comes from legacy code in 2D engine
 	//modules.push_back(textures = new ModuleTextures());  
-	modules.push_back(audio = new ModuleAudio());
+	//modules.push_back(audio = new ModuleAudio());
 	//modules.push_back(module_editor_camera = new ModuleEditorCamera());
-	modules.push_back(scene = new ModuleScene());
+	
 	//TODO: Under refactor to support opengl 3.3
 	//modules.push_back(editor_gui = new ModuleEditorGUI()); 
 }

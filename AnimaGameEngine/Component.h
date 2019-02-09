@@ -8,7 +8,6 @@ enum class ComponentType
 	TRANSFORM,
 	GIZMO,
 	CAMERA,
-	EDITOR_CAMERA,
 	MESH,
 	MESH_RENDERER,
 	MATERIAL,

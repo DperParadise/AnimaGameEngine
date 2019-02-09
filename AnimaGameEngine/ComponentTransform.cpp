@@ -7,7 +7,7 @@ const glm::vec3 ComponentTransform::worldForward = glm::vec3(0.0f, 0.0f, 1.0f);
 const glm::vec3 ComponentTransform::worldLeft = glm::vec3(1.0f, 0.0f, 0.0f);
 
 ComponentTransform::ComponentTransform(ComponentType type, const std::string &name, GameObject *ownerGO) : 
-	Component(type, name, ownerGO){ }
+	Component(type, ownerGO){ }
 
 ComponentTransform::~ComponentTransform() {}
 

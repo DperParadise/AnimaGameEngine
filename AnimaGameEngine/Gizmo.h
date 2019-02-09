@@ -1,3 +1,4 @@
+/*
 #ifndef __GIZMO_H__
 #define __GIZMO_H__
 
@@ -18,4 +19,4 @@ private:
 };
 
 #endif
-
+*/

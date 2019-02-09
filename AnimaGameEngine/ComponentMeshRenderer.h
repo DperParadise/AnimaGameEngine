@@ -10,11 +10,6 @@ class Shader;
 class ComponentCamera;
 class ModuleEditorCamera;
 
-namespace glm
-{
-	class mat4;
-}
-
 class ComponentMeshRenderer : public Component
 {
 public:

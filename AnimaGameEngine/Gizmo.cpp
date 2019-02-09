@@ -1,3 +1,4 @@
+/*
 #include "Gizmo.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "Globals.h"
@@ -130,3 +131,4 @@ void Gizmo::Draw(const GameObject *go) const
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
+*/

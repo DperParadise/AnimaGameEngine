@@ -7,7 +7,8 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "Application.h"
-#include "ModuleEditorCamera.h"
+#include "ComponentCamera.h"
+#include "ModuleScene.h"
 
 ComponentGizmo::ComponentGizmo(
 	ComponentType type,
@@ -45,24 +46,27 @@ void ComponentGizmo::Update(float dt)
 		//TODO: Check matrix product order
 		model = rotMatrix * model;
 
-		const glm::vec3 scale = GetOwnerGO()->GetTransform()->GetWorldScale();
-		model = glm::scale(model, scale);
-
-		glm::mat4 normalMatrix;
-		normalMatrix = glm::inverse(model);
-		normalMatrix = glm::transpose(normalMatrix);
-
 		//Set shader uniforms
+		
 		shader->Use();
 		shader->SetMat4("model", model);
-		shader->SetMat4("normalMatrix", normalMatrix);
+		
+		ComponentCamera *camera = (ComponentCamera*)App->scene->activeCameraGO->FindComponentByType(ComponentType::CAMERA);
+
 		shader->SetMat4("view", camera->GetViewMatrix());
 		shader->SetMat4("projection", camera->GetProjectionMatrix());
-
+		
 		glBindVertexArray(VAO);
+
 		glDrawArrays(GL_LINES, 0, numVertices);
 
-		glBindVertexArray(0);
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR)
+		{
+			MYLOG(" Error después glDrawArrays(): %s\n", gluErrorString(error));
+		}
+
+		glBindVertexArray(0);		
 	}
 }
 
@@ -105,6 +109,7 @@ void ComponentGizmo::GenerateVertexData()
 
 void ComponentGizmo::SetVertexBuffers()
 {
+	
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 
@@ -113,13 +118,14 @@ void ComponentGizmo::SetVertexBuffers()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 
-	//vertices position
+	//vertices location
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-	//color position
+	//color location
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(3 * sizeof(float)));
+
 }
 
 void ComponentGizmo::ClearVertexBuffers()

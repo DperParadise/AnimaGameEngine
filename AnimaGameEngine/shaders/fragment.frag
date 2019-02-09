@@ -1,6 +1,16 @@
 #version 330
-out vec4 outputColor;
+
+struct Material
+{
+  sampler2D texture_diffuse;
+};
+
+in vec2 outTexCoord;
+out vec4 fragColor;
+
+uniform Material material;
+
 void main()
 {
-outputColor = vec4(1.0, 0.5, 0.2, 1.0);
+  fragColor = vec4(texture(material.texture_diffuse, outTexCoord), 1.0);
 }

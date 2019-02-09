@@ -4,14 +4,14 @@
 #include <string>
 #include <vector>
 #include "Component.h"
-#include "Gizmo.h"
+//#include "Gizmo.h"
 #include "libraries/glm/glm.hpp"
 
 
 struct aiNode;
 struct aiMesh;
 struct aiScene;
-class ComponentMaterial;
+//class ComponentMaterial;
 class ComponentTransform;
 class Mesh;
 class Shader;
@@ -34,28 +34,33 @@ public:
 
 	const ComponentTransform *GetTransform() const;
 
-	Component *CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv);
-	Component *CreatePrimitiveMatComp(float *ambient, float *diffuse, float *specular, float shininess);
+	//Component *CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv);
+	//Component *CreatePrimitiveMatComp(float *ambient, float *diffuse, float *specular, float shininess);
 
-	Component* CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh);
-	Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
+	//Component* CreateLoadedMeshComp(ComponentMaterial *mat, aiMesh *mesh);
+	//Component* CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *scene, const char *file_name);
 	Component* AddMeshRenderer(const Mesh *mesh, const Shader *shader, const ComponentCamera *camera);
-	Component* AddGizmoComponent(const std::string& vertexPath, const std::string &fragmentPath);
 	Component* AddCameraComponent();
 	Component* AddEditorCameraComponent();
-	Component* CreateBehaviour(const std::string &behav_name);
-	Component* CreateTorsoBehaviour(const std::string &behav_name);
-	Component* CreateAmbientLight();
-	Component* CreateDirectionalLight();
-	Component* CreatePointLight();
+	Component* AddGizmoComponent(const std::string& vertexPath, const std::string &fragmentPath);
+	//Component* CreateBehaviour(const std::string &behav_name);
+	//Component* CreateTorsoBehaviour(const std::string &behav_name);
+	//Component* CreateAmbientLight();
+	//Component* CreateDirectionalLight();
+	//Component* CreatePointLight();
+
+	const std::string& GetName() const;
+	const std::vector<GameObject*>& GetChildrenGO() const;
 
 	GameObject *GetParentGO() const;
 	void SetParentGO(GameObject *parentGO);
 
 	void AddChildGO(GameObject *childGO);
-
+	
 	Component *FindComponentByType(ComponentType type);
 	
+	void SetDirty();
+	bool IsDirty() const;
 
 private:
 
@@ -73,7 +78,7 @@ private:
 	void LoadTransform(const aiNode *node);
 	void CombineTransform(GameObject *parentGO);
 	void Clear();
-	Gizmo gizmo;
+	//Gizmo gizmo;
 };
 
 

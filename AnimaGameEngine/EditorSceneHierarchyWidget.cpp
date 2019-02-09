@@ -1,3 +1,4 @@
+/*
 #include "EditorSceneHierarchyWidget.h"
 #include "libraries/ImGui/imgui.h"
 #include "Application.h"
@@ -26,7 +27,7 @@ void EditorSceneHierarchyWidget::Draw(EditorInspectorWidget *inspector)
 
 	ImGui::Begin(title.c_str());
 	
-	for (GameObject *go : App->scene->game_objects)
+	for (GameObject *go : App->scene->gameObjects)
 	{
 		DrawNode(go, selected_go);
 	}
@@ -62,3 +63,4 @@ void EditorSceneHierarchyWidget::DrawNode(GameObject *go, void* &selected_go) co
 		ImGui::TreePop();
 	}
 }
+*/

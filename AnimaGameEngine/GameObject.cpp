@@ -1,11 +1,6 @@
 #include "GameObject.h"
 #include "Globals.h"
-#include "ComponentMesh.h"
-#include "ComponentMaterial.h"
-#include "ComponentLight.h"
-#include "ComponentAmbientLight.h"
 #include "ComponentMeshRenderer.h"
-#include "ComponentBehaviour.h"
 #include "libraries/assimp/include/vector3.h"
 #include "libraries/assimp/include/quaternion.h"
 #include "libraries/assimp/include/scene.h"
@@ -14,12 +9,10 @@
 #include "ComponentCamera.h"
 #include "ComponentEditorCamera.h"
 
-//test
-#include "ComponentTorsoBehaviour.h"
-
 GameObject::GameObject(const std::string &name, const aiNode *node) : name(name)
 {
 	transform = new ComponentTransform(ComponentType::TRANSFORM, "transform", this);
+	AddGizmoComponent("shaders/gizmo.vert", "shaders/gizmo.frag"); //TODO: Implement a way to manage shaders
 
 	if (node)
 	{
@@ -47,8 +40,8 @@ void GameObject::Update(float dt)
 		(*it)->Update(dt);
 	}
 
-	if (selectedGO)
-		gizmo.Draw(this);
+	//if (selectedGO)
+	//	gizmo.Draw(this);
 }
 
 void GameObject::UpdateWorldTransform()
@@ -94,7 +87,7 @@ void GameObject::Rotate(float angle, const glm::vec3 &axis)
 	transform->Rotate(angle, axis);
 	dirty = true;
 }
-
+/*
 Component* GameObject::CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv)
 {
 	Component *comp = new ComponentMesh(ComponentType::MESH, mat, std::string("Mesh"), true, this, vertices, normals, uv);
@@ -122,7 +115,7 @@ Component* GameObject::CreateLoadedMaterialComp(aiMesh *mesh, const aiScene *sce
 	components.push_back(comp);
 	return comp;
 }
-
+*/
 Component* GameObject::AddMeshRenderer(const Mesh *mesh, const Shader *shader, const ComponentCamera *camera)
 {
 	Component *comp = new ComponentMeshRenderer(ComponentType::MESH_RENDERER, mesh, shader, camera, this);
@@ -146,11 +139,11 @@ Component * GameObject::AddCameraComponent()
 
 Component * GameObject::AddEditorCameraComponent()
 {
-	Component *comp = new ComponentEditorCamera(ComponentType::EDITOR_CAMERA, this);
+	Component *comp = new ComponentEditorCamera(ComponentType::CAMERA, this);
 	components.push_back(comp);
-	return nullptr;
+	return comp;
 }
-
+/*
 Component* GameObject::CreateBehaviour(const std::string &behav_name)
 {
 	Component *comp = new ComponentBehaviour(ComponentType::BEHAVIOUR, behav_name, std::string("Behaviour"), true, this);
@@ -177,6 +170,16 @@ Component *GameObject::CreatePointLight()
 	Component *comp = new ComponentLight(ComponentType::POINT_LIGHT, std::string("Point Light"), true, this);
 	components.push_back(comp);
 	return comp;
+}
+*/
+const std::string & GameObject::GetName() const
+{
+	return name;
+}
+
+const std::vector<GameObject*>& GameObject::GetChildrenGO() const
+{
+	return childrenGO;
 }
 
 GameObject * GameObject::GetParentGO() const
@@ -205,14 +208,22 @@ Component * GameObject::FindComponentByType(ComponentType type)
 	}
 	return found;
 }
-
+void GameObject::SetDirty()
+{
+	dirty = true;
+}
+bool GameObject::IsDirty() const
+{
+	return dirty;
+}
+/*
 Component *GameObject::CreateDirectionalLight()
 {
 	Component *comp = new ComponentLight(ComponentType::DIRECTIONAL_LIGHT, std::string("Directional Light"), true, this);
 	components.push_back(comp);
 	return comp;
 }
-
+*/
 void GameObject::LoadTransform(const aiNode *node)
 {
 	//Assimp types
@@ -250,7 +261,7 @@ void GameObject::CombineTransform(GameObject *parentGO)
 	transform->SetWorldScale(parentGO->transform->GetWorldScale() * transform->GetRelativeScaleWorldAxis());
 	
 	// TODO: Check quaternions mult order
-	transform->SetWorldRotation(parentGO->transform->GetWorldRotation * transform->GetRelativeRotationWorldAxis());
+	transform->SetWorldRotation(parentGO->transform->GetWorldRotation() * transform->GetRelativeRotationWorldAxis());
 }
 
 void GameObject::Clear()

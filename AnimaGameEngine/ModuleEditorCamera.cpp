@@ -1,9 +1,10 @@
 #include "ModuleEditorCamera.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "ModuleWindow.h"
+#include "ModuleWindowGLFW.h"
 #include "libraries/glm/gtc/matrix_transform.hpp"
-#include "libraries/SDL/include/SDL.h"
+//#include "libraries/SDL/include/SDL.h"
+#include "libraries/glew-2.0.0/include/GL/glew.h"
 
 ModuleEditorCamera::ModuleEditorCamera() {}
 
@@ -11,84 +12,86 @@ ModuleEditorCamera::~ModuleEditorCamera() {}
 
 bool ModuleEditorCamera::Init(Config *config) 
 {
-	aspectRatio = (float)App->window->window_width / (float)App->window->window_height;
+	aspectRatio = (float)App->window->width / (float)App->window->height;
 	
 	SetOrientation();
+
+	SetViewport(App->window->width, App->window->height);
 
 	return true;
 }
 
 update_status ModuleEditorCamera::Update(float dt)
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-				position.y += cameraSpeedFast * dt;
-			else
-				position.y += cameraSpeedSlow * dt;
-		}
+	//if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	//{
+	//	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
+	//	{
+	//		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	//			position.y += cameraSpeedFast * dt;
+	//		else
+	//			position.y += cameraSpeedSlow * dt;
+	//	}
 
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-				position.y -= cameraSpeedFast * dt;
-			else
-				position.y -= cameraSpeedSlow * dt;
-		}
-	
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-				position += cameraFront * cameraSpeedFast * dt;
-			else
-				position += cameraFront * cameraSpeedSlow * dt;
+	//	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+	//	{
+	//		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	//			position.y -= cameraSpeedFast * dt;
+	//		else
+	//			position.y -= cameraSpeedSlow * dt;
+	//	}
+	//
+	//	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	//	{
+	//		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	//			position += cameraFront * cameraSpeedFast * dt;
+	//		else
+	//			position += cameraFront * cameraSpeedSlow * dt;
 
-		}
+	//	}
 
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-				position -= cameraFront * cameraSpeedFast * dt;
-			else
-				position -= cameraFront * cameraSpeedSlow * dt;
-		}
+	//	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	//	{
+	//		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	//			position -= cameraFront * cameraSpeedFast * dt;
+	//		else
+	//			position -= cameraFront * cameraSpeedSlow * dt;
+	//	}
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-				position -= cameraRight * cameraSpeedFast * dt;
-			else
-				position -= cameraRight * cameraSpeedSlow * dt;
-		}
+	//	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	//	{
+	//		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	//			position -= cameraRight * cameraSpeedFast * dt;
+	//		else
+	//			position -= cameraRight * cameraSpeedSlow * dt;
+	//	}
 
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
-				position += cameraRight * cameraSpeedFast * dt;
-			else
-				position += cameraRight * cameraSpeedSlow * dt;
-		}
+	//	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	//	{
+	//		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+	//			position += cameraRight * cameraSpeedFast * dt;
+	//		else
+	//			position += cameraRight * cameraSpeedSlow * dt;
+	//	}
 
-		//Use mouse motion to move the camera
-		iPoint increment = App->input->GetMouseMotion();
-		if (increment.y != 0)
-		{
-			pitch -= increment.y * sensitivity * dt ;
-			if (pitch > 89.0f )
-				pitch = 89.0f;
+	//	//Use mouse motion to move the camera
+	//	iPoint increment = App->input->GetMouseMotion();
+	//	if (increment.y != 0)
+	//	{
+	//		pitch -= increment.y * sensitivity * dt ;
+	//		if (pitch > 89.0f )
+	//			pitch = 89.0f;
 
-			if (pitch < -89.0f)
-				pitch = -89.0f;
-		}
-		if (increment.x != 0)
-		{
-			yaw += increment.x * sensitivity * dt;
-		}
+	//		if (pitch < -89.0f)
+	//			pitch = -89.0f;
+	//	}
+	//	if (increment.x != 0)
+	//	{
+	//		yaw += increment.x * sensitivity * dt;
+	//	}
 
-		SetOrientation();
-	}
+	//	SetOrientation();
+	//}
 
 	// Zoom in with mouse wheel
 	/*
@@ -118,7 +121,7 @@ bool ModuleEditorCamera::CleanUp()
 
 void ModuleEditorCamera::OnResize()
 {
-	aspectRatio = (float)App->window->window_width / (float)App->window->window_height;
+	aspectRatio = (float)App->window->width / (float)App->window->height;
 	UpdateProjectionMatrix();
 }
 
@@ -154,7 +157,14 @@ void ModuleEditorCamera::SetOrientation()
 	cameraRight = glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f)));
 	cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront));
 
+	MYLOG("front=(%f, %f, %f) position=(%f, %f, %f)", front.x, front.y, front.z, position.x, position.y, position.z)
+
 	UpdateViewMatrix();
+}
+
+void ModuleEditorCamera::SetViewport(unsigned width, unsigned height)
+{
+	glViewport(0, 0, width, height);
 }
 
 

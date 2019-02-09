@@ -1,18 +1,19 @@
 #include "ComponentCamera.h"
 #include "libraries/glm/gtc/matrix_transform.hpp"
 #include "Application.h"
-#include "ModuleWindow.h"
+#include "ModuleWindowGLFW.h"
+#include "libraries/glew-2.0.0/include/GL/glew.h"
 
-
-ComponentCamera::ComponentCamera(ComponentType type, GameObject *ownerGO) : 
+ComponentCamera::ComponentCamera(ComponentType type, GameObject *ownerGO) :
 	Component(type, ownerGO)
 {
-	aspectRatio = (float)App->window->window_width / (float)App->window->window_height;
-
+	aspectRatio = (float)App->window->width / (float)App->window->height;
 	SetOrientation();
+	UpdateProjectionMatrix();
+	SetViewport(App->window->width, App->window->height);
 }
 
-ComponentCamera:: ~ComponentCamera(){}
+ComponentCamera:: ~ComponentCamera() {}
 
 void ComponentCamera::Update(float dt)
 {
@@ -23,6 +24,7 @@ void ComponentCamera::OnResize(uint width, uint height)
 {
 	aspectRatio = (float)width / (float)height;
 	UpdateProjectionMatrix();
+	SetViewport(width, height);
 }
 
 const glm::mat4 &ComponentCamera::GetProjectionMatrix() const
@@ -58,4 +60,9 @@ void ComponentCamera::SetOrientation()
 	cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront));
 
 	UpdateViewMatrix();
+}
+
+void ComponentCamera::SetViewport(unsigned width, unsigned height)
+{
+	glViewport(0, 0, width, height);
 }

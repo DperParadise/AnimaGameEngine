@@ -1,27 +1,32 @@
 #include "ModuleScene.h"
 #include "GameObject.h"
 #include "Component.h"
-#include "ComponentLight.h"
-#include "ComponentAmbientLight.h"
+//#include "ComponentLight.h"
+//#include "ComponentAmbientLight.h"
 #include "Model.h"
 #include "CubeGO.h"
+#include "EditorCameraGO.h"
+#include "ComponentEditorCamera.h"
+#include "ComponentCamera.h"
 
-//test rotation
-#include "Application.h"
-#include "ModuleInput.h"
-#include <cmath>
-
-//test shader
-#include "Shader.h"
 
 ModuleScene::ModuleScene() {}
 
-ModuleScene::~ModuleScene() {}
+ModuleScene::~ModuleScene() 
+{
+	RELEASE(editorCameraGO)
+}
 
  bool ModuleScene::Start()
 {	 
 	 //create gameobjects
+	 editorCameraGO = new EditorCameraGO("editor camera");
+	 activeCameraGO = editorCameraGO;
 
+	 GameObject *world_origin = new GameObject("world origin");
+	 world_origin->SetDirty();
+	 AddGameObject(world_origin);
+	 
 	 /*
 	 GameObject *world_origin = new GameObject("world origin");
 	 world_origin->dirty = false;
@@ -54,53 +59,66 @@ ModuleScene::~ModuleScene() {}
 	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
-	 //TODO: Remove shader test when everyting is OK
-	 Shader shader("shaders/vertex.vert", "shaders/fragment.frag");
-
+	 
 	return true;
 }
 
 update_status ModuleScene::Update(float dt) 
 {
-	for (std::vector<GameObject*>::iterator it = game_objects.begin(); it != game_objects.end(); it++)
+
+	for (std::vector<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
 	{
 		(*it)->Update(dt);
 
 		(*it)->UpdateWorldTransform();
-
-
 	}
+
+	activeCameraGO->Update(dt);
+
 	return UPDATE_CONTINUE;
 }
 
 bool ModuleScene::CleanUp()
 {
-	for (std::vector<GameObject*>::iterator it = game_objects.begin(); it != game_objects.end(); it++)
+	for (std::vector<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
 	{
 		RELEASE(*it);
 	}
-	game_objects.clear();
+	gameObjects.clear();
 	
 	return true;
 }
-
+/*
 GameObject* ModuleScene::CreateGameObject(const std::string &name) 
 {
 	GameObject *go = new GameObject(name);
-	game_objects.push_back(go);
+	gameObjects.push_back(go);
 
 	return go;
 }
-
+*/
 void ModuleScene::AddGameObject(GameObject *go)
 {
-	game_objects.push_back(go);
+	gameObjects.push_back(go);
 }
 
+void ModuleScene::SetActiveCamera(GameObject * camera)
+{
+	activeCameraGO = camera;
+}
+void ModuleScene::OnResize(unsigned width, unsigned height)
+{
+	ComponentCamera  *camera = nullptr;
+	camera = (ComponentCamera*)activeCameraGO->FindComponentByType(ComponentType::CAMERA);
+
+	if (camera)
+		camera->OnResize(width, height);
+}
+/*
 GameObject* ModuleScene::FindGameObject(const std::string &name) 
 {
 	
-	for (std::vector<GameObject*>::iterator it = game_objects.begin(); it != game_objects.end(); it++)
+	for (std::vector<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
 	{
 		GameObject *found = nullptr;
 		if ((found = FindInHierarchy(name, *it)) != nullptr)
@@ -111,10 +129,10 @@ GameObject* ModuleScene::FindGameObject(const std::string &name)
 
  GameObject* ModuleScene::FindInHierarchy(const std::string &name,  GameObject *go) 
 {
-	 if (go->name == name)
+	 if (go->GetName() == name)
 		 return go;
 
-	 for each(GameObject *child in go->children_go)
+	 for each(GameObject *child in go->GetChildrenGO())
 	 {
 		 if (FindInHierarchy(name, child) != nullptr)
 			 return child;
@@ -126,17 +144,18 @@ void ModuleScene::LinkGameObject(GameObject *go, GameObject *dest)
 {
 	if (go == nullptr || dest == nullptr)
 		return;
-
-	for (std::vector<GameObject*>::iterator it = go->parent_go->children_go.begin(); it != go->parent_go->children_go.end(); it++)
+	
+	for (auto it = go->GetParentGO()->GetChildrenGO().begin();  it != go->GetParentGO()->GetChildrenGO().end(); it++)
 	{
 		if ((*it) == go)
 		{
 			GameObject *found = *it;
-			dest->children_go.push_back(found);
-			go->parent_go->children_go.erase(it);
-			found->parent_go = dest;
+			dest->AddChildGO(found);
+			go->GetParentGO()->GetChildrenGO().erase(it); //TODO: create a GetChildrenGO() not const.
+			found->SetParentGO(dest);
 		
 			break;
 		}	
 	}
 }
+*/

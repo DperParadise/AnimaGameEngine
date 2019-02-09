@@ -10,7 +10,6 @@
 #include "Shader.h"
 #include "ComponentCamera.h"
 #include "Mesh.h"
-#include "ModuleEditorCamera.h"
 #include "Globals.h"
 
 ComponentMeshRenderer::ComponentMeshRenderer(

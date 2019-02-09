@@ -1,3 +1,4 @@
+/*
 #include "ModuleEditorGUI.h"
 #include "Application.h"
 #include "ModuleWindow.h"
@@ -55,3 +56,4 @@ bool ModuleEditorGUI::CleanUp()
 	return true;
 }
 
+*/

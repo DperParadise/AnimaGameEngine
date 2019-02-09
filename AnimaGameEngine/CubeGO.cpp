@@ -1,3 +1,4 @@
+/*
 #include "CubeGO.h"
 #include "ComponentMesh.h"
 
@@ -185,3 +186,4 @@ void CubeGO::CreateVertexInfo()
 		1.0f, 0.0f
 	};
 }
+*/

@@ -7,14 +7,14 @@
 #include <string>
 
 class Module;
-class ModuleRender;
-class ModuleWindow;
 class ModuleTextures;
-class ModuleInput;
+class ModuleInputGLFW;
 class ModuleAudio;
 class ModuleEditorCamera;
 class ModuleScene;
 class ModuleEditorGUI;
+class ModuleWindowGLFW;
+class ModuleRenderGLFW;
 
 class Application
 {
@@ -27,14 +27,15 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	ModuleRender* renderer;
-	ModuleWindow* window;
+	ModuleRenderGLFW* renderer;
+	ModuleWindowGLFW* window;
 	ModuleTextures* textures;
-	ModuleInput* input;
+	ModuleInputGLFW* input;
 	ModuleAudio* audio;
 	ModuleEditorCamera* module_editor_camera;
 	ModuleScene* scene;
 	ModuleEditorGUI* editor_gui;
+
 	//------------------------------------------------- TIME CONTROL -----------------------------------------
 	TimerChrono timer_chrono;
 	double ms_last_update = 0.0f;

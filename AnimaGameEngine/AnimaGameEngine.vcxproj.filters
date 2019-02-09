@@ -110,27 +110,6 @@
     <ClInclude Include="ModuleEditorGUI.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="libraries\ImGui\imconfig.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\ImGui\imgui.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\ImGui\imgui_impl_sdl_gl3.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\ImGui\imgui_internal.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\ImGui\stb_rect_pack.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\ImGui\stb_textedit.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\ImGui\stb_truetype.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="EditorConsoleWidget.h">
       <Filter>Editor Widgets</Filter>
     </ClInclude>
@@ -175,6 +154,15 @@
     </ClInclude>
     <ClInclude Include="EditorCameraGO.h">
       <Filter>GameObjects and Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInputGLFW.h">
+      <Filter>CoreModules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRenderGLFW.h">
+      <Filter>CoreModules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWindowGLFW.h">
+      <Filter>CoreModules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,18 +238,6 @@
     <ClCompile Include="ModuleEditorGUI.cpp">
       <Filter>CoreModules</Filter>
     </ClCompile>
-    <ClCompile Include="libraries\ImGui\imgui.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\ImGui\imgui_demo.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\ImGui\imgui_draw.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\ImGui\imgui_impl_sdl_gl3.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="EditorConsoleWidget.cpp">
       <Filter>Editor Widgets</Filter>
     </ClCompile>
@@ -306,6 +282,15 @@
     </ClCompile>
     <ClCompile Include="EditorCameraGO.cpp">
       <Filter>GameObjects and Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleInputGLFW.cpp">
+      <Filter>CoreModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleRenderGLFW.cpp">
+      <Filter>CoreModules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleWindowGLFW.cpp">
+      <Filter>CoreModules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

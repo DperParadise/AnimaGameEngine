@@ -4,8 +4,7 @@
 #include "Component.h"
 #include "Globals.h"
 #include "libraries/glm/glm.hpp"
-
-class Config;
+#include "Point.h"
 
 class ComponentCamera: public Component
 {
@@ -23,7 +22,7 @@ public:
 protected:
 	glm::mat4 projectionMatrix;
 	glm::mat4 viewMatrix;
-	glm::vec3 position = glm::vec3(0.0f, 10.0f, 10.0f);
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 10.0f);
 	float pitch = 0.0f;
 	float yaw = -90.0f;
 	glm::vec3 cameraFront;
@@ -39,10 +38,11 @@ protected:
 	float cameraSpeedSlow = 30.0f;
 	float cameraSpeedFast = 60.0f;
 	float cameraWheelSpeed = 30.0f;
-	float sensitivity = 20.0f;
+	float sensitivity = 10.0f;
 
 	 void UpdateProjectionMatrix();
 	 void UpdateViewMatrix();
 	 void SetOrientation();
+	 void SetViewport(unsigned width, unsigned height);
 };
 #endif

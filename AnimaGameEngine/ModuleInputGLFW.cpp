@@ -8,7 +8,7 @@
 //static variables
 glm::vec2 ModuleInputGLFW::lastMousePos;
 glm::vec2 ModuleInputGLFW::mouseOffset;
-bool ModuleInputGLFW::firstMouseInteraction;
+bool ModuleInputGLFW::firstMouseInteraction = true;
 double ModuleInputGLFW::scrollOffsetY;
 
 ModuleInputGLFW::ModuleInputGLFW()
@@ -37,6 +37,8 @@ update_status ModuleInputGLFW::Update(float dt)
 
 update_status ModuleInputGLFW::PostUpdate(float dt)
 {
+	mouseOffset = glm::vec2(0.0f);
+
 	glfwPollEvents();
 
 	return update_status::UPDATE_CONTINUE;
@@ -53,7 +55,6 @@ void ModuleInputGLFW::MouseCallback(GLFWwindow * window, double xpos, double ypo
 	{
 		lastMousePos.x = xpos;
 		lastMousePos.y = ypos;
-		mouseOffset = lastMousePos;
 		firstMouseInteraction = false;
 	}
 	mouseOffset.x = xpos - lastMousePos.x;

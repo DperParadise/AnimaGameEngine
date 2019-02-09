@@ -135,5 +135,5 @@ void ComponentGizmo::ClearVertexBuffers()
 
 void ComponentGizmo::ComputeNumVerticesToDraw()
 {
-	numVertices = vertices.size() / (2 * 3);
+	numVertices = vertices.size() / 3;
 }

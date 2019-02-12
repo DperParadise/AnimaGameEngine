@@ -25,6 +25,14 @@ struct Texture
 	std::string type;
 };
 
+struct Material
+{
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
+	float shininess;
+};
+
 class Mesh
 {
 public:
@@ -35,16 +43,14 @@ public:
 		unsigned int GetEBO() const;
 
 		const std::vector<unsigned int>& GetIndices() const;
-
-		//testing
-		int numVertices = 0;
-		
+		const Material &GetMaterial() const;
 
 private:
 	unsigned VAO, VBO, EBO;
 		std::vector<Vertex> vertices;
 		std::vector<unsigned> indices;
 		std::vector<Texture> textures;
+		Material material;
 
 		static std::vector<Texture> loadedTextures;
 
@@ -57,6 +63,10 @@ private:
 		void LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const std::string &texturePath);
 		unsigned CreateOpenGLTexture(const std::string texturePath);
 		static void ClearLoadedTexturesVector();
+		void LoadMaterial(const aiScene *aiScene, const aiMesh *mesh);
+		
+
+
 
 };
 

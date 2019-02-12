@@ -56,7 +56,11 @@ void ComponentMeshRenderer::Update(float dt) {
 		shader->SetMat4("view", camera->GetViewMatrix());
 		shader->SetMat4("projection", camera->GetProjectionMatrix());
 		
-	
+		shader->SetVec3("material.ambient", mesh->GetMaterial().ambient);
+		shader->SetVec3("material.diffuse", mesh->GetMaterial().diffuse);
+		shader->SetVec3("material.specular", mesh->GetMaterial().specular);
+		shader->SetFloat("material.shininess", mesh->GetMaterial().shininess);
+
 		//Bind Textures
 		unsigned int diffuse_nr = 1;
 		unsigned int specular_nr = 1;
@@ -84,7 +88,6 @@ void ComponentMeshRenderer::Update(float dt) {
 			glBindTexture(GL_TEXTURE_2D, mesh->GetTextures()[i].id);
 		}
 		
-
 		//Draw
 		glBindVertexArray(mesh->GetVAO());
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->GetEBO());

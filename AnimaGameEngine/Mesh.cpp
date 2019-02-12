@@ -20,6 +20,7 @@ void Mesh::LoadMesh(const aiScene *scene, const aiMesh *mesh, const std::string 
 	ClearVertexVectors();
 
 	LoadTextures(scene, mesh, texturePath);
+	LoadMaterial(scene, mesh);
 	ClearLoadedTexturesVector();
 }
 
@@ -46,7 +47,6 @@ unsigned int Mesh::GetEBO() const
 void Mesh::LoadVertices(const aiMesh * mesh)
 {
 	const aiVector3D zero3D(0.0f, 0.0f, 0.0f);
-	numVertices = mesh->mNumVertices;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
 	{
@@ -268,4 +268,43 @@ unsigned Mesh::CreateOpenGLTexture(const std::string texturePath)
 void Mesh::ClearLoadedTexturesVector()
 {
 	loadedTextures.clear();
+}
+
+void Mesh::LoadMaterial(const aiScene * aiScene, const aiMesh * mesh)
+{
+	unsigned materialIndex = mesh->mMaterialIndex;
+	aiMaterial *material = aiScene->mMaterials[materialIndex];
+
+	aiColor3D color;
+	float shininess;
+
+	if (material->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
+	{
+		this->material.ambient.r = color.r;
+		this->material.ambient.g = color.g;
+		this->material.ambient.b = color.b;
+	}
+
+	if (material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
+	{
+		this->material.diffuse.r = color.r;
+		this->material.diffuse.g = color.g;
+		this->material.diffuse.b = color.b;
+	}
+
+	if (material->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
+	{
+		this->material.specular.r = color.r;
+		this->material.specular.g = color.g;
+		this->material.specular.b = color.b;
+	}
+
+	if (material->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS)
+		this->material.shininess = shininess;
+
+}
+
+const Material & Mesh::GetMaterial() const
+{
+	return material;
 }

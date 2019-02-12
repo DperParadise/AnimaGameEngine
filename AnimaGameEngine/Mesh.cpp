@@ -46,8 +46,6 @@ unsigned int Mesh::GetEBO() const
 void Mesh::LoadVertices(const aiMesh * mesh)
 {
 	const aiVector3D zero3D(0.0f, 0.0f, 0.0f);
-
-	//vertices.resize(mesh->mNumVertices);
 	numVertices = mesh->mNumVertices;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; ++i)

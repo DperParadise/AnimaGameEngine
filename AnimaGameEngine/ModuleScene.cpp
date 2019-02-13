@@ -60,7 +60,7 @@ ModuleScene::~ModuleScene()
 	 //batmanGO->CreateBehaviour("BatmanMovement");
 	 //GameObject *torsoGO = FindGameObject("BatmanTorso");
 	 //torsoGO->CreateTorsoBehaviour("TorsoBehaviour");
-	 //Model iron_man = Model("models/IronManFBX/IronMan.FBX", Model::load_flags::TRIANGULATE);
+	 //Model iron_man = Model("models/IronMan/IronMan.obj", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
 	 

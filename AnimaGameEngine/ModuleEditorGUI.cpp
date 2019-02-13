@@ -1,11 +1,12 @@
-/*
+
 #include "ModuleEditorGUI.h"
 #include "Application.h"
-#include "ModuleWindow.h"
+#include "ModuleWindowGLFW.h"
 #include "Globals.h"
 
-#include "libraries/ImGui/imgui_impl_sdl_gl3.h"
-#include "libraries/ImGui/imgui.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 ModuleEditorGUI::ModuleEditorGUI() {}
 
@@ -14,7 +15,19 @@ ModuleEditorGUI::~ModuleEditorGUI() {}
 bool ModuleEditorGUI::Init(Config *config)
 {
 	MYLOG("Init IMGUI");
-	ImGui_ImplSdlGL3_Init(App->window->window);
+	
+	const char* glsl_version = "#version 130";
+
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsClassic();
+
+	// Setup Platform/Renderer bindings
+	ImGui_ImplGlfw_InitForOpenGL(App->window->window, true);
+	ImGui_ImplOpenGL3_Init(glsl_version);
 
 	return true;
 }
@@ -27,7 +40,10 @@ bool ModuleEditorGUI::Start()
 
 update_status ModuleEditorGUI::PreUpdate(float dt)
 {
-	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	// Start the Dear ImGui frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
 
 	return UPDATE_CONTINUE;
 }
@@ -40,6 +56,7 @@ update_status ModuleEditorGUI::Update(float dt)
 	scene_hierarchy.Draw(&inspector);
 	
 	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	return UPDATE_CONTINUE;
 }
@@ -52,8 +69,10 @@ update_status ModuleEditorGUI::PostUpdate(float dt)
 bool ModuleEditorGUI::CleanUp()
 {
 	MYLOG("Shutdown IMGUI");
-	ImGui_ImplSdlGL3_Shutdown();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
 	return true;
 }
 
-*/

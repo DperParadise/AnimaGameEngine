@@ -77,10 +77,15 @@ void GameObject::Scale(const glm::vec3 & scale)
 	dirty = true;
 }
 
-const ComponentTransform* GameObject::GetTransform() const
+ ComponentTransform* GameObject::GetTransform()
 {
 	return transform;
 }
+
+ const ComponentTransform * GameObject::GetTransform() const
+ {
+	 return transform;
+ }
 
 void GameObject::Rotate(float angle, const glm::vec3 &axis)
 {
@@ -216,6 +221,12 @@ bool GameObject::IsDirty() const
 {
 	return dirty;
 }
+
+const std::vector<Component*>& GameObject::GetComponents() const
+{
+	return components;
+}
+
 /*
 Component *GameObject::CreateDirectionalLight()
 {

@@ -32,6 +32,7 @@ public:
 	void Rotate(float angle, const glm::vec3 &axis);
 	void Scale(const glm::vec3 &scale);
 
+	ComponentTransform *GetTransform();
 	const ComponentTransform *GetTransform() const;
 
 	//Component *CreatePrimitiveMeshComp(ComponentMaterial *mat, float *vertices, float *normals, float *uv);
@@ -62,13 +63,17 @@ public:
 	void SetDirty();
 	bool IsDirty() const;
 
+	//GUI can modify this value
+	bool active = true;
+
+	const std::vector<Component*>& GetComponents() const;
+
 private:
 
 	ComponentTransform *transform = nullptr;
 
 	bool dirty = true;
 	GameObject *parentGO = nullptr;
-	bool active = true;
 	std::string name;
 	std::vector<Component*> components;
 	std::vector<GameObject*> childrenGO;

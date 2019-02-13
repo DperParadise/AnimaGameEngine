@@ -1,11 +1,11 @@
-/*
+
 #include "EditorSceneHierarchyWidget.h"
-#include "libraries/ImGui/imgui.h"
 #include "Application.h"
 #include "ModuleScene.h"
 #include "GameObject.h"
 #include "Globals.h"
 #include "EditorInspectorWidget.h"
+#include "imgui.h"
 
 EditorSceneHierarchyWidget::EditorSceneHierarchyWidget(const std::string &title, 
 	int x, 
@@ -42,12 +42,12 @@ void EditorSceneHierarchyWidget::DrawNode(GameObject *go, void* &selected_go) co
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
 		| ImGuiTreeNodeFlags_OpenOnDoubleClick | (go == selected_go ? ImGuiTreeNodeFlags_Selected : 0);
 
-	bool is_leaf = go->children_go.size() == 0;
+	bool is_leaf = go->GetChildrenGO().size() == 0;
 
 	if (is_leaf)
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
-	bool node_open = ImGui::TreeNodeEx(go, node_flags, go->name.c_str());
+	bool node_open = ImGui::TreeNodeEx(go, node_flags, go->GetName().c_str());
 	if (ImGui::IsItemClicked())
 	{
 		selected_go = go;	
@@ -55,7 +55,7 @@ void EditorSceneHierarchyWidget::DrawNode(GameObject *go, void* &selected_go) co
 
 	if (node_open && !is_leaf)
 	{
-		for (GameObject *child_go : go->children_go)
+		for (GameObject *child_go : go->GetChildrenGO())
 		{
 			DrawNode(child_go, selected_go);
 		}
@@ -63,4 +63,3 @@ void EditorSceneHierarchyWidget::DrawNode(GameObject *go, void* &selected_go) co
 		ImGui::TreePop();
 	}
 }
-*/

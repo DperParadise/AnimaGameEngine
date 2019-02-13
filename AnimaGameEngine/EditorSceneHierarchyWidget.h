@@ -1,4 +1,4 @@
-/*
+
 #ifndef __EDITOR_SCENE_HIERARCHY_WIDGET_H__
 #define __EDITOR_SCENE_HIERARCHY_WIDGET_H__
 
@@ -22,8 +22,4 @@ public:
 	
 };
 
-
-
-
 #endif // !__EDITOR_SCENE_HIERARCHY_WIDGET_H__
-*/

@@ -1,14 +1,3 @@
-/* ---------- IMGUI headers -----------------*/
-/*
-#include "libraries/ImGui/imconfig.h"
-#include "libraries/ImGui/imgui.h"
-#include "libraries/ImGui/imgui_impl_sdl_gl3.h"
-#include "libraries/ImGui/imgui_internal.h"
-#include "libraries/ImGui/stb_rect_pack.h"
-#include "libraries/ImGui/stb_textedit.h"
-#include "libraries/ImGui/stb_truetype.h"
-*/
-/*
 #ifndef __MODULE_EDITOR_GUI_H__
 #define __MODULE_EDITOR_GUI_H__
 
@@ -40,9 +29,4 @@ public:
 
 };
 
-
-
-
-
 #endif
-*/

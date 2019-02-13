@@ -1,4 +1,4 @@
-/*
+
 #ifndef __EDITOR_INSPECTOR_WIDGET_H__
 #define __EDITOR_INSPECTOR_WIDGET_H__
 
@@ -29,4 +29,3 @@ private:
 };
 #endif // !__EDITOR_INSPECTOR_WIDGET_H__
 
-*/

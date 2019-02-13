@@ -47,9 +47,8 @@ Application::Application()
 	//modules.push_back(textures = new ModuleTextures());  
 	//modules.push_back(audio = new ModuleAudio());
 	//modules.push_back(module_editor_camera = new ModuleEditorCamera());
-	
-	//TODO: Under refactor to support opengl 3.3
-	//modules.push_back(editor_gui = new ModuleEditorGUI()); 
+
+	modules.push_back(editor_gui = new ModuleEditorGUI()); 
 }
 
 Application::~Application()

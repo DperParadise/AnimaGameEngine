@@ -4,29 +4,30 @@ using namespace std::chrono;
 
 TimerChrono::TimerChrono(){}
 
-void TimerChrono::Start()
+void TimerChrono::SetTimeOrigin()
 {
-	prev_time = steady_clock::now();
-	curr_time = prev_time;
+	origin = high_resolution_clock::now();
 }
 
-int TimerChrono::Read()
+int TimerChrono::ReadInstant()
 {
-	curr_time = high_resolution_clock::now();
-	int elapsed = duration_cast<milliseconds>(curr_time - prev_time).count();
-	prev_time = curr_time;
-
-	return elapsed;
-	
+	current = high_resolution_clock::now();
+	return duration_cast<milliseconds>(current - origin).count();
 }
 
 void TimerChrono::Delay(int time_in_ms)
 {
-	delay_time = high_resolution_clock::now() + milliseconds(time_in_ms);
-
-	while (high_resolution_clock::now() < delay_time)
+	if (isNewDelayTime)
 	{
-		//wait	
+		delay_time = high_resolution_clock::now() + milliseconds(time_in_ms);
+		isNewDelayTime = false;
 	}
 
+	while (high_resolution_clock::now() < delay_time)
+	{	
+		//wait
+	}
+	isNewDelayTime = true;
 }
+
+

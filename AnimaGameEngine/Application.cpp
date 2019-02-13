@@ -84,35 +84,18 @@ bool Application::Init()
 	
 	RELEASE(config);
 
-	//------------------------------------- START TIMERS-----------------------------------
-	timer_chrono.Start();
+	//Initialize the time origin to use it in the next time readings inside Update()
+	timer_chrono.SetTimeOrigin();
 
 	return ret;
 }
 
 update_status Application::Update()
 {
+	int startUpdate = timer_chrono.ReadInstant();
+
 	update_status ret = UPDATE_CONTINUE;
 
-	//---------------------------------------   TIME CONTROL ---------------------------------------
-	dt = timer_chrono.Read(); //milliseconds
-	wait_time = 0.0;
-
-	if (dt < ms_cap)
-	{
-		wait_time = ms_cap - dt;
-		timer_chrono.Delay(wait_time);
-	}
-
-	dt /= 1000.0;
-
-#ifdef _DEBUG
-	//Comment out when debugging
-	//ms_last_update = dt * 1000.0;
-	//fps = 1.0 / dt;
-	//MYLOG("MS LAST UPDATE = %f    WAIT TIME = %d    dt = %f    FPS = %d", ms_last_update, wait_time, dt, (int)fps);
-#endif	
-	
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PreUpdate(dt);
@@ -125,7 +108,29 @@ update_status Application::Update()
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PostUpdate(dt);
 
-	
+	int endUpdate = timer_chrono.ReadInstant();
+
+	dt = endUpdate - startUpdate;
+	wait_time = 0.0;
+
+	if (dt < ms_cap)
+	{
+		wait_time = ms_cap - dt;
+		timer_chrono.Delay(wait_time);
+	}
+	//In case we have waited time, we have to add this time to the dt
+	dt += wait_time;
+
+	//Convert dt to seconds
+	dt /= 1000.0;
+
+#ifdef _DEBUG
+	//Comment out when debugging
+	//ms_last_update = dt * 1000.0;
+	//fps = 1.0 / dt;
+	//MYLOG("MS LAST UPDATE = %f    WAIT TIME = %d    dt = %f    FPS = %f", ms_last_update, wait_time, dt, fps);
+#endif	
+
 	return ret;
 }
 

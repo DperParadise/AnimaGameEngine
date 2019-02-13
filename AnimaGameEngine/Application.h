@@ -43,7 +43,7 @@ public:
 	double ms_cap = 0.0f;
 	Uint32 wait_time = 0;
 
-	//dt in seconds
+	///dt in seconds
 	double dt = 0.0f;
 
 private:

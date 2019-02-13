@@ -17,6 +17,7 @@ ModuleInputGLFW::ModuleInputGLFW()
 
 bool ModuleInputGLFW::Init(Config * config)
 {
+	MYLOG("Use WASD + right click to travel inside the scene and rotate the camera with mouse movements")
 	glfwSetFramebufferSizeCallback(App->window->window, FramebufferSizeCallback);
 	glfwSetCursorPosCallback(App->window->window, MouseCallback);
 	glfwSetScrollCallback(App->window->window, ScrollCallback);

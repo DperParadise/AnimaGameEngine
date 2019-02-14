@@ -20,6 +20,23 @@ GameObject::GameObject(const std::string &name, const aiNode *node) : name(name)
 	}
 }
 
+void GameObject::LoadTransform(const aiNode *node)
+{
+	aiVector3D pos;
+	aiVector3D scale;
+	aiQuaternion rot;
+
+	node->mTransformation.Decompose(scale, rot, pos);
+
+	glm::vec3 posGLM(pos.x, pos.y, pos.z);
+	glm::vec3 scaleGLM(scale.x, scale.y, scale.z);
+	glm::quat rotGLM(rot.w, rot.x, rot.y, rot.z);
+
+	transform->SetRelativePositionWorldAxis(posGLM);
+	transform->SetRelativeScaleWorldAxis(scaleGLM);
+	transform->SetRelativeRotationWorldAxis(rotGLM);
+}
+
 GameObject::~GameObject()
 {
 	Clear();
@@ -62,7 +79,25 @@ void GameObject::UpdateWorldTransform()
 	dirty = false;
 }
 
+void GameObject::CombineTransform(GameObject *parentGO)
+{
 
+	//The world position will be the same as the relativePosition taken from the Asimp Decompose() method
+	if (!parentGO)
+	{
+		transform->SetWorldPosition(transform->GetRelativePositionWorldAxis());
+		transform->SetWorldScale(transform->GetRelativeScaleWorldAxis());
+		transform->SetWorldRotation(transform->GetRelativeRotationWorldAxis());
+
+		return;
+	}
+
+	transform->SetWorldPosition(parentGO->transform->GetWorldPosition() + transform->GetRelativePositionWorldAxis());
+	transform->SetWorldScale(parentGO->transform->GetWorldScale() * transform->GetRelativeScaleWorldAxis());
+
+	// TODO: Check quaternions mult order
+	transform->SetWorldRotation(parentGO->transform->GetWorldRotation() * transform->GetRelativeRotationWorldAxis());
+}
 
  ComponentTransform* GameObject::GetTransform()
 {
@@ -127,7 +162,7 @@ Component * GameObject::FindComponentByType(ComponentType type)
 	}
 	return found;
 }
-
+//Translation in world position
 void GameObject::Translate(const glm::vec3 & pos)
 {
 	transform->Translate(pos);
@@ -173,44 +208,6 @@ Component * GameObject::AddEditorCameraComponent()
 	Component *comp = new ComponentEditorCamera(ComponentType::CAMERA, this);
 	components.push_back(comp);
 	return comp;
-}
-
-
-void GameObject::LoadTransform(const aiNode *node)
-{
-	aiVector3D pos;
-	aiVector3D scale;
-	aiQuaternion rot;
-
-	node->mTransformation.Decompose(scale, rot, pos);
-
-	glm::vec3 posGLM(pos.x, pos.y, pos.z);
-	glm::vec3 scaleGLM(scale.x, scale.y, scale.z);
-	glm::quat rotGLM(rot.x, rot.y, rot.z, rot.w);
-
-	transform->SetRelativePositionWorldAxis(posGLM);
-	transform->SetRelativeScaleWorldAxis(scaleGLM);
-	transform->SetRelativeRotationWorldAxis(rotGLM);
-}
-
-void GameObject::CombineTransform(GameObject *parentGO)
-{ 
-
-	//The world position will be the same as the relativePosition taken from the Asimp Decompose() method
-	if (!parentGO)
-	{
-		transform->SetWorldPosition(transform->GetRelativePositionWorldAxis());
-		transform->SetWorldScale(transform->GetRelativeScaleWorldAxis());
-		transform->SetWorldRotation(transform->GetRelativeRotationWorldAxis());
-
-		return;
-	}
-
-	transform->SetWorldPosition(parentGO->transform->GetWorldPosition() + transform->GetRelativePositionWorldAxis());
-	transform->SetWorldScale(parentGO->transform->GetWorldScale() * transform->GetRelativeScaleWorldAxis());
-	
-	// TODO: Check quaternions mult order
-	transform->SetWorldRotation(parentGO->transform->GetWorldRotation() * transform->GetRelativeRotationWorldAxis());
 }
 
 void GameObject::Clear()

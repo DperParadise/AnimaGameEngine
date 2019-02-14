@@ -54,26 +54,45 @@ void EditorInspectorWidget::Draw(GameObject *go)
 			//TODO: Improve rotations stuff.
 			ImGui::Text("Rotation");
 			glm::quat rot = go->GetTransform()->GetWorldRotation();
-			glm::vec3 eulerRot = glm::degrees(glm::eulerAngles(rot));
+			glm::vec3 degrees = glm::degrees(glm::eulerAngles(rot));
 			
-			bool XRotField = ImGui::InputFloat("x", &eulerRot[0], 1.0f, 1.0f);
+			bool XRotField = ImGui::InputFloat("x", &degrees.x, 1.0f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool YRotField = ImGui::InputFloat("y", &eulerRot[1], 1.0f, 1.0f);
+			bool YRotField = ImGui::InputFloat("y", &degrees.y, 1.0f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool ZRotField = ImGui::InputFloat("z", &eulerRot[2], 1.0f, 1.0f);
+			bool ZRotField = ImGui::InputFloat("z", &degrees.z, 1.0f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			if (XRotField || YRotField || ZRotField)
-			{			
-				go->GetTransform()->SetWorldRotation(eulerRot);
-				
+			if (XRotField | YRotField | ZRotField)
+			{	
+				//TODO: Improve this
+				if (degrees.x > 90.0f)
+					degrees.x = 90.0f;
+
+				if (degrees.y > 90.0f)
+					degrees.y = 90.0f;
+
+				if (degrees.z > 90.0f)
+					degrees.z = 90.0f;
+
+				if (degrees.x < -90.0f)
+					degrees.x = -90.0f;
+
+				if (degrees.y < -90.0f)
+					degrees.y = -90.0f;
+
+				if (degrees.z < -90.0f)
+					degrees.z = -90.0f;
+
+				MYLOG("OX degrees=(%f, %f, %f)", degrees.x, degrees.y, degrees.z)
+				go->Rotate(degrees);	
 			}
-
+			
 			ImGui::Text("Scale");
 			glm::vec3 scale = go->GetTransform()->GetWorldScale();
 

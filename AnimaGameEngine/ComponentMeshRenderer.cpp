@@ -38,8 +38,7 @@ void ComponentMeshRenderer::Update(float dt) {
 		const glm::quat rotQuat = GetOwnerGO()->GetTransform()->GetWorldRotation();
 		const glm::mat4 rotMatrix = glm::mat4_cast(rotQuat);
 
-		//TODO: Check matrix product order
-		model = rotMatrix * model;
+		model = model * rotMatrix;
 
 		const glm::vec3 scale = GetOwnerGO()->GetTransform()->GetWorldScale();
 		model = glm::scale(model, scale);

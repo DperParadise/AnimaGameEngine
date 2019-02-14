@@ -104,13 +104,6 @@ void GameObject::CombineTransform(GameObject *parentGO)
 	return transform;
 }
 
- const ComponentTransform * GameObject::GetTransform() const
- {
-	 return transform;
- }
-
-
-
 const std::string & GameObject::GetName() const
 {
 	return name;
@@ -169,9 +162,9 @@ void GameObject::Translate(const glm::vec3 & pos)
 	dirty = true;
 }
 
-void GameObject::Rotate(float angle, const glm::vec3 &axis)
+void GameObject::Rotate(const glm::vec3 &eulerAnglesInDegrees)
 {
-	transform->Rotate(angle, axis);
+	transform->Rotate(eulerAnglesInDegrees);
 	dirty = true;
 }
 

@@ -26,7 +26,7 @@ bool Component::IsEnabled() const
 }
 
 //Returns the gameobject this component is attached to.
-const GameObject * Component::GetOwnerGO() const
+ GameObject * Component::GetOwnerGO()
 {
 	return ownerGO;
 }

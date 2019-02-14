@@ -43,8 +43,7 @@ void ComponentGizmo::Update(float dt)
 		const glm::quat rotQuat = GetOwnerGO()->GetTransform()->GetWorldRotation();
 		const glm::mat4 rotMatrix = glm::mat4_cast(rotQuat);
 
-		//TODO: Check matrix product order
-		model = rotMatrix * model;
+		model = model * rotMatrix;
 
 		//Set shader uniforms
 		

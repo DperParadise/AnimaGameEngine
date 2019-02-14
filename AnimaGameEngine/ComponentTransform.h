@@ -13,7 +13,7 @@ public:
 
 	
 	void Translate(const glm::vec3 &translation);
-	void Rotate(float angle, const glm::vec3 &axis);
+	void Rotate(const glm::vec3 &eulerAnglesInDegrees);
 	void Scale(const glm::vec3 &scale);
 	void ResetPosition();
 

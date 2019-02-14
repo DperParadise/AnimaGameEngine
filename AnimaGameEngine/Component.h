@@ -30,7 +30,7 @@ public:
 
 	ComponentType GetComponentType() const;
 	bool IsEnabled() const;
-	const GameObject* GetOwnerGO() const;
+	GameObject* GetOwnerGO();
 
 private:
 	ComponentType type;

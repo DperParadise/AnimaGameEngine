@@ -1,5 +1,6 @@
 #include "ComponentTransform.h"
 #include "libraries/glm/gtx/rotate_vector.hpp"
+#include "libraries/glm/gtc/quaternion.hpp"
 #include "GameObject.h"
 
 //define Transform static fields
@@ -34,18 +35,32 @@ void ComponentTransform::Translate(const glm::vec3 & translation)
 	}
 	else
 	{
-		relativePosition = translation;
+		relativePosition = worldPosition;
 	}
 }
 
-void ComponentTransform::Rotate(float angle, const glm::vec3 & axis)
+void ComponentTransform::Rotate(const glm::vec3 & eulerAnglesInDegrees)
 {
-	worldRotation = glm::rotate(worldRotation, glm::radians(angle), axis);
+	worldRotation = glm::quat(glm::radians(eulerAnglesInDegrees));
+
+	//Since worlRotation = parentWorlRot * relativeRot. We need to calculate the new relativeRot
+	//Rw_child = Rw_parent * Rr_child; inv(Rw_parent) * Rw_child = Rr_child;
+	if (GetOwnerGO()->GetParentGO())
+	{
+		glm::quat parentWorldRot = GetOwnerGO()->GetParentGO()->GetTransform()->GetWorldRotation();
+		// inverse == conjugate in rotations
+		glm::quat inverseParentWorldRot = glm::conjugate(parentWorldRot); 
+		relativeRotation = inverseParentWorldRot * worldRotation;
+	}
+	else
+	{
+		relativeRotation = worldRotation;	
+	}
 
 	//TODO: Check rotation order => rotation*vector or vector*rotation
-	ownForward = worldRotation * ownForward;
-	ownUp = worldRotation * ownUp;
-	ownLeft = worldRotation * ownLeft;
+	//ownForward = worldRotation * ownForward;
+	//ownUp = worldRotation * ownUp;
+	//ownLeft = worldRotation * ownLeft;
 }
 
 void ComponentTransform::Scale(const glm::vec3 & scale)

@@ -23,7 +23,7 @@ public:
 
 	///Getters and setters
 	ComponentTransform *GetTransform();
-	const ComponentTransform *GetTransform() const;
+
 	const std::string& GetName() const;
 	const std::vector<GameObject*>& GetChildrenGO() const;
 	GameObject *GetParentGO() const;
@@ -42,7 +42,7 @@ public:
 
 	///Methods to modify the transform
 	void Translate(const glm::vec3 &translation);
-	void Rotate(float angle, const glm::vec3 &axis);
+	void Rotate(const glm::vec3 &eulerAnglesInDegrees);
 	void Scale(const glm::vec3 &scale);
 
 	///Methods to Add components

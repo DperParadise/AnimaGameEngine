@@ -9,7 +9,7 @@ public:
 	TimerChrono();
 
 	void SetTimeOrigin();
-	int ReadInstant();
+	int ReadTime();
 	void Delay(int time_in_ms);
 
 	
@@ -18,7 +18,7 @@ private:
 	std::chrono::time_point<std::chrono::steady_clock> origin;
 	std::chrono::time_point<std::chrono::steady_clock> current;
 
-	bool isNewDelayTime = true;
+	
 };
 
 

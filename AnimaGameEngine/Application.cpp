@@ -92,7 +92,7 @@ bool Application::Init()
 
 update_status Application::Update()
 {
-	int startUpdate = timer_chrono.ReadInstant();
+	int startUpdate = timer_chrono.ReadTime();
 
 	update_status ret = UPDATE_CONTINUE;
 
@@ -108,7 +108,7 @@ update_status Application::Update()
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PostUpdate(dt);
 
-	int endUpdate = timer_chrono.ReadInstant();
+	int endUpdate = timer_chrono.ReadTime();
 
 	dt = endUpdate - startUpdate;
 	wait_time = 0.0;

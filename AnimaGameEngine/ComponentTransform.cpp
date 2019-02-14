@@ -1,5 +1,6 @@
 #include "ComponentTransform.h"
 #include "libraries/glm/gtx/rotate_vector.hpp"
+#include "GameObject.h"
 
 //define Transform static fields
 const glm::vec3 ComponentTransform::worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -11,18 +12,30 @@ ComponentTransform::ComponentTransform(ComponentType type, GameObject *ownerGO) 
 
 	relativePosition = glm::vec3(0.0f);
 	relativeScale = glm::vec3(1.0f);
-	relativeRotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);
+	relativeRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f); // Note that: quat(w, x, y, z)
 
 	worldPosition = glm::vec3(0.0f);
 	worldScale = glm::vec3(1.0f);
-	worldRotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);
+	worldRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 }
 
 ComponentTransform::~ComponentTransform() {}
 
 void ComponentTransform::Translate(const glm::vec3 & translation)
 {
-	worldPosition += translation;
+	worldPosition = translation;
+
+	//Since worldPosition = relativePos + parentWorldPos. We need to calculate the new relativePos
+	if (GetOwnerGO()->GetParentGO())
+	{
+		glm::vec3 parentWorldPos = GetOwnerGO()->GetParentGO()->GetTransform()->GetWorldPosition();
+		glm::vec3 relPos = worldPosition - parentWorldPos;
+		relativePosition = relPos;
+	}
+	else
+	{
+		relativePosition = translation;
+	}
 }
 
 void ComponentTransform::Rotate(float angle, const glm::vec3 & axis)

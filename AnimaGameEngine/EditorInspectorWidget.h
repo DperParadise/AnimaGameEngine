@@ -24,8 +24,6 @@ private:
 	void ShowHelpMarker(const char* desc);
 	void ShowComponentInfo(Component *comp);
 	void ShowMeshRendererInfo(ComponentMeshRenderer *mr);
-	
-
 };
 #endif // !__EDITOR_INSPECTOR_WIDGET_H__
 

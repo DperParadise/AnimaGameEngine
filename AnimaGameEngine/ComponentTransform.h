@@ -38,12 +38,12 @@ public:
 private:
 	glm::vec3 acumRelPosition;
 
-	//vectors on world axis
+	///vectors on world axis
 	glm::vec3 relativePosition;
 	glm::vec3 relativeScale;
 	glm::quat relativeRotation;
 
-	//base vectors of this transform
+	///base vectors of this transform
 	glm::vec3 ownForward;
 	glm::vec3 ownLeft;
 	glm::vec3 ownUp;

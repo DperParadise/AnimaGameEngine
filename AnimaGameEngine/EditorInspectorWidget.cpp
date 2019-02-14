@@ -28,7 +28,7 @@ void EditorInspectorWidget::Draw(GameObject *go)
 	ImGui::Begin(title.c_str());
 	if (go)
 	{
-		ImGui::Checkbox("Active", &go->enabled);
+		ImGui::Checkbox("Enabled", &go->enabled);
 
 		if (ImGui::CollapsingHeader("Transform"))
 		{
@@ -48,8 +48,8 @@ void EditorInspectorWidget::Draw(GameObject *go)
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 			
 			if (XPosField || YPosField || ZPosField)
-			{							
-				go->GetTransform()->SetWorldPosition(pos);
+			{		
+				go->Translate(pos);
 			}
 			//TODO: Improve rotations stuff.
 			ImGui::Text("Rotation");

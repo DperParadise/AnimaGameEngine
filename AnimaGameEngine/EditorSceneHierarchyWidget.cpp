@@ -6,12 +6,13 @@
 #include "Globals.h"
 #include "EditorInspectorWidget.h"
 #include "imgui.h"
+#include "ComponentGizmo.h"
 
 EditorSceneHierarchyWidget::EditorSceneHierarchyWidget(const std::string &title, 
 	int x, 
 	int y, 
 	unsigned int width, 
-	unsigned int height) : title(title), pos_x(x), pos_y(y), width(width), height(height) {} 
+	unsigned int height) : title(title), posX(x), posY(y), width(width), height(height) {} 
 
 
 EditorSceneHierarchyWidget::EditorSceneHierarchyWidget(){}
@@ -21,43 +22,49 @@ EditorSceneHierarchyWidget::~EditorSceneHierarchyWidget() {}
 void EditorSceneHierarchyWidget::Draw(EditorInspectorWidget *inspector)
 {
 	ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiSetCond_FirstUseEver);
-	ImGui::SetNextWindowPos(ImVec2(pos_x, pos_y), ImGuiSetCond_FirstUseEver);
-
-	static void *selected_go = nullptr;
+	ImGui::SetNextWindowPos(ImVec2(posX, posY), ImGuiSetCond_FirstUseEver);
 
 	ImGui::Begin(title.c_str());
 	
 	for (GameObject *go : App->scene->gameObjects)
 	{
-		DrawNode(go, selected_go);
+		DrawNode(go);
 	}
 
-	inspector->Draw((GameObject*)selected_go);
+	inspector->Draw(selectedGO);
 
 	ImGui::End();
 }
 
-void EditorSceneHierarchyWidget::DrawNode(GameObject *go, void* &selected_go) const
+void EditorSceneHierarchyWidget::DrawNode(GameObject *go) 
 {
-	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
-		| ImGuiTreeNodeFlags_OpenOnDoubleClick | (go == selected_go ? ImGuiTreeNodeFlags_Selected : 0);
+	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow
+		| ImGuiTreeNodeFlags_OpenOnDoubleClick | (go == selectedGO ? ImGuiTreeNodeFlags_Selected : 0);
 
-	bool is_leaf = go->GetChildrenGO().size() == 0;
+	bool isLeaf = go->GetChildrenGO().size() == 0;
 
-	if (is_leaf)
-		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+	if (isLeaf)
+		nodeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
-	bool node_open = ImGui::TreeNodeEx(go, node_flags, go->GetName().c_str());
+	bool isNodeOpen = ImGui::TreeNodeEx(go, nodeFlags, go->GetName().c_str());
 	if (ImGui::IsItemClicked())
 	{
-		selected_go = go;	
+		if (selectedGO)
+		{
+			ComponentGizmo *lastGizmo = (ComponentGizmo*)selectedGO->FindComponentByType(ComponentType::GIZMO);
+			lastGizmo->Disable();
+		}
+		
+		selectedGO = go;
+		ComponentGizmo *currentGizmo = (ComponentGizmo*)selectedGO->FindComponentByType(ComponentType::GIZMO);
+		currentGizmo->Enable();
 	}
 
-	if (node_open && !is_leaf)
+	if (isNodeOpen && !isLeaf)
 	{
 		for (GameObject *child_go : go->GetChildrenGO())
 		{
-			DrawNode(child_go, selected_go);
+			DrawNode(child_go);
 		}
 
 		ImGui::TreePop();

@@ -29,12 +29,12 @@ public:
 	void Disable();
 
 	ComponentType GetComponentType() const;
-	bool IsActive() const;
+	bool IsEnabled() const;
 	const GameObject* GetOwnerGO() const;
 
 private:
 	ComponentType type;
-	bool active = true;
+	bool enabled = true;
 	GameObject *ownerGO = nullptr;
 
 };

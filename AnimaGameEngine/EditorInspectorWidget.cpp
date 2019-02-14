@@ -28,7 +28,7 @@ void EditorInspectorWidget::Draw(GameObject *go)
 	ImGui::Begin(title.c_str());
 	if (go)
 	{
-		ImGui::Checkbox("Active", &go->active);
+		ImGui::Checkbox("Active", &go->enabled);
 
 		if (ImGui::CollapsingHeader("Transform"))
 		{

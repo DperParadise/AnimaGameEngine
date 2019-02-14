@@ -64,7 +64,7 @@ public:
 	bool IsDirty() const;
 
 	//GUI can modify this value
-	bool active = true;
+	bool enabled = true;
 
 	const std::vector<Component*>& GetComponents() const;
 

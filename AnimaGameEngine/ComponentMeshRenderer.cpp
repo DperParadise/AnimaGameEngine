@@ -28,7 +28,7 @@ ComponentMeshRenderer::~ComponentMeshRenderer()
 
 //Draw the mesh
 void ComponentMeshRenderer::Update(float dt) {
-	if (IsActive())
+	if (IsEnabled())
 	{
 		glm::mat4 model;
 

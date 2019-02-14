@@ -1,6 +1,6 @@
 #include "Component.h"
 
-Component::Component(ComponentType type, GameObject *owner, bool act) : type(type), ownerGO(owner), active(act) {}
+Component::Component(ComponentType type, GameObject *owner, bool act) : type(type), ownerGO(owner), enabled(act) {}
 
 Component::~Component() {}
 
@@ -8,11 +8,11 @@ void Component::Update(float dt) {}
 
 void Component::Enable()
 {
-	active = true;
+	enabled = true;
 }
 void Component::Disable()
 {
-	active = false;
+	enabled = false;
 }
 
 ComponentType Component::GetComponentType() const
@@ -20,9 +20,9 @@ ComponentType Component::GetComponentType() const
 	return type;
 }
 
-bool Component::IsActive() const
+bool Component::IsEnabled() const
 {
-	return active;
+	return enabled;
 }
 
 //Returns the gameobject this component is attached to.

@@ -14,10 +14,12 @@ public:
 	~EditorSceneHierarchyWidget();
 
 	void Draw(EditorInspectorWidget *inspector);
-	void DrawNode(GameObject *go, void* &selected_go) const;
+	void DrawNode(GameObject *go);
 
+private:
+	GameObject *selectedGO = nullptr;
 	std::string title = "Scene Hierarchy";
-	int pos_x = 0, pos_y = 0;
+	int posX = 0, posY = 0;
 	unsigned int width = 200, height = 400;
 	
 };

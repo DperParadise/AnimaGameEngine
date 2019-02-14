@@ -22,7 +22,7 @@ ComponentGizmo::ComponentGizmo(
 	ClearVertexBuffers();
 
 	CreateShader(vertexPath, fragmentPath);
-
+	Disable();
 }
 
 ComponentGizmo::~ComponentGizmo()
@@ -33,7 +33,7 @@ ComponentGizmo::~ComponentGizmo()
 void ComponentGizmo::Update(float dt)
 {
 	//Draw
-	if (IsActive())
+	if (IsEnabled())
 	{
 		glm::mat4 model;
 

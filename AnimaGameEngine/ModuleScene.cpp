@@ -21,7 +21,8 @@ ModuleScene::~ModuleScene()
 {	 
 	 //create gameobjects
 	 editorCameraGO = new EditorCameraGO("editor camera");
-	 
+	 editorCameraGO->FindComponentByType(ComponentType::GIZMO)->Disable();
+
 	 activeCameraGO = editorCameraGO;
 	 activeCameraComponent = (ComponentEditorCamera*)editorCameraGO->FindComponentByType(ComponentType::CAMERA);
 
@@ -54,7 +55,7 @@ ModuleScene::~ModuleScene()
 	 //CubeGO *cube_go = new CubeGO("Cube");	
 	 //AddGameObject(cube_go);
 
-	 Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
+	 //Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
 	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
 	 //GameObject *batmanGO = FindGameObject("Batman.obj");
 	 //batmanGO->CreateBehaviour("BatmanMovement");

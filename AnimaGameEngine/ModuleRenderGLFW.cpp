@@ -19,6 +19,13 @@ bool ModuleRenderGLFW::Init(Config * config)
 		return false;
 	}
 
+	//test glew Initialization
+	MYLOG("Using Glew %s", glewGetString(GLEW_VERSION));
+	MYLOG("Vendor: %s", glGetString(GL_VENDOR));
+	MYLOG("Renderer: %s", glGetString(GL_RENDERER));
+	MYLOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	MYLOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
 	//------------- INIT DEVIL---------------------
 	//Initialize IL
 	ilInit();

@@ -21,9 +21,7 @@
 #define __ilut_h_
 #define __ILUT_H__
 
-#include "libraries\DevIL_Windows_SDK\include\IL\il.h" //<IL/il.h>
-#include "libraries\DevIL_Windows_SDK\include\IL\il.h" //<IL/il.h>
-
+#include <devil/il.h>
 
 //-----------------------------------------------------------------------------
 // Defines
@@ -97,7 +95,7 @@
 		#endif
 	#endif
 
-	#include "libraries\DevIL_Windows_SDK\include\IL\ilut_config.h" //<IL/ilut_config.h>
+	#include <devil/ilut_config.h>
 #endif
 
 

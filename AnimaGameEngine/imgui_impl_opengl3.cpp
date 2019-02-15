@@ -84,7 +84,7 @@
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 #include <GL/gl3w.h>
 #elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)
-#include "libraries/glew-2.0.0/include/GL/glew.h"  //TODO: Arrange folder structure for libraries inside 3rdparty
+#include <glew_2.0.0/GL/glew.h>
 #elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)
 #include <glad/glad.h>
 #else

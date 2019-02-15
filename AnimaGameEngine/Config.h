@@ -1,7 +1,7 @@
 #ifndef __CONGIG_H__
 #define __CONFIG_H__
 
-#include "libraries/parson/parson.h"
+#include "parson.h"
 #include <string>
 
 class Config
@@ -24,8 +24,4 @@ private:
 	JSON_Object *root_object = nullptr;
 	const char *path = nullptr;
 };
-
-
-
-
 #endif

@@ -41,7 +41,7 @@ public:
 	double ms_last_update = 0.0f;
 	double fps = 0.0f;
 	double ms_cap = 0.0f;
-	Uint32 wait_time = 0;
+	unsigned wait_time = 0;
 
 	///dt in seconds
 	double dt = 0.0f;

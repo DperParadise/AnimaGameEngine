@@ -2,7 +2,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "libraries/glew-2.0.0/include/GL/glew.h"
+#include <glew_2.0.0/GL/glew.h>
 #include <devil/il.h>
 #include "Globals.h"
 

@@ -1,6 +1,6 @@
 #include "Cube.h"
 #include "Globals.h"
-#include "libraries/DevIL_Windows_SDK/include/IL/ilu.h"
+#include <devil/ilu.h>
 
 Cube::Cube(){}
 Cube::~Cube() {}

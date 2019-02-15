@@ -1,7 +1,7 @@
 #include "ComponentMeshRenderer.h"
 #include <vector>
 #include "GameObject.h"
-#include "libraries/glew-2.0.0/include/GL/glew.h"
+#include <glew_2.0.0/GL/glew.h>
 #include "Globals.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

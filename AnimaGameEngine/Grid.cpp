@@ -1,5 +1,5 @@
 #include "Grid.h"
-#include "libraries/glew-2.0.0/include/GL/glew.h"
+#include <glew_2.0.0/GL/glew.h>
 
 Grid::Grid() {}
 Grid::~Grid() {}

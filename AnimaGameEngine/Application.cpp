@@ -12,18 +12,17 @@
 
 #ifdef _MSC_VER
 	#ifdef _DEBUG 
-		#pragma comment(lib, "libraries/glew-2.0.0/libx86/deb/glew32d.lib")
+		#pragma comment(lib, "3rdparty/lib_x86/deb/glew32d.lib")
 	#else
-		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")		
+		#pragma comment(lib, "3rdparty/lib_x86/rel/glew32.lib")		
 	#endif
-		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")
 		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
-		#pragma comment (lib, "3rdparty/lib/DevIL.lib")
-		#pragma comment (lib, "3rdparty/lib/ILU.lib")
-		#pragma comment (lib, "3rdparty/lib/ILUT.lib")
-		#pragma comment (lib, "3rdparty/lib/assimp-vc140-mt.lib")
-		#pragma comment (lib, "3rdparty/lib/glfw3.lib")
+		#pragma comment (lib, "3rdparty/lib_x86/DevIL.lib")
+		#pragma comment (lib, "3rdparty/lib_x86/ILU.lib")
+		#pragma comment (lib, "3rdparty/lib_x86/ILUT.lib")
+		#pragma comment (lib, "3rdparty/lib_x86/assimp-vc140-mt.lib")
+		#pragma comment (lib, "3rdparty/lib_x86/glfw3.lib")
 #endif
 
 using namespace std;

@@ -1,9 +1,9 @@
 #include "GameObject.h"
 #include "Globals.h"
 #include "ComponentMeshRenderer.h"
-#include "libraries/assimp/include/vector3.h"
-#include "libraries/assimp/include/quaternion.h"
-#include "libraries/assimp/include/scene.h"
+#include <assimp/vector3.h>
+#include <assimp//quaternion.h>
+#include <assimp//scene.h>
 #include "ComponentTransform.h"
 #include "ComponentGizmo.h"
 #include "ComponentCamera.h"

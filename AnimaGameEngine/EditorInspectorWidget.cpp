@@ -35,15 +35,15 @@ void EditorInspectorWidget::Draw(GameObject *go)
 			ImGui::Text("Position");
 			glm::vec3 pos = go->GetTransform()->GetWorldPosition();
 
-			bool XPosField = ImGui::InputFloat("x", &pos.x, 0.01f, 1.0f);
+			bool XPosField = ImGui::InputFloat("pos x", &pos.x, 0.01f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool YPosField = ImGui::InputFloat("y", &pos.y, 0.01f, 1.0f);
+			bool YPosField = ImGui::InputFloat("pos y", &pos.y, 0.01f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool ZPosField = ImGui::InputFloat("z", &pos.z, 0.01f, 1.0f);
+			bool ZPosField = ImGui::InputFloat("pos z", &pos.z, 0.01f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 			
@@ -56,19 +56,19 @@ void EditorInspectorWidget::Draw(GameObject *go)
 			glm::quat rot = go->GetTransform()->GetWorldRotation();
 			glm::vec3 degrees = glm::degrees(glm::eulerAngles(rot));
 			
-			bool XRotField = ImGui::InputFloat("x", &degrees.x, 1.0f, 1.0f);
+			bool XRotField = ImGui::InputFloat("rot x", &degrees.x, 1.0f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool YRotField = ImGui::InputFloat("y", &degrees.y, 1.0f, 1.0f);
+			bool YRotField = ImGui::InputFloat("rot y", &degrees.y, 1.0f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool ZRotField = ImGui::InputFloat("z", &degrees.z, 1.0f, 1.0f);
+			bool ZRotField = ImGui::InputFloat("rot z", &degrees.z, 1.0f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			if (XRotField | YRotField | ZRotField)
+			if (XRotField || YRotField || ZRotField)
 			{	
 				//TODO: Improve this
 				if (degrees.x > 90.0f)
@@ -89,28 +89,29 @@ void EditorInspectorWidget::Draw(GameObject *go)
 				if (degrees.z < -90.0f)
 					degrees.z = -90.0f;
 
-				MYLOG("OX degrees=(%f, %f, %f)", degrees.x, degrees.y, degrees.z)
+				MYLOG("degrees=(%f, %f, %f)", degrees.x, degrees.y, degrees.z)
 				go->Rotate(degrees);	
 			}
 			
 			ImGui::Text("Scale");
 			glm::vec3 scale = go->GetTransform()->GetWorldScale();
 
-			bool XScaleField = ImGui::InputFloat("x", &scale.x, 0.01f, 1.0f);
+			bool XScaleField = ImGui::InputFloat("scale x", &scale.x, 0.01f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool YScaleField = ImGui::InputFloat("y", &scale.y, 0.01f, 1.0f);
+			bool YScaleField = ImGui::InputFloat("scale y", &scale.y, 0.01f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
-			bool ZScaleField = ImGui::InputFloat("z", &scale.z, 0.01f, 1.0f);
+			bool ZScaleField = ImGui::InputFloat("scale z", &scale.z, 0.01f, 1.0f);
 			ImGui::SameLine();
 			ShowHelpMarker("CTRL + click on +/- for fast step");
 
 			if (XScaleField || YScaleField || ZScaleField)
 			{
-				go->GetTransform()->SetWorldScale(scale);
+				MYLOG("scale=(%f, %f, %f)", scale.x, scale.y, scale.z)
+				go->Scale(scale);
 			}
 		}
 

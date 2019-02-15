@@ -65,7 +65,17 @@ void ComponentTransform::Rotate(const glm::vec3 & eulerAnglesInDegrees)
 
 void ComponentTransform::Scale(const glm::vec3 & scale)
 {
-	worldScale *= scale;
+	worldScale = scale;
+
+	if (GetOwnerGO()->GetParentGO())
+	{
+		glm::vec3 parentWorldScale = GetOwnerGO()->GetParentGO()->GetTransform()->GetWorldScale();
+		relativeScale = parentWorldScale / worldScale;
+	}
+	else
+	{
+		relativeScale = worldScale;
+	}
 }
 
 void ComponentTransform::ResetPosition()

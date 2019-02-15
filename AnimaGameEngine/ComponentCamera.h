@@ -3,7 +3,7 @@
 
 #include "Component.h"
 #include "Globals.h"
-#include "libraries/glm/glm.hpp"
+#include <glm/glm.hpp>
 #include "Point.h"
 
 class ComponentCamera: public Component

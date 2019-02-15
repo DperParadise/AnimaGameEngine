@@ -1,7 +1,6 @@
 #include "ComponentEditorCamera.h"
 #include "Application.h"
 #include "ModuleInputGLFW.h"
-//#include "libraries/SDL/include/SDL.h"
 #include "Point.h"
 #include <GLFW/glfw3.h>
 

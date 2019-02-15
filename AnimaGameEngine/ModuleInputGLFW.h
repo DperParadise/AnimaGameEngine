@@ -2,7 +2,7 @@
 #define MODULEINPUT
 
 #include "Module.h"
-#include "libraries/glm/glm.hpp"
+#include <glm/glm.hpp>
 
 struct GLFWwindow;
 

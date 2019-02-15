@@ -1,5 +1,5 @@
 #include "ModuleInputGLFW.h"
-#include "3rdparty/include/GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 #include "Application.h"
 #include "ModuleWindowGLFW.h"
 #include "ModuleScene.h"

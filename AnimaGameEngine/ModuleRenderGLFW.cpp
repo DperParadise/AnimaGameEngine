@@ -4,9 +4,9 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindowGLFW.h"
-#include "libraries/DevIL_Windows_SDK/include/IL/il.h"
-#include "libraries/DevIL_Windows_SDK/include/IL/ilu.h"
-#include "libraries/DevIL_Windows_SDK/include/IL/ilut.h"
+#include <devil/il.h>
+#include <devil/ilu.h>
+#include <devil/ilut.h>
 
 bool ModuleRenderGLFW::Init(Config * config)
 {

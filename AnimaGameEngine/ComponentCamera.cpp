@@ -1,5 +1,5 @@
 #include "ComponentCamera.h"
-#include "libraries/glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 #include "Application.h"
 #include "ModuleWindowGLFW.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"

@@ -13,24 +13,17 @@
 #ifdef _MSC_VER
 	#ifdef _DEBUG 
 		#pragma comment(lib, "libraries/glew-2.0.0/libx86/deb/glew32d.lib")
-		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
-		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
-		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/DevIL.lib")
-		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
-		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
-		#pragma comment (lib, "3rdparty/lib/assimp-vc140-mt.lib")
-		#pragma comment (lib, "3rdparty/lib/glfw3.lib")
-
 	#else
+		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")		
+	#endif
 		#pragma comment(lib, "libraries/glew-2.0.0/libx86/rel/glew32.lib")
 		#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 		#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
-		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/DevIL.lib")
-		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILU.lib")
-		#pragma comment (lib, "libraries/DevIL_Windows_SDK/lib/x86/Release/ILUT.lib")
-		#pragma comment (lib, "libraries/assimp/lib/release/assimp-vc140-mt.lib")
+		#pragma comment (lib, "3rdparty/lib/DevIL.lib")
+		#pragma comment (lib, "3rdparty/lib/ILU.lib")
+		#pragma comment (lib, "3rdparty/lib/ILUT.lib")
+		#pragma comment (lib, "3rdparty/lib/assimp-vc140-mt.lib")
 		#pragma comment (lib, "3rdparty/lib/glfw3.lib")
-	#endif
 #endif
 
 using namespace std;

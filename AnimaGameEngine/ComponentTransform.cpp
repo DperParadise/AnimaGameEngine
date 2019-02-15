@@ -1,6 +1,5 @@
 #include "ComponentTransform.h"
-#include "libraries/glm/gtx/rotate_vector.hpp"
-#include "libraries/glm/gtc/quaternion.hpp"
+//#include <glm/gtx/rotate_vector.hpp> //TODO: what for?
 #include "GameObject.h"
 
 //define Transform static fields

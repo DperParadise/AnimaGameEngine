@@ -3,10 +3,9 @@
 #include "imgui.h"
 #include "Component.h"
 #include "GameObject.h"
-#include "libraries/glm/glm.hpp"
-#include "libraries/glm/gtc/quaternion.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include "Globals.h"
-#include <cmath>
 #include "ComponentMeshRenderer.h"
 #include "ComponentTransform.h"
 

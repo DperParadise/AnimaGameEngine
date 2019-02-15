@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "Component.h"
-#include "libraries/glm/glm.hpp"
+#include <glm/glm.hpp>
 
 struct aiNode;
 class ComponentTransform;

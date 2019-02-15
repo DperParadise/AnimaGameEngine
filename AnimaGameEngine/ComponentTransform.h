@@ -2,8 +2,8 @@
 #define __TRANSFORM_H__
 
 #include "Component.h"
-#include "libraries/glm/glm.hpp"
-#include "libraries/glm/gtc/quaternion.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 class ComponentTransform : public Component
 {

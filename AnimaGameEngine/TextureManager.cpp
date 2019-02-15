@@ -1,6 +1,6 @@
 #include "TextureManager.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
-#include "libraries/DevIL_Windows_SDK/include/IL/il.h"
+#include <devil/il.h>
 #include <cassert>
 
 std::unique_ptr<TextureManager> TextureManager::instance;

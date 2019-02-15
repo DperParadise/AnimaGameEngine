@@ -3,7 +3,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "libraries/glew-2.0.0/include/GL/glew.h"
-#include "libraries/DevIL_Windows_SDK/include/IL/il.h"
+#include <devil/il.h>
 #include "Globals.h"
 
 std::vector<Texture> Mesh::loadedTextures = std::vector<Texture>();

@@ -3,9 +3,9 @@
 #include "GameObject.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
 #include "Globals.h"
-#include "libraries/glm/glm.hpp"
-#include "libraries/glm/gtc/matrix_transform.hpp"
-#include "libraries/glm/gtc/quaternion.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include "ComponentTransform.h"
 #include "Shader.h"
 #include "ComponentCamera.h"

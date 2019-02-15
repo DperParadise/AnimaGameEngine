@@ -2,8 +2,8 @@
 #include "Globals.h"
 #include "Shader.h"
 #include "libraries/glew-2.0.0/include/GL/glew.h"
-#include "libraries/glm/glm.hpp"
-#include "libraries/glm/gtc/matrix_transform.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "Application.h"

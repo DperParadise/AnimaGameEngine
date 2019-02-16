@@ -10,12 +10,13 @@ bool ModuleWindowGLFW::Init(Config * config)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE); //
+	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE); 
 
 	MYLOG("Load ModuleWindow configuration");
 	const char *windowTitle = config->GetString("ModuleWindow", "window_title");
-	width = config->GetInt("ModuleWindow", "window_width");
-	height = config->GetInt("ModuleWindow", "window_height");
+	const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	width = mode->width;
+	height = mode->height;
 
 	window = glfwCreateWindow(width, height, windowTitle, NULL, NULL);
 	if (window == NULL)

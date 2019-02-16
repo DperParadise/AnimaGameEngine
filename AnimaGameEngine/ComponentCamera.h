@@ -35,8 +35,8 @@ protected:
 	int width = 0.0f;
 	int height = 0.0f;
 	float aspectRatio = 0.0f;
-	float cameraSpeedSlow = 30.0f;
-	float cameraSpeedFast = 60.0f;
+	float cameraSpeedSlow = 5.0f;
+	float cameraSpeedFast = 15.0f;
 	float cameraWheelSpeed = 30.0f;
 	float sensitivity = 10.0f;
 

@@ -27,7 +27,7 @@ bool ModuleInputGLFW::Init(Config * config)
 
 update_status ModuleInputGLFW::Update(float dt)
 {
-	if (glfwGetKey(App->window->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(App->window->window, GLFW_KEY_ESCAPE) == GLFW_PRESS || glfwWindowShouldClose(App->window->window))
 	{
 		glfwTerminate();
 		return update_status::UPDATE_STOP;

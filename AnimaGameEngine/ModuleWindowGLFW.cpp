@@ -10,6 +10,7 @@ bool ModuleWindowGLFW::Init(Config * config)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE); //
 
 	MYLOG("Load ModuleWindow configuration");
 	const char *windowTitle = config->GetString("ModuleWindow", "window_title");

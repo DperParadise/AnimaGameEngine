@@ -8,9 +8,7 @@
 
 std::vector<Texture> Mesh::loadedTextures = std::vector<Texture>();
 
-Mesh::Mesh()
-{
-}
+Mesh::Mesh(){}
 
 void Mesh::LoadMesh(const aiScene *scene, const aiMesh *mesh, const std::string &texturePath)
 {
@@ -47,6 +45,7 @@ unsigned int Mesh::GetEBO() const
 void Mesh::LoadVertices(const aiMesh * mesh)
 {
 	const aiVector3D zero3D(0.0f, 0.0f, 0.0f);
+	vertices.reserve(mesh->mNumVertices);
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
 	{

@@ -5,15 +5,21 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+class GameObject;
+
 class ComponentTransform : public Component
 {
 public:
 	ComponentTransform(ComponentType type, GameObject *ownerGO);
 	~ComponentTransform();
 
-	
+	//TODO: temporary, used by the inspector widget as a starting rotation to avoid problems in quaternion->degrees conversion
+	glm::vec3 degreesWorld;
+	void SetInitialDegrees(GameObject *go);
+
 	void Translate(const glm::vec3 &translation);
-	void Rotate(const glm::vec3 &eulerAnglesInDegrees);
+	//void Rotate(const glm::vec3 &eulerAnglesInDegrees);
+	void Rotate(float angleInDegrees, const glm::vec3 &axis);
 	void Scale(const glm::vec3 &scale);
 	void ResetPosition();
 

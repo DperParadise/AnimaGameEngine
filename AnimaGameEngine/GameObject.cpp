@@ -18,6 +18,8 @@ GameObject::GameObject(const std::string &name, const aiNode *node) : name(name)
 	{
 		LoadTransform(node);
 	}
+
+	transform->SetInitialDegrees(this);
 }
 
 void GameObject::LoadTransform(const aiNode *node)
@@ -161,10 +163,16 @@ void GameObject::Translate(const glm::vec3 & pos)
 	transform->Translate(pos);
 	dirty = true;
 }
-
+/*
 void GameObject::Rotate(const glm::vec3 &eulerAnglesInDegrees)
 {
 	transform->Rotate(eulerAnglesInDegrees);
+	dirty = true;
+}
+*/
+void GameObject::Rotate(float angleInDegrees, const glm::vec3 & axis)
+{
+	transform->Rotate(angleInDegrees, axis);
 	dirty = true;
 }
 

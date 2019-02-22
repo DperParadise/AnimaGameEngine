@@ -42,7 +42,8 @@ public:
 
 	///Methods to modify the transform
 	void Translate(const glm::vec3 &translation);
-	void Rotate(const glm::vec3 &eulerAnglesInDegrees);
+	//void Rotate(const glm::vec3 &eulerAnglesInDegrees);
+	void Rotate(float angleInDegrees, const glm::vec3 &axis);
 	void Scale(const glm::vec3 &scale);
 
 	///Methods to Add components

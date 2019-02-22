@@ -52,7 +52,7 @@ void EditorSceneHierarchyWidget::DrawNode(GameObject *go)
 		if (selectedGO)
 		{
 			ComponentGizmo *lastGizmo = (ComponentGizmo*)selectedGO->FindComponentByType(ComponentType::GIZMO);
-			lastGizmo->Disable();
+			//lastGizmo->Disable();   pinto todos los gizmos
 		}
 		
 		selectedGO = go;

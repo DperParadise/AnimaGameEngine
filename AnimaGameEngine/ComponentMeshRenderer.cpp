@@ -39,7 +39,7 @@ void ComponentMeshRenderer::Update(float dt) {
 		const glm::mat4 rotMatrix = glm::mat4_cast(rotQuat);
 
 		model = model * rotMatrix;
-
+		
 		const glm::vec3 scale = GetOwnerGO()->GetTransform()->GetWorldScale();
 		model = glm::scale(model, scale);
 

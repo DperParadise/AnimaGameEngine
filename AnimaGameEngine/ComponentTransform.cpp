@@ -1,5 +1,6 @@
 #include "ComponentTransform.h"
 #include "GameObject.h"
+#include "Globals.h"
 
 //define Transform static fields
 const glm::vec3 ComponentTransform::worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -20,6 +21,11 @@ ComponentTransform::ComponentTransform(ComponentType type, GameObject *ownerGO) 
 
 ComponentTransform::~ComponentTransform() {}
 
+void ComponentTransform::SetInitialDegrees(GameObject *go)
+{
+	degreesWorld = glm::degrees(glm::eulerAngles(go->GetTransform()->GetWorldRotation()));
+}
+
 void ComponentTransform::Translate(const glm::vec3 & translation)
 {
 	worldPosition = translation;
@@ -36,29 +42,46 @@ void ComponentTransform::Translate(const glm::vec3 & translation)
 		relativePosition = worldPosition;
 	}
 }
+//
+//void ComponentTransform::Rotate(const glm::vec3 & eulerAnglesInDegrees)
+//{	
+//	worldRotation = glm::quat(glm::radians(eulerAnglesInDegrees));
+//	glm::vec3 axis = glm::axis(worldRotation);
+//	MYLOG("CT: rot post euler->quat: axis(%f, %f, %f) d(%f, %f, %f) q(%f, %f, %f, %f) \n", axis.x, axis.y, axis.z, eulerAnglesInDegrees.x, eulerAnglesInDegrees.y, eulerAnglesInDegrees.z, worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w)
+//
+//	//Since worlRotation = parentWorlRot * relativeRot. We need to calculate the new relativeRot
+//	//Rw_child = Rw_parent * Rr_child; inv(Rw_parent) * Rw_child = Rr_child;
+//	if (GetOwnerGO()->GetParentGO())
+//	{
+//		glm::quat parentWorldRot = GetOwnerGO()->GetParentGO()->GetTransform()->GetWorldRotation();
+//		// inverse == conjugate in rotations
+//		glm::quat inverseParentWorldRot = glm::conjugate(parentWorldRot); 
+//		relativeRotation = inverseParentWorldRot * worldRotation;
+//	}
+//	else
+//	{
+//		relativeRotation = worldRotation;	
+//	}
+//}
 
-void ComponentTransform::Rotate(const glm::vec3 & eulerAnglesInDegrees)
+void ComponentTransform::Rotate(float angleInDegrees, const glm::vec3 & axis)
 {
-	worldRotation = glm::quat(glm::radians(eulerAnglesInDegrees));
+	//Adding the new rotation to the current rotation
+	worldRotation = glm::angleAxis(glm::radians(angleInDegrees), axis) * worldRotation;
+	//MYLOG("CT: rot post euler->quat: inc_angle=%f axis=(%f, %f, %f) q(%f, %f, %f, %f)", angleInDegrees, axis.x, axis.y, axis.z, worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w)
 
 	//Since worlRotation = parentWorlRot * relativeRot. We need to calculate the new relativeRot
 	//Rw_child = Rw_parent * Rr_child; inv(Rw_parent) * Rw_child = Rr_child;
 	if (GetOwnerGO()->GetParentGO())
 	{
 		glm::quat parentWorldRot = GetOwnerGO()->GetParentGO()->GetTransform()->GetWorldRotation();
-		// inverse == conjugate in rotations
-		glm::quat inverseParentWorldRot = glm::conjugate(parentWorldRot); 
+		glm::quat inverseParentWorldRot = glm::conjugate(parentWorldRot);
 		relativeRotation = inverseParentWorldRot * worldRotation;
 	}
 	else
 	{
-		relativeRotation = worldRotation;	
+		relativeRotation = worldRotation;
 	}
-
-	//TODO: Check rotation order => rotation*vector or vector*rotation
-	//ownForward = worldRotation * ownForward;
-	//ownUp = worldRotation * ownUp;
-	//ownLeft = worldRotation * ownLeft;
 }
 
 void ComponentTransform::Scale(const glm::vec3 & scale)

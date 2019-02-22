@@ -4,6 +4,7 @@
 
 #include <string>
 #include "Component.h"
+#include <glm/glm.hpp>
 
 class GameObject;
 class ComponentMeshRenderer;

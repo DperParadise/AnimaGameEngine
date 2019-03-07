@@ -30,6 +30,9 @@
     <Filter Include="ImGUI">
       <UniqueIdentifier>{9346ae0b-dded-46dd-ae56-4b3990e7c0a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Animations">
+      <UniqueIdentifier>{4d1844a5-9c60-425a-bde4-6e42387253bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h">
@@ -191,6 +194,9 @@
     <ClInclude Include="parson.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -336,6 +342,9 @@
     </ClCompile>
     <ClCompile Include="parson.c">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Animations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

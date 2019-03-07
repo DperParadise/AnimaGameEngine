@@ -3,11 +3,14 @@
 
 #include <assimp/postprocess.h>
 #include <string>
+#include "Skeleton.h"
 
 class Importer;
 struct aiScene;
 struct aiNode;
 class GameObject;
+class Skeleton;
+
 class Model
 {	
 
@@ -20,15 +23,15 @@ public:
 
 	Model(const std::string &filePath, unsigned int load_flags = 0);
 	~Model();
-	
+	Skeleton& GetSkeleton();
 
 private:
 	const aiScene *scene;
 	Importer *importer = nullptr;
-	std::string modelName;
 	GameObject *modelGO = nullptr;
 	void Load(const std::string &filePath, unsigned int flags);
 	GameObject* LoadHierarchy(aiNode *node, GameObject *parentGO, const std::string &filePath);
+	Skeleton modelSkeleton;
 };
 
 #endif

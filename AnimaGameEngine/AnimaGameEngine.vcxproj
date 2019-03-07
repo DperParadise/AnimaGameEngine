@@ -191,6 +191,7 @@
     <ClInclude Include="parson.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="SpherePrimitive.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TimerChrono.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="ModuleWindowGLFW.cpp" />
     <ClCompile Include="parson.c" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="SpherePrimitive.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TimerChrono.cpp" />

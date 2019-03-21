@@ -163,7 +163,6 @@ void Mesh::LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const
 		if(AlreadyLoaded(std::string(name.data), texture))
 		{
 			textures.push_back(texture);
-			loadedTextures.push_back(textures.back());
 		}
 		else
 		{
@@ -306,4 +305,14 @@ void Mesh::LoadMaterial(const aiScene * aiScene, const aiMesh * mesh)
 const Material & Mesh::GetMaterial() const
 {
 	return material;
+}
+
+void Mesh::AddBoneName(const std::string & boneName)
+{
+	bones.push_back(boneName);
+}
+
+const std::vector<std::string>& Mesh::GetBones() const
+{
+	return bones;
 }

@@ -153,10 +153,14 @@ Component * GameObject::FindComponentByType(ComponentType type)
 	for (Component *component : components)
 	{
 		if (component->GetComponentType() == type)
+		{
 			found = component;
+			return found;
+		}
 	}
 	return found;
 }
+
 //Translation in world position
 void GameObject::Translate(const glm::vec3 & pos)
 {
@@ -183,7 +187,7 @@ void GameObject::Scale(const glm::vec3 & scale)
 }
 
 
-Component* GameObject::AddMeshRenderer(const Mesh *mesh, const Shader *shader, const ComponentCamera *camera)
+Component* GameObject::AddMeshRenderer(Mesh *mesh, const Shader *shader, const ComponentCamera *camera)
 {
 	Component *comp = new ComponentMeshRenderer(ComponentType::MESH_RENDERER, mesh, shader, camera, this);
 	components.push_back(comp);

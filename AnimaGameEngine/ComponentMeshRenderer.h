@@ -14,7 +14,7 @@ class ComponentMeshRenderer : public Component
 {
 public:
 	ComponentMeshRenderer(	ComponentType type, 
-							const Mesh *mesh, 
+							Mesh *mesh, 
 							const Shader *shader,
 							const ComponentCamera *compCamera,
 							GameObject *ownerGO,
@@ -23,8 +23,10 @@ public:
 
 	void Update(float dt);
 
+	Mesh *GetMesh();
+
 private:
-	const Mesh *mesh = nullptr;
+	Mesh *mesh = nullptr;
 	const Shader *shader = nullptr;
 	const ComponentCamera *camera = nullptr;
 	bool isPlaying = false;

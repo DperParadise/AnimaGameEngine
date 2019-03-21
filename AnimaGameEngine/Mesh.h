@@ -45,12 +45,16 @@ public:
 		const std::vector<unsigned int>& GetIndices() const;
 		const Material &GetMaterial() const;
 
+		void AddBoneName(const std::string &boneName);
+		const std::vector<std::string>& GetBones() const;
+
 private:
 	unsigned VAO, VBO, EBO;
 		std::vector<Vertex> vertices;
 		std::vector<unsigned> indices;
 		std::vector<Texture> textures;
 		Material material;
+		std::vector<std::string> bones;
 
 		static std::vector<Texture> loadedTextures;
 

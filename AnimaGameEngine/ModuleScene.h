@@ -10,6 +10,7 @@ class GameObject;
 class EditorCameraGO;
 class ComponentEditorCamera;
 class ComponentCamera;
+class Skeleton;
 
 class ModuleScene : public Module
 {
@@ -21,11 +22,13 @@ public:
 	virtual bool CleanUp();
 
 	void AddGameObject(GameObject *go);
+	void AddSkeleton(Skeleton *skeleton);
 	void SetActiveCamera(GameObject *camera);
 
 	void OnResize(unsigned width, unsigned height);
 
 	std::vector<GameObject*> gameObjects;
+	std::vector<Skeleton*> skeletons;
 	GameObject *activeCameraGO = nullptr;
 	ComponentCamera *activeCameraComponent = nullptr;
 	EditorCameraGO *editorCameraGO = nullptr;

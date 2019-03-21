@@ -4,14 +4,16 @@
 #include <glm/gtc/quaternion.hpp>
 #include <string>
 #include <vector>
-#include "Globals.h"
+#include "Shader.h"
 
 class Mesh;
-class ComponentTransform;
+struct aiScene;
+struct aiNode;
 class GameObject;
 
-struct JointPose
+struct BonePose
 {
+	BonePose();
 	glm::quat rotation;
 	glm::vec3 position;
 	glm::vec3 scale;
@@ -23,33 +25,57 @@ struct VertexWeight
 	float weight;
 };
 
-struct Joint
+class Bone
 {
-	JointPose inverseBindPose;
-	JointPose localPose;
-	Mesh *mesh;
+public:
+	Bone();
+	~Bone();
+
+	BonePose inverseBindPose;
+	BonePose worldPose;
+	BonePose localPose;
+	Bone *parent = nullptr;
+	std::vector<Mesh*> meshes; //No hace falta,en principio
+	std::vector<Bone*> children;
 	std::vector<VertexWeight> verticesWeights;
 	std::string name;
-	unsigned int id;
-};
+	unsigned int id = 0;
 
-struct SkeletonTreeNode
-{
-	GameObject *ownerGO = nullptr;
-	unsigned int *jointIds = nullptr;
+private:
+	void Clear();
 };
 
 class Skeleton
 {
 public:
-	Skeleton();
+	Skeleton(const std::string &skeletonName, const std::string &skeletonPath, Shader *sklShader, GameObject *GOHierarchyRoot);
 	~Skeleton();
+	void Load(const std::string &skeletonPath);
+	void LoadMD5(const std::string &skeletonPath);
+	void Update();
+	static bool Less(const Bone &a, const Bone &b);
+	void Clear();
 
-	std::vector<Joint> skeleton;
-	std::vector<SkeletonTreeNode> skeletonTree;
+	std::vector<Bone> skeleton;
+	std::vector<Bone> skeletonWorldPoses;
+	Bone *skeletonTree = nullptr;
+	std::string name;
 
-	void Draw() const;
-	static bool Less(const Joint &a, const Joint &b);
+private:
+	void LoadBonesMD5(aiNode *node);
+	Bone* LoadSkeletonTreeMD5(aiNode *node, Bone *parentBone);
+	void PrintSkeleton() const;
+	void PrintSkeletonTree(Bone *bone, int spaces) const;
+	void BindBoneToMesh(GameObject *goHierarchy);
+	int FindBoneInSkeleton(const std::string &nodeName) const;
+	Bone* FindBoneInSkeletonTree(const std::string &boneName, Bone *bone);
+	void UpdateSkeletonTreePoses(Bone *bone);
+
+	std::vector<glm::vec3> skeletonVertices;
+	unsigned int VAO, VBO, EBO;
+	Shader *shader = nullptr;
+	const aiScene *scene = nullptr;
+	GameObject *GOHierarchy = nullptr;
 };
 #endif
 

@@ -80,9 +80,6 @@
     <ClInclude Include="ModuleEditorCamera.h">
       <Filter>CoreModules</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Geometry Load</Filter>
-    </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Primitives</Filter>
     </ClInclude>
@@ -197,6 +194,12 @@
     <ClInclude Include="Skeleton.h">
       <Filter>Animations</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>Geometry Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -234,9 +237,6 @@
     </ClCompile>
     <ClCompile Include="ModuleEditorCamera.cpp">
       <Filter>CoreModules</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Geometry Load</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>Primitives</Filter>
@@ -345,6 +345,12 @@
     </ClCompile>
     <ClCompile Include="Skeleton.cpp">
       <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>Geometry Load</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

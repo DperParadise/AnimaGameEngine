@@ -47,7 +47,7 @@ public:
 	void Scale(const glm::vec3 &scale);
 
 	///Methods to Add components
-	Component* AddMeshRenderer(const Mesh *mesh, const Shader *shader, const ComponentCamera *camera);
+	Component* AddMeshRenderer(Mesh *mesh, const Shader *shader, const ComponentCamera *camera);
 	Component* AddCameraComponent();
 	Component* AddEditorCameraComponent();
 	Component* AddGizmoComponent(const std::string& vertexPath, const std::string &fragmentPath);

@@ -3,12 +3,12 @@
 #include "Component.h"
 //#include "ComponentLight.h"
 //#include "ComponentAmbientLight.h"
-#include "Model.h"
+#include "ModelLoader.h"
 #include "CubeGO.h"
 #include "EditorCameraGO.h"
 #include "ComponentEditorCamera.h"
 #include "ComponentCamera.h"
-
+#include "Skeleton.h"
 
 ModuleScene::ModuleScene() {}
 
@@ -55,7 +55,8 @@ ModuleScene::~ModuleScene()
 	 //AddGameObject(cube_go);
 
 	 //Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
-	 Model model_batman = Model("models/Batman/Batman.obj", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+	 //GameObject *batman = ModelLoader::Load("models/Batman/Batman.obj", ModelLoader::load_flags::FLIP_UVs | ModelLoader::load_flags::TRIANGULATE);
+	 //gameObjects.push_back(batman);
 	 //GameObject *batmanGO = FindGameObject("Batman.obj");
 	 //batmanGO->CreateBehaviour("BatmanMovement");
 	 //GameObject *torsoGO = FindGameObject("BatmanTorso");
@@ -63,12 +64,24 @@ ModuleScene::~ModuleScene()
 	 //Model iron_man = Model("models/IronMan/IronMan.obj", Model::load_flags::TRIANGULATE);
 	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
+	 ///Load animated model
+	 //Model stickFigure = Model("models/StickFigurea/StickFigurea.FBX", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+ 
+	 GameObject *guardLampGO = ModelLoader::LoadMD5("models/GuardLamp/boblampclean.md5mesh", ModelLoader::load_flags::TRIANGULATE);
+	 gameObjects.push_back(guardLampGO);
+	 Skeleton *guardLampSkeleton = new Skeleton("boblampclean", "models/GuardLamp/boblampclean.md5mesh", nullptr, guardLampGO);
+	 skeletons.push_back(guardLampSkeleton);
 	 
 	return true;
 }
 
 update_status ModuleScene::Update(float dt) 
 {
+	//TODO: Improve skeletons management
+	for (Skeleton *skl : skeletons)
+	{
+		skl->Update();
+	}
 
 	for (std::vector<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
 	{
@@ -90,6 +103,12 @@ bool ModuleScene::CleanUp()
 	}
 	gameObjects.clear();
 	
+	for (Skeleton *skeleton : skeletons)
+	{
+		RELEASE(skeleton)
+	}
+	skeletons.clear();
+
 	return true;
 }
 /*
@@ -104,6 +123,11 @@ GameObject* ModuleScene::CreateGameObject(const std::string &name)
 void ModuleScene::AddGameObject(GameObject *go)
 {
 	gameObjects.push_back(go);
+}
+
+void ModuleScene::AddSkeleton(Skeleton * skeleton)
+{
+	skeletons.push_back(skeleton);
 }
 
 void ModuleScene::SetActiveCamera(GameObject * camera)

@@ -14,7 +14,7 @@
 
 ComponentMeshRenderer::ComponentMeshRenderer(
 	ComponentType type, 
-	const Mesh *mesh,
+	Mesh *mesh,
 	const Shader *shader,
 	const ComponentCamera *compCamera,
 	GameObject *ownerGO,
@@ -56,7 +56,12 @@ void ComponentMeshRenderer::Update(float dt) {
 		shader->SetMat4("projection", camera->GetProjectionMatrix());
 		
 		shader->SetVec3("material.ambient", mesh->GetMaterial().ambient);
-		shader->SetVec3("material.diffuse", mesh->GetMaterial().diffuse);
+		
+		if(mesh->GetMaterial().diffuse != glm::vec3(0.0f))
+			shader->SetVec3("material.diffuse", mesh->GetMaterial().diffuse);
+		else
+			shader->SetVec3("material.diffuse", glm::vec3(1.0f));
+
 		shader->SetVec3("material.specular", mesh->GetMaterial().specular);
 		shader->SetFloat("material.shininess", mesh->GetMaterial().shininess);
 
@@ -102,4 +107,9 @@ void ComponentMeshRenderer::Update(float dt) {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindVertexArray(0);
 	}
+}
+
+Mesh* ComponentMeshRenderer::GetMesh()
+{
+	return mesh;
 }

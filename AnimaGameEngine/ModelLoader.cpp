@@ -10,6 +10,7 @@
 #include "ComponentMeshRenderer.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
+#include <map>
 
 const aiScene *ModelLoader::scene = nullptr;
 GameObject *ModelLoader::modelGO = nullptr;
@@ -33,17 +34,18 @@ ModelLoader::~ModelLoader() {}
 	return modelGO;
 }
 
- GameObject * ModelLoader::LoadMD5(const std::string & filePath, unsigned int flags)
+ GameObject * ModelLoader::LoadMD5(const std::string & filePath, unsigned int flags, Skeleton **outSkeleton)
  {
 	 Assimp::Importer importer;
 	 scene = importer.ReadFile(filePath, flags);
 	 aiNode *root_node = scene->mRootNode;
-	 modelGO = LoadMeshesMD5(root_node, filePath);
 
+	 modelGO = LoadModelMD5(root_node, filePath, outSkeleton);
+	 
 	 return modelGO;
  }
 
-GameObject *ModelLoader::LoadHierarchy(aiNode *node, GameObject *parentGO, const std::string &filePath)
+GameObject *ModelLoader::LoadHierarchy(const aiNode *node, GameObject *parentGO, const std::string &filePath)
 {	
 	std::string gameObjectName = std::string(node->mName.data);
 	if (gameObjectName.empty())
@@ -58,10 +60,9 @@ GameObject *ModelLoader::LoadHierarchy(aiNode *node, GameObject *parentGO, const
 		uint meshIndex = node->mMeshes[i];
 		aiMesh *aiMesh = scene->mMeshes[meshIndex];
 
-		Mesh *mesh = new Mesh();
 		unsigned int slashPos = filePath.find_last_of("/");
 		std::string texturePath = std::string(filePath, 0, slashPos + 1);
-		mesh->LoadMesh(scene, aiMesh, texturePath);
+		Mesh *mesh = new Mesh(scene, aiMesh, texturePath);
 
 		Shader *shader = new Shader("shaders/vertex.vert", "shaders/fragment.frag"); //TODO: Implement a way to manage shaders
 
@@ -78,12 +79,12 @@ GameObject *ModelLoader::LoadHierarchy(aiNode *node, GameObject *parentGO, const
 	return go;
 }
 
-GameObject* ModelLoader::LoadMeshesMD5(aiNode *node, const std::string &filePath)
+GameObject* ModelLoader::LoadModelMD5(const aiNode *node, const std::string &filePath, Skeleton **outSkeleton)
 {
 	unsigned int slashPos = filePath.find_last_of("/");
 	std::string modelName = std::string(filePath, slashPos + 1);
 
-	aiNode *meshNode = node->FindNode("<MD5_Mesh>");
+	const aiNode *meshNode = node->FindNode("<MD5_Mesh>");
 	if (!node)
 	{
 		MYLOG("<MD5_Mesh> node not found")
@@ -92,6 +93,9 @@ GameObject* ModelLoader::LoadMeshesMD5(aiNode *node, const std::string &filePath
 
 	GameObject *go = new GameObject(modelName, meshNode);
 	go->SetParentGO(nullptr);
+
+	///Load skeleton
+	Skeleton *skeleton = new Skeleton(modelName, filePath, nullptr);
 
 	for (uint i = 0; i < meshNode->mNumMeshes; i++)
 	{
@@ -102,27 +106,17 @@ GameObject* ModelLoader::LoadMeshesMD5(aiNode *node, const std::string &filePath
 		///Load mesh and add a renderer
 		uint meshIndex = meshNode->mMeshes[i];
 		aiMesh *aiMesh = scene->mMeshes[meshIndex];
-		Mesh *mesh = new Mesh();
 		unsigned int slashPos = filePath.find_last_of("/");
 		std::string texturePath = std::string(filePath, 0, slashPos + 1);
-		mesh->LoadMesh(scene, aiMesh, texturePath);
+		Mesh *mesh = new Mesh(scene, aiMesh, texturePath, skeleton);
 
-		Shader *shader = new Shader("shaders/vertex.vert", "shaders/fragment.frag"); //TODO: Implement a way to manage shaders
+		Shader *shader = new Shader("shaders/vertex_animation.vert", "shaders/fragment.frag"); //TODO: Implement a way to manage shaders
 
 		ComponentCamera *camera = (ComponentCamera*)App->scene->activeCameraComponent;
-		meshGO->AddMeshRenderer(mesh, shader, camera);
-
-		///Load bones associated to this mesh
-		if (aiMesh->HasBones())
-		{
-			for (uint j = 0; j < aiMesh->mNumBones; ++j)
-			{
-				mesh->AddBoneName(aiMesh->mBones[j]->mName.C_Str());
-
-				MYLOG("Mesh: %d bone: %s", i, aiMesh->mBones[j]->mName.C_Str())
-			}
-		}
+		ComponentMeshRenderer *mr = (ComponentMeshRenderer*)meshGO->AddMeshRenderer(mesh, shader, camera);
+		mr->SetPoseMatrices(skeleton->skeletonPoses);
 	}
 
+	*outSkeleton = skeleton;
 	return go;
 }

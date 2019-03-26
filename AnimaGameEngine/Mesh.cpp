@@ -5,20 +5,34 @@
 #include <glew_2.0.0/GL/glew.h>
 #include <devil/il.h>
 #include "Globals.h"
+#include <cstring>
+#include "Skeleton.h"
 
 std::vector<Texture> Mesh::loadedTextures = std::vector<Texture>();
 
-Mesh::Mesh(){}
-
-void Mesh::LoadMesh(const aiScene *scene, const aiMesh *mesh, const std::string &texturePath)
+Vertex::Vertex()
 {
-	LoadVertices(mesh);
-	LoadIndices(mesh);
+	memset(bones, 0, 4 * sizeof(unsigned int));
+	memset(weights, 0.0f, 4 * sizeof(float));
+}
+
+Mesh::Mesh(const aiScene *scene, const aiMesh *aiMesh, const std::string &texturePath, Skeleton *skeleton)
+{
+	LoadMesh(scene, aiMesh, texturePath, skeleton);
+}
+
+void Mesh::LoadMesh(const aiScene *scene, const aiMesh *aiMesh, const std::string &texturePath, Skeleton *skeleton)
+{
+	LoadVertices(aiMesh);
+	LoadIndices(aiMesh);
+	
+	if(skeleton)
+		SetVertexWeightsMD5(aiMesh, skeleton);
+
 	SetVertexBuffers();
 	ClearVertexVectors();
-
-	LoadTextures(scene, mesh, texturePath);
-	LoadMaterial(scene, mesh);
+	LoadTextures(scene, aiMesh, texturePath);
+	LoadMaterial(scene, aiMesh);
 	ClearLoadedTexturesVector();
 }
 
@@ -37,7 +51,17 @@ unsigned int Mesh::GetEBO() const
 	return EBO;
 }
 
- const std::vector<unsigned int> & Mesh::GetIndices() const
+unsigned int Mesh::GetVBO() const
+{
+	return VBO;
+}
+
+std::vector<Vertex>& Mesh::GetVertices()
+{
+	return vertices;
+}
+
+const std::vector<unsigned int> & Mesh::GetIndices() const
 {
 	return indices;
 }
@@ -115,6 +139,14 @@ void Mesh::SetVertexBuffers()
 	//bitangents
 	glEnableVertexAttribArray(4);
 	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+
+	//boneIds
+	glEnableVertexAttribArray(5);
+	glVertexAttribIPointer(5, 4, GL_UNSIGNED_INT, sizeof(Vertex), (void*)offsetof(Vertex, bones));
+	
+	//weights
+	glEnableVertexAttribArray(6);
+	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weights));
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -261,7 +293,7 @@ unsigned Mesh::CreateOpenGLTexture(const std::string texturePath)
 }
 
 /*
-* This method will be called after all meshes have been loaded
+* This method will be called after all meshes have been loaded for non animated models
 */
 void Mesh::ClearLoadedTexturesVector()
 {
@@ -300,6 +332,53 @@ void Mesh::LoadMaterial(const aiScene * aiScene, const aiMesh * mesh)
 	if (material->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS)
 		this->material.shininess = shininess;
 
+}
+
+void Mesh::SetVertexWeightsMD5(const aiMesh *aiMesh, const Skeleton *skeleton)
+{
+	if (aiMesh->HasBones())
+	{
+		std::vector<int> visitedVertices(aiMesh->mNumVertices, -1);
+
+		for (uint i = 0; i < aiMesh->mNumBones; ++i)
+		{
+			aiBone *aiBone = aiMesh->mBones[i];
+			aiVertexWeight *vertexWeights = aiBone->mWeights;
+			for (uint j = 0; j < aiBone->mNumWeights; ++j)
+			{
+				unsigned int vertexId = vertexWeights[j].mVertexId;
+				float weight = vertexWeights[j].mWeight;
+
+				unsigned int boneIndex = 0;
+				int found = visitedVertices[vertexId];
+
+				if (found == -1)
+				{
+					visitedVertices[vertexId] = 0;
+				}
+
+				boneIndex = visitedVertices[vertexId];
+				
+				//TODO: Decide how to manage a bigger number of bones affecting a vertex
+				if (boneIndex > 3)
+				{
+					MYLOG("Error: Number of bones influencing bones is bigger than 4")
+					continue;
+				}
+
+				visitedVertices[vertexId] += 1;
+
+				int boneId = skeleton->FindBoneInSkeleton(aiBone->mName.C_Str());
+				if (boneId == -1)
+				{
+					MYLOG("Error: bone %s not found", aiBone->mName.C_Str())
+				}
+
+				vertices[vertexId].bones[boneIndex] = boneId;
+				vertices[vertexId].weights[boneIndex] = weight;
+			}
+		}
+	}
 }
 
 const Material & Mesh::GetMaterial() const

@@ -99,6 +99,11 @@ void Shader::SetMat4(const std::string & name, const glm::mat4 & value) const
 	glUniformMatrix4fv(glGetUniformLocation(programId, name.c_str()), 1, GL_FALSE, &value[0][0]);
 }
 
+void Shader::SetMat4Array(const std::string & name, const glm::mat4 * array, unsigned int size) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(programId, name.c_str()), size, GL_FALSE, &array[0][0][0]);
+}
+
 void Shader::CheckErrors(unsigned int type, unsigned int shaderOrProgram)
 {
 	GLint isCompiled = 0;

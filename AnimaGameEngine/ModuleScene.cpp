@@ -67,9 +67,9 @@ ModuleScene::~ModuleScene()
 	 ///Load animated model
 	 //Model stickFigure = Model("models/StickFigurea/StickFigurea.FBX", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
  
-	 GameObject *guardLampGO = ModelLoader::LoadMD5("models/GuardLamp/boblampclean.md5mesh", ModelLoader::load_flags::TRIANGULATE);
+	 Skeleton *guardLampSkeleton = nullptr;
+	 GameObject *guardLampGO = ModelLoader::LoadMD5("models/GuardLamp/boblampclean.md5mesh", ModelLoader::load_flags::TRIANGULATE, &guardLampSkeleton);
 	 gameObjects.push_back(guardLampGO);
-	 Skeleton *guardLampSkeleton = new Skeleton("boblampclean", "models/GuardLamp/boblampclean.md5mesh", nullptr, guardLampGO);
 	 skeletons.push_back(guardLampSkeleton);
 	 
 	return true;

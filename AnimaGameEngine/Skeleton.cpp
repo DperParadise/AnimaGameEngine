@@ -5,11 +5,13 @@
 #include "GameObject.h"
 #include "ComponentMeshRenderer.h"
 #include "Mesh.h"
+#include <map>
+#include "ComponentMeshRenderer.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 Skeleton::Skeleton(const std::string &skeletonName, 
 	const std::string &skeletonPath, 
-	Shader *sklShader,
-	GameObject *GOHierarchyRoot) : name(skeletonName), shader(sklShader), GOHierarchy(GOHierarchyRoot)
+	Shader *skeletonShader) : name(skeletonName), shader(skeletonShader)
 {
 	LoadMD5(skeletonPath);
 }
@@ -48,6 +50,8 @@ void Skeleton::LoadMD5(const std::string & skeletonPath)
 	skeletonTree = LoadSkeletonTreeMD5(rootNode->FindNode("<MD5_Hierarchy>"), nullptr);
 	PrintSkeletonTree(skeletonTree, 1);
 
+	SetInvBindPoseMatrices();
+	SetSkeletonPosesMatrices();
 }
 
 void Skeleton::Update()
@@ -68,8 +72,7 @@ void Skeleton::LoadBonesMD5(aiNode* node)
 				static unsigned int boneId = 0;
 
 				aiBone *aiBone = aiMesh->mBones[j];
-
-				//Check If bone is already in the skeleton
+				
 				if (FindBoneInSkeleton(aiBone->mName.C_Str()) != -1)
 				{
 					continue;
@@ -96,19 +99,9 @@ void Skeleton::LoadBonesMD5(aiNode* node)
 				bone.inverseBindPose.position.y = pos.y;
 				bone.inverseBindPose.position.z = pos.z;
 
-				aiVertexWeight *vertexWeights = aiBone->mWeights;
-				for (uint k = 0; k < aiBone->mNumWeights; ++k)
-				{
-					VertexWeight vw;
-					vw.vertexId = vertexWeights->mVertexId;
-					vw.weight = vertexWeights->mWeight;
-					bone.verticesWeights.push_back(vw);
-				}
-
 				bone.name = std::string(aiBone->mName.C_Str());
 				bone.id = boneId;
 				skeleton.push_back(bone);
-				skeletonWorldPoses.push_back(bone);
 				++boneId;
 			}
 		}
@@ -160,7 +153,7 @@ void Skeleton::PrintSkeleton() const
 	MYLOG("============= BEGIN BONES ===============")
 	for (const Bone &b : skeleton)
 	{
-		MYLOG("bone: %s Meshes bound=%d", b.name.c_str(), b.meshes.size())
+		MYLOG("bone: %s", b.name.c_str())
 	}
 	MYLOG("============= END BONES =================")
 }
@@ -176,22 +169,6 @@ void Skeleton::PrintSkeletonTree(Bone *bone, int spaces) const
 	for (Bone *b : bone->children)
 	{
 		PrintSkeletonTree(b, numSpaces);
-	}
-}
-
-//Bind bone to mesh for a MD5 model loaded with assimp - No hace falta, en principio.
-void Skeleton::BindBoneToMesh(GameObject *goHierarchy)
-{
-	for (GameObject *child : goHierarchy->GetChildrenGO())
-	{
-		ComponentMeshRenderer *mr = (ComponentMeshRenderer*)child->FindComponentByType(ComponentType::MESH_RENDERER);
-		Mesh *mesh = mr->GetMesh();
-		
-		for (const std::string &jointName : mesh->GetBones())
-		{
-			int nodeId = FindBoneInSkeleton(jointName);
-			skeleton[nodeId].meshes.push_back(mesh);
-		}
 	}
 }
 
@@ -244,9 +221,18 @@ void Skeleton::UpdateSkeletonTreePoses(Bone *bone)
 			bone->worldPose.position = bone->localPose.position;
 		}
 
-		//Update vector of world poses
 		static int index = 0;
-		skeletonWorldPoses[index].worldPose = bone->worldPose;
+
+		//Update poses matrices
+		glm::mat4 pose;
+		pose = glm::translate(pose, bone->worldPose.position);
+		pose = pose * glm::mat4_cast(bone->worldPose.rotation);
+		pose = glm::scale(pose, bone->worldPose.scale);
+		
+		pose = pose * invBindPoseMatrices[index];
+		
+		skeletonPoses[index] = pose;
+
 		++index;
 		if (index == skeleton.size())
 			index = 0;
@@ -255,6 +241,25 @@ void Skeleton::UpdateSkeletonTreePoses(Bone *bone)
 	{
 		UpdateSkeletonTreePoses(childBone);
 	}
+}
+
+void Skeleton::SetInvBindPoseMatrices()
+{
+	invBindPoseMatrices.reserve(skeleton.size());
+
+	for (const Bone &bone : skeleton)
+	{
+		glm::mat4 invBindMatrix;
+		invBindMatrix = glm::translate(invBindMatrix, bone.inverseBindPose.position);
+		invBindMatrix = invBindMatrix * glm::mat4_cast(bone.inverseBindPose.rotation);
+		invBindMatrix = glm::scale(invBindMatrix, bone.inverseBindPose.scale);
+		invBindPoseMatrices.push_back(invBindMatrix);
+	}
+}
+
+void Skeleton::SetSkeletonPosesMatrices()
+{
+	skeletonPoses.resize(skeleton.size());
 }
 
 bool Skeleton::Less(const Bone &left, const Bone &right)

@@ -25,6 +25,8 @@ public:
 
 	void SetMat4(const std::string &name, const glm::mat4 &value) const;
 
+	void SetMat4Array(const std::string &name, const glm::mat4 *array, unsigned int size) const;
+
 private:
 	unsigned programId;
 

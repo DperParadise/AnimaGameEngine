@@ -3,7 +3,8 @@
 
 #include "Component.h"
 #include <string>
-
+#include <vector>
+#include "Skeleton.h"
 
 class Mesh;
 class Shader;
@@ -25,14 +26,16 @@ public:
 
 	Mesh *GetMesh();
 
+	void SetPoseMatrices(const std::vector<glm::mat4> &SkeletonPoses);
+	
 private:
 	Mesh *mesh = nullptr;
 	const Shader *shader = nullptr;
 	const ComponentCamera *camera = nullptr;
 	bool isPlaying = false;
 
-
-
+	const glm::mat4 *skeletonPoses = nullptr;
+	unsigned int poseVectorSize = 0;
 };
 
 #endif // !_COMP_MESH_RENDERER_H_

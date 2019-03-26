@@ -7,6 +7,9 @@
 struct aiScene;
 struct aiNode;
 class GameObject;
+class Skeleton;
+class aiMesh;
+class Mesh;
 
 class ModelLoader
 {	
@@ -21,13 +24,13 @@ public:
 	ModelLoader();
 	~ModelLoader();
 	static GameObject* Load(const std::string &filePath, unsigned int flags);
-	static GameObject* LoadMD5(const std::string &filePath, unsigned int flags);
+	static GameObject* LoadMD5(const std::string &filePath, unsigned int flags, Skeleton **outSkeleton);
 
 private:
 	static  const aiScene *scene;
 	static GameObject *modelGO;
-	static GameObject* LoadHierarchy(aiNode *node, GameObject *parentGO, const std::string &filePath);
-	static GameObject* LoadMeshesMD5(aiNode *node, const std::string &filePath);
+	static GameObject* LoadHierarchy(const aiNode *node, GameObject *parentGO, const std::string &filePath);
+	static GameObject* LoadModelMD5(const aiNode *node, const std::string &filePath, Skeleton **outSkeleton);
 };
 
 #endif

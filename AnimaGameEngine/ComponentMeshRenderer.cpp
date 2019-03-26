@@ -65,6 +65,9 @@ void ComponentMeshRenderer::Update(float dt) {
 		shader->SetVec3("material.specular", mesh->GetMaterial().specular);
 		shader->SetFloat("material.shininess", mesh->GetMaterial().shininess);
 
+		//Set skeleton poses matrices
+		shader->SetMat4Array("bones", skeletonPoses, poseVectorSize);
+
 		//Bind Textures
 		unsigned int diffuse_nr = 1;
 		unsigned int specular_nr = 1;
@@ -97,7 +100,6 @@ void ComponentMeshRenderer::Update(float dt) {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->GetEBO());
 		glDrawElements(GL_TRIANGLES, mesh->GetIndices().size(), GL_UNSIGNED_INT, 0);
 
-
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 			MYLOG("Error OpenGL: %s", gluErrorString(error))
@@ -113,3 +115,12 @@ Mesh* ComponentMeshRenderer::GetMesh()
 {
 	return mesh;
 }
+
+void ComponentMeshRenderer::SetPoseMatrices(const std::vector<glm::mat4> &skeletonPoses)
+{
+	this->skeletonPoses = skeletonPoses.data();
+	poseVectorSize = skeletonPoses.size();
+}
+
+
+

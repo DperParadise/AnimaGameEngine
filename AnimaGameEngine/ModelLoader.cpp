@@ -11,6 +11,8 @@
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include <map>
+#include "Animation.h"
+#include "Skeleton.h"
 
 const aiScene *ModelLoader::scene = nullptr;
 GameObject *ModelLoader::modelGO = nullptr;
@@ -28,9 +30,13 @@ ModelLoader::~ModelLoader() {}
 
 	Assimp::Importer importer;
 	scene = importer.ReadFile(filePath, flags);
+	if (!scene)
+	{
+		MYLOG("Error: scene pointer is null")
+		return nullptr;
+	}
 	aiNode *root_node = scene->mRootNode;
 	modelGO = LoadHierarchy(root_node, nullptr, filePath);
-
 	return modelGO;
 }
 
@@ -38,11 +44,32 @@ ModelLoader::~ModelLoader() {}
  {
 	 Assimp::Importer importer;
 	 scene = importer.ReadFile(filePath, flags);
+	 if (!scene)
+	 {
+		MYLOG("Error: scene pointer is null")
+		return nullptr;
+	 }
 	 aiNode *root_node = scene->mRootNode;
-
 	 modelGO = LoadModelMD5(root_node, filePath, outSkeleton);
-	 
 	 return modelGO;
+ }
+
+ void ModelLoader::LoadAnimationsMD5(const std::string &filePath, std::vector<Animation*> &animations, const Skeleton *skeleton)
+ {
+	 Assimp::Importer importer;
+	 scene = importer.ReadFile(filePath, 0);
+	 if (!scene->HasAnimations())
+	 {
+		MYLOG("Error: No animations found in the scene")
+		return;
+	 }
+
+	 for (int i = 0; i < scene->mNumAnimations; ++i)
+	 {
+		 aiAnimation* aiAnimation = scene->mAnimations[i];
+		 Animation *animation = new Animation(aiAnimation->mName.C_Str(), aiAnimation, skeleton);
+		 animations.push_back(animation);
+	 }
  }
 
 GameObject *ModelLoader::LoadHierarchy(const aiNode *node, GameObject *parentGO, const std::string &filePath)
@@ -91,11 +118,12 @@ GameObject* ModelLoader::LoadModelMD5(const aiNode *node, const std::string &fil
 		return nullptr;
 	}
 
-	GameObject *go = new GameObject(modelName, meshNode);
-	go->SetParentGO(nullptr);
-
 	///Load skeleton
 	Skeleton *skeleton = new Skeleton(modelName, filePath, nullptr);
+
+	///Create game objects
+	GameObject *go = new GameObject(modelName, meshNode);
+	go->SetParentGO(nullptr);
 
 	for (uint i = 0; i < meshNode->mNumMeshes; i++)
 	{
@@ -118,5 +146,6 @@ GameObject* ModelLoader::LoadModelMD5(const aiNode *node, const std::string &fil
 	}
 
 	*outSkeleton = skeleton;
+
 	return go;
 }

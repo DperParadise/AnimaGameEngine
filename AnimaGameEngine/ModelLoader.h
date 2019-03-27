@@ -3,6 +3,7 @@
 
 #include <assimp/postprocess.h>
 #include <string>
+#include <vector>
 
 struct aiScene;
 struct aiNode;
@@ -10,6 +11,7 @@ class GameObject;
 class Skeleton;
 class aiMesh;
 class Mesh;
+class Animation;
 
 class ModelLoader
 {	
@@ -25,6 +27,7 @@ public:
 	~ModelLoader();
 	static GameObject* Load(const std::string &filePath, unsigned int flags);
 	static GameObject* LoadMD5(const std::string &filePath, unsigned int flags, Skeleton **outSkeleton);
+	static void LoadAnimationsMD5(const std::string &filePath, std::vector<Animation*> &animations, const Skeleton *skeleton);
 
 private:
 	static  const aiScene *scene;

@@ -9,6 +9,7 @@
 #include "ComponentEditorCamera.h"
 #include "ComponentCamera.h"
 #include "Skeleton.h"
+#include "Animation.h"
 
 ModuleScene::ModuleScene() {}
 
@@ -71,7 +72,8 @@ ModuleScene::~ModuleScene()
 	 GameObject *guardLampGO = ModelLoader::LoadMD5("models/GuardLamp/boblampclean.md5mesh", ModelLoader::load_flags::TRIANGULATE, &guardLampSkeleton);
 	 gameObjects.push_back(guardLampGO);
 	 skeletons.push_back(guardLampSkeleton);
-	 
+	 ModelLoader::LoadAnimationsMD5("models/GuardLamp/boblampclean.md5anim", animations, guardLampSkeleton);
+	
 	return true;
 }
 
@@ -108,6 +110,12 @@ bool ModuleScene::CleanUp()
 		RELEASE(skeleton)
 	}
 	skeletons.clear();
+
+	for (Animation *animation : animations)
+	{
+		RELEASE(animation)
+	}
+	animations.clear();
 
 	return true;
 }

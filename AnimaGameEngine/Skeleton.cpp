@@ -47,8 +47,9 @@ void Skeleton::LoadMD5(const std::string & skeletonPath)
 	LoadBonesMD5(rootNode->FindNode("<MD5_Mesh>"));
 	PrintSkeleton();
 
-	skeletonTree = LoadSkeletonTreeMD5(rootNode->FindNode("<MD5_Hierarchy>"), nullptr);
+	skeletonTree = LoadSkeletonTreeMD5(rootNode->FindNode("origin"), nullptr);
 	PrintSkeletonTree(skeletonTree, 1);
+	PrintSkeleton();
 
 	SetInvBindPoseMatrices();
 	SetSkeletonPosesMatrices();
@@ -137,6 +138,15 @@ Bone* Skeleton::LoadSkeletonTreeMD5(aiNode *node, Bone *parentBone)
 		skeleton[index].localPose.position.y = position.y;
 		skeleton[index].localPose.position.z = position.z;
 	}
+	else
+	{
+		//Bones in the hierarchy that are not related to meshes but still affect the hierarchy, i.e: bone "origin"
+		Bone bone;
+		bone.name = newBone->name;
+		bone.id = skeleton.size();
+		skeleton.push_back(bone);
+	}
+
 	if (parentBone)
 		parentBone->children.push_back(newBone);
 
@@ -274,7 +284,7 @@ void Skeleton::Clear()
 
 BonePose::BonePose() :scale(glm::vec3(1.0f)) {}
 
-Bone::Bone() {}
+Bone::Bone(){}
 
 Bone::~Bone()
 {

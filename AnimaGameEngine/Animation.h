@@ -11,11 +11,12 @@ class Skeleton;
 
 struct KeyFrame
 {
+	KeyFrame();
 	KeyFrame(glm::quat rot, glm::vec3 pos, glm::vec3 scale, float time);
 	glm::quat rotation;
 	glm::vec3 position;
 	glm::vec3 scale;
-	float time;
+	float timeInTicks;
 };
 
 struct BoneChannel
@@ -31,20 +32,25 @@ struct BoneChannel
 class Animation
 {
 public:
-	Animation(const std::string &name, aiAnimation *aiAnimation, const Skeleton *skeleton);
+	Animation(const std::string &name, aiAnimation *aiAnimation, Skeleton *skeleton);
 	~Animation();
+	void Update(float dt);
+
 	std::vector<BoneChannel*> animation;
-	float startTime = 0.0f;
-	float currentTime = 0.0f;
-	float duration = 0.0f;
+	float startTime = 0.0f; // No lo necesito, creo
+	float accumTime = 0.0f;
+	float durationInSecs = 0.0f;
+	int durationInTicks = 0;
 	float ticksPerSecond = 0.0;
 	std::string name;
 
 private:
 	double ticksPerSecondDefault = 25.0f;
-	bool loop = false;
+	bool loop = true;
+	Skeleton *skeleton = nullptr;
+	bool isPlaying = true;
 
-	void Load(aiAnimation *aiAnimation, const Skeleton *skeleton);
+	void Load(aiAnimation *aiAnimation);
 	void Play(float startTime, bool loop);
 	void Stop();
 	void SortBoneChannelsByBoneId();

@@ -11,6 +11,7 @@ struct aiScene;
 struct aiNode;
 class GameObject;
 class ComponentMeshRenderer;
+class ComponentCamera;
 
 struct BonePose
 {
@@ -47,7 +48,7 @@ private:
 class Skeleton
 {
 public:
-	Skeleton(const std::string &skeletonName, const std::string &skeletonPath, Shader *skeletonShader);
+	Skeleton(const std::string &skeletonName, const std::string &skeletonPath, Shader *skeletonShader, const ComponentCamera *camera);
 	~Skeleton();
 	void Load(const std::string &skeletonPath);
 	void LoadMD5(const std::string &skeletonPath);
@@ -59,6 +60,7 @@ public:
 	std::vector<Bone> skeleton;
 	std::vector<glm::mat4> skeletonPoses;
 	std::vector<glm::mat4> invBindPoseMatrices;
+	
 	Bone *skeletonTree = nullptr;
 	std::string name;
 
@@ -71,11 +73,23 @@ private:
 	void UpdateSkeletonTreePoses(Bone *bone);
 	void SetInvBindPoseMatrices();
 	void SetSkeletonPosesMatrices();
+	
+	void SetSkeletonVertexBuffers();
+	void SetSkeletonToDraw();
+	unsigned int CountBonesInHierarchy(const Bone *bone);
+	void UpdateSkeletonToDraw(const Bone *bone);
+	void DrawSkeleton(const glm::mat4 &view, const glm::mat4 &projection);
+	std::vector<Bone*> endBones;
+	std::vector<unsigned int> endBonesHierachySize;
+	std::vector<glm::vec3> boneHierarchy;
+	unsigned int VAO, VBO;
+	Shader *skeletonShader = nullptr;
 
-	std::vector<glm::vec3> skeletonVertices;
-	unsigned int VAO, VBO, EBO;
-	Shader *shader = nullptr;
 	const aiScene *scene = nullptr;
+
+	glm::mat4 invRootNode;
+
+	const ComponentCamera *camera = nullptr;
 };
 #endif
 

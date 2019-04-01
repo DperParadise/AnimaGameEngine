@@ -40,7 +40,7 @@ ModelLoader::~ModelLoader() {}
 	return modelGO;
 }
 
- GameObject * ModelLoader::LoadMD5(const std::string & filePath, unsigned int flags, Skeleton **outSkeleton)
+ GameObject * ModelLoader::LoadMD5(const std::string & filePath, unsigned int flags, Skeleton **outSkeleton, const ComponentCamera *camera)
  {
 	 Assimp::Importer importer;
 	 scene = importer.ReadFile(filePath, flags);
@@ -50,11 +50,11 @@ ModelLoader::~ModelLoader() {}
 		return nullptr;
 	 }
 	 aiNode *root_node = scene->mRootNode;
-	 modelGO = LoadModelMD5(root_node, filePath, outSkeleton);
+	 modelGO = LoadModelMD5(root_node, filePath, outSkeleton, camera);
 	 return modelGO;
  }
 
- void ModelLoader::LoadAnimationsMD5(const std::string &filePath, std::vector<Animation*> &animations, const Skeleton *skeleton)
+ void ModelLoader::LoadAnimationsMD5(const std::string &filePath, std::vector<Animation*> &animations, Skeleton *skeleton)
  {
 	 Assimp::Importer importer;
 	 scene = importer.ReadFile(filePath, 0);
@@ -106,7 +106,7 @@ GameObject *ModelLoader::LoadHierarchy(const aiNode *node, GameObject *parentGO,
 	return go;
 }
 
-GameObject* ModelLoader::LoadModelMD5(const aiNode *node, const std::string &filePath, Skeleton **outSkeleton)
+GameObject* ModelLoader::LoadModelMD5(const aiNode *node, const std::string &filePath, Skeleton **outSkeleton, const ComponentCamera *camera)
 {
 	unsigned int slashPos = filePath.find_last_of("/");
 	std::string modelName = std::string(filePath, slashPos + 1);
@@ -119,7 +119,8 @@ GameObject* ModelLoader::LoadModelMD5(const aiNode *node, const std::string &fil
 	}
 
 	///Load skeleton
-	Skeleton *skeleton = new Skeleton(modelName, filePath, nullptr);
+	Shader *shader = new Shader("shaders/skeleton.vert", "shaders/skeleton.frag");
+	Skeleton *skeleton = new Skeleton(modelName, filePath, shader, camera);
 
 	///Create game objects
 	GameObject *go = new GameObject(modelName, meshNode);

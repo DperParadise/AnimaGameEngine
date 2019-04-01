@@ -20,65 +20,71 @@ ModuleScene::~ModuleScene()
 
  bool ModuleScene::Start()
 {	 
-	 //create gameobjects
-	 editorCameraGO = new EditorCameraGO("editor camera");
-	 editorCameraGO->FindComponentByType(ComponentType::GIZMO)->Disable();
+	//create gameobjects
+	editorCameraGO = new EditorCameraGO("editor camera");
+	editorCameraGO->FindComponentByType(ComponentType::GIZMO)->Disable();
 
-	 activeCameraGO = editorCameraGO;
-	 activeCameraComponent = (ComponentEditorCamera*)editorCameraGO->FindComponentByType(ComponentType::CAMERA);
+	activeCameraGO = editorCameraGO;
+	activeCameraComponent = (ComponentEditorCamera*)editorCameraGO->FindComponentByType(ComponentType::CAMERA);
 
+	/*
+	GameObject *world_origin = new GameObject("world origin");
+	world_origin->dirty = false;
+	AddGameObject(world_origin);
+	*/
+	/*
+	GameObject *ambient_light = new GameObject("ambient light");
+	ComponentAmbientLight *comp_amb_light = (ComponentAmbientLight*)ambient_light->CreateAmbientLight();
+	AddGameObject(ambient_light);
 	 
-	 GameObject *world_origin = new GameObject("world origin");
-	 AddGameObject(world_origin);
-	 
+	GameObject *directional_light = new GameObject("dir light");
+	ComponentLight *comp_dir_light = (ComponentLight*)directional_light->CreateDirectionalLight();
+	AddGameObject(directional_light);
+	*/
+	/*GameObject *point_light = new GameObject("dir light");
+	ComponentLight *comp_point_light = (ComponentLight*)point_light->CreateDirectionalLight();
+	comp_point_light->SetPosition(0.0f, 0.0f, 20.0f);
+	comp_point_light->SetDiffuse(1.0f, 1.0f, 0.0f, 1.0f);
+	AddGameObject(point_light);*/
 
-	 /*
-	 GameObject *world_origin = new GameObject("world origin");
-	 world_origin->dirty = false;
-	 AddGameObject(world_origin);
-	 */
-	 /*
-	 GameObject *ambient_light = new GameObject("ambient light");
-	 ComponentAmbientLight *comp_amb_light = (ComponentAmbientLight*)ambient_light->CreateAmbientLight();
-	 AddGameObject(ambient_light);
-	 
-	 GameObject *directional_light = new GameObject("dir light");
-	 ComponentLight *comp_dir_light = (ComponentLight*)directional_light->CreateDirectionalLight();
-	 AddGameObject(directional_light);
-	 */
-	 /*GameObject *point_light = new GameObject("dir light");
-	 ComponentLight *comp_point_light = (ComponentLight*)point_light->CreateDirectionalLight();
-	 comp_point_light->SetPosition(0.0f, 0.0f, 20.0f);
-	 comp_point_light->SetDiffuse(1.0f, 1.0f, 0.0f, 1.0f);
-	 AddGameObject(point_light);*/
+	//CubeGO *cube_go = new CubeGO("Cube");	
+	//AddGameObject(cube_go);
 
-	 //CubeGO *cube_go = new CubeGO("Cube");	
-	 //AddGameObject(cube_go);
-
-	 //Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
-	 //GameObject *batman = ModelLoader::Load("models/Batman/Batman.obj", ModelLoader::load_flags::FLIP_UVs | ModelLoader::load_flags::TRIANGULATE);
-	 //gameObjects.push_back(batman);
-	 //GameObject *batmanGO = FindGameObject("Batman.obj");
-	 //batmanGO->CreateBehaviour("BatmanMovement");
-	 //GameObject *torsoGO = FindGameObject("BatmanTorso");
-	 //torsoGO->CreateTorsoBehaviour("TorsoBehaviour");
-	 //Model iron_man = Model("models/IronMan/IronMan.obj", Model::load_flags::TRIANGULATE);
-	 //Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
+	//Model street = Model("models/street/Street.obj", Model::load_flags::TRIANGULATE);
+	//GameObject *batman = ModelLoader::Load("models/Batman/Batman.obj", ModelLoader::load_flags::FLIP_UVs | ModelLoader::load_flags::TRIANGULATE);
+	//gameObjects.push_back(batman);
+	//GameObject *batmanGO = FindGameObject("Batman.obj");
+	//batmanGO->CreateBehaviour("BatmanMovement");
+	//GameObject *torsoGO = FindGameObject("BatmanTorso");
+	//torsoGO->CreateTorsoBehaviour("TorsoBehaviour");
+	//Model iron_man = Model("models/IronMan/IronMan.obj", Model::load_flags::TRIANGULATE);
+	//Model magneto = Model("models/Magneto_obj_casco_solo/magneto_casco_solo.obj", Model::load_flags::TRIANGULATE);
 	 
-	 ///Load animated model
-	 //Model stickFigure = Model("models/StickFigurea/StickFigurea.FBX", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
+	///Load animated model
+	//Model stickFigure = Model("models/StickFigurea/StickFigurea.FBX", Model::load_flags::FLIP_UVs | Model::load_flags::TRIANGULATE);
  
-	 Skeleton *guardLampSkeleton = nullptr;
-	 GameObject *guardLampGO = ModelLoader::LoadMD5("models/GuardLamp/boblampclean.md5mesh", ModelLoader::load_flags::TRIANGULATE, &guardLampSkeleton);
-	 gameObjects.push_back(guardLampGO);
-	 skeletons.push_back(guardLampSkeleton);
-	 ModelLoader::LoadAnimationsMD5("models/GuardLamp/boblampclean.md5anim", animations, guardLampSkeleton);
-	
+	Skeleton *guardLampSkeleton = nullptr;
+	GameObject *guardLampGO = ModelLoader::LoadMD5("models/GuardLamp/boblampclean.md5mesh", ModelLoader::load_flags::TRIANGULATE, &guardLampSkeleton, activeCameraComponent);
+	gameObjects.push_back(guardLampGO);
+	skeletons.push_back(guardLampSkeleton);
+	//ModelLoader::LoadAnimationsMD5("models/GuardLamp/boblampclean.md5anim", animations, guardLampSkeleton);
+
+	GameObject *dummy = new GameObject("dummy", nullptr);
+	gameObjects.push_back(dummy);
+
+	GameObject *worldOrigin = new GameObject("world origin", nullptr);
+	gameObjects.push_back(worldOrigin);
+
 	return true;
 }
 
 update_status ModuleScene::Update(float dt) 
 {
+	for (Animation *anim : animations)
+	{
+		anim->Update(dt);
+	}
+
 	//TODO: Improve skeletons management
 	for (Skeleton *skl : skeletons)
 	{

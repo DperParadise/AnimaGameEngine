@@ -32,6 +32,7 @@ ComponentGizmo::~ComponentGizmo()
 
 void ComponentGizmo::Update(float dt)
 {
+	std::string name = GetOwnerGO()->GetName();
 	//Draw
 	if (IsEnabled())
 	{
